@@ -9,8 +9,8 @@ básicos del análisis de series cronológicas.
 
 | Tema | Clase | Laboratorio y materiales extras |
 |----------------------|-------------------------|--------------------------|
-| 1\. Introducción | [Tema 0](./Tema_0/presentacion.html) <br> [Tema 1](./Tema_1/presentacion.html) | [Lab Tema 1](./Tema_1/lab.html) |
-| 2 Descomposición | [Tema 2](./Tema_2/presentacion.html) | [Lab Tema 2](./Tema_2/lab_Tema02.html) <br> [archivos](./Tema_2/Tema_2.zip) |
+| 1\. Introducción | [Tema 1](./Tema_1/presentacion.html) | [Lab Tema 1](./Tema_1/lab.html) |
+| 2 Descomposición | [Tema 2](./Tema_2/presentacion.html) | [Lab Tema 2](./Tema_2/lab.html) <br> [archivos](./Tema_2/Tema_2.zip) |
 | 3\. Suavizamiento | [Tema 3](./Tema_3/presentacion.html) | [Lab Tema 3](./Tema_3/lab_Tema03.html) <br> [archivos](./Tema_3/Tema_3.zip) |
 | 4.Regresión | [Tema 4](./Tema_4/presentacion.html) | [Lab Tema 4](./Tema_4/lab_Tema04.html) |
 | 5\. Modelos | [Tema 5](./Tema_5/presentacion.html) | [Lab Tema 5](./Tema_5/lab_Tema05.html) <br> [archivos](./Tema_5/Tema_5.zip) |

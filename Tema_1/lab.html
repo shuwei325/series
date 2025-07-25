@@ -8,7 +8,7 @@
 
 <meta name="author" content="Shu Wei Chou Chen">
 
-<title>Lab 1: Análisis exploratorio de series temporales</title>
+<title>Lab: Análisis exploratorio de series temporales</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -112,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#ejemplo-gasto-de-medicamento-anti-diabético-mensual" id="toc-ejemplo-gasto-de-medicamento-anti-diabético-mensual" class="nav-link" data-scroll-target="#ejemplo-gasto-de-medicamento-anti-diabético-mensual"><span class="header-section-number">4</span> <strong>Ejemplo:</strong> gasto de medicamento anti-diabético (mensual)</a></li>
   <li><a href="#ejemplo-producción-de-cerveza-en-australia" id="toc-ejemplo-producción-de-cerveza-en-australia" class="nav-link" data-scroll-target="#ejemplo-producción-de-cerveza-en-australia"><span class="header-section-number">5</span> <strong>Ejemplo:</strong> Producción de cerveza en Australia</a>
   <ul class="collapse">
-  <li><a href="#lagplot" id="toc-lagplot" class="nav-link" data-scroll-target="#lagplot"><span class="header-section-number">5.1</span> Lagplot</a></li>
+  <li><a href="#gráficos-de-rezagos" id="toc-gráficos-de-rezagos" class="nav-link" data-scroll-target="#gráficos-de-rezagos"><span class="header-section-number">5.1</span> Gráficos de rezagos</a></li>
   <li><a href="#funcion-de-autocorrelacion" id="toc-funcion-de-autocorrelacion" class="nav-link" data-scroll-target="#funcion-de-autocorrelacion"><span class="header-section-number">5.2</span> Funcion de autocorrelacion</a></li>
   </ul></li>
   <li><a href="#ejemplo-muertes-por-accidente-en-eu-1973-1978" id="toc-ejemplo-muertes-por-accidente-en-eu-1973-1978" class="nav-link" data-scroll-target="#ejemplo-muertes-por-accidente-en-eu-1973-1978"><span class="header-section-number">6</span> <strong>Ejemplo:</strong> Muertes por accidente en EU 1973-1978</a></li>
@@ -128,8 +128,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 1: Análisis exploratorio de series temporales</h1>
-<p class="subtitle lead"><a href="https://shuwei325.github.io/series">Curso: Series temporales</a></p>
+<h1 class="title">Lab: Análisis exploratorio de series temporales</h1>
+<p class="subtitle lead"><a href="https://shuwei325.github.io/series">Curso: Análisis de series temporales</a></p>
 </div>
 
 
@@ -471,8 +471,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"Time"</span>),</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">yaxis =</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"Passengers"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item" id="htmlwidget-60116f426b10825b25c4" style="width:100%;height:650px;"></div>
-<script type="application/json" data-for="htmlwidget-60116f426b10825b25c4">{"x":{"visdat":{"86d4715615f9":["function () ","plotlyVisDat"]},"cur_data":"86d4715615f9","attrs":{"86d4715615f9":{"x":[1949,1949.0833333333333,1949.1666666666667,1949.25,1949.3333333333335,1949.4166666666667,1949.5000000000002,1949.5833333333335,1949.6666666666667,1949.7500000000002,1949.8333333333335,1949.916666666667,1950,1950.0833333333337,1950.166666666667,1950.2500000000005,1950.3333333333337,1950.416666666667,1950.5000000000005,1950.5833333333337,1950.6666666666672,1950.7500000000005,1950.8333333333339,1950.9166666666672,1951,1951.0833333333339,1951.1666666666672,1951.2500000000007,1951.3333333333339,1951.4166666666674,1951.5000000000007,1951.5833333333339,1951.6666666666674,1951.7500000000007,1951.8333333333342,1951.9166666666674,1952,1952.0833333333342,1952.1666666666674,1952.2500000000009,1952.3333333333342,1952.4166666666677,1952.5000000000009,1952.5833333333344,1952.6666666666677,1952.7500000000011,1952.8333333333344,1952.9166666666677,1953,1953.0833333333344,1953.1666666666679,1953.2500000000011,1953.3333333333346,1953.4166666666679,1953.5000000000011,1953.5833333333346,1953.6666666666679,1953.7500000000014,1953.8333333333346,1953.9166666666681,1954,1954.0833333333346,1954.1666666666681,1954.2500000000014,1954.3333333333348,1954.4166666666681,1954.5000000000016,1954.5833333333348,1954.6666666666681,1954.7500000000016,1954.8333333333348,1954.9166666666683,1955,1955.0833333333351,1955.1666666666683,1955.2500000000018,1955.3333333333351,1955.4166666666683,1955.5000000000018,1955.5833333333351,1955.6666666666686,1955.7500000000018,1955.8333333333353,1955.9166666666686,1956,1956.0833333333353,1956.1666666666686,1956.250000000002,1956.3333333333353,1956.4166666666688,1956.500000000002,1956.5833333333353,1956.6666666666688,1956.750000000002,1956.8333333333355,1956.9166666666688,1957,1957.0833333333355,1957.1666666666688,1957.2500000000023,1957.3333333333355,1957.416666666669,1957.5000000000023,1957.5833333333358,1957.666666666669,1957.7500000000025,1957.8333333333358,1957.916666666669,1958,1958.0833333333358,1958.1666666666692,1958.2500000000025,1958.333333333336,1958.4166666666692,1958.5000000000025,1958.583333333336,1958.6666666666692,1958.7500000000027,1958.833333333336,1958.9166666666695,1959,1959.083333333336,1959.1666666666695,1959.2500000000027,1959.3333333333362,1959.4166666666695,1959.500000000003,1959.5833333333362,1959.6666666666697,1959.750000000003,1959.8333333333362,1959.9166666666697,1960,1960.0833333333364,1960.1666666666697,1960.2500000000032,1960.3333333333364,1960.4166666666697,1960.5000000000032,1960.5833333333364,1960.6666666666699,1960.7500000000032,1960.8333333333367,1960.9166666666699],"y":[112,118,132,129,121,135,148,148,136,119,104,118,115,126,141,135,125,149,170,170,158,133,114,140,145,150,178,163,172,178,199,199,184,162,146,166,171,180,193,181,183,218,230,242,209,191,172,194,196,196,236,235,229,243,264,272,237,211,180,201,204,188,235,227,234,264,302,293,259,229,203,229,242,233,267,269,270,315,364,347,312,274,237,278,284,277,317,313,318,374,413,405,355,306,271,306,315,301,356,348,355,422,465,467,404,347,305,336,340,318,362,348,363,435,491,505,404,359,310,337,360,342,406,396,420,472,548,559,463,407,362,405,417,391,419,461,472,535,622,606,508,461,390,432],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"AirPassengers Time Series","xaxis":{"domain":[0,1],"automargin":true,"title":"Time"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Passengers"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1949,1949.0833333333333,1949.1666666666667,1949.25,1949.3333333333335,1949.4166666666667,1949.5000000000002,1949.5833333333335,1949.6666666666667,1949.7500000000002,1949.8333333333335,1949.916666666667,1950,1950.0833333333337,1950.166666666667,1950.2500000000005,1950.3333333333337,1950.416666666667,1950.5000000000005,1950.5833333333337,1950.6666666666672,1950.7500000000005,1950.8333333333339,1950.9166666666672,1951,1951.0833333333339,1951.1666666666672,1951.2500000000007,1951.3333333333339,1951.4166666666674,1951.5000000000007,1951.5833333333339,1951.6666666666674,1951.7500000000007,1951.8333333333342,1951.9166666666674,1952,1952.0833333333342,1952.1666666666674,1952.2500000000009,1952.3333333333342,1952.4166666666677,1952.5000000000009,1952.5833333333344,1952.6666666666677,1952.7500000000011,1952.8333333333344,1952.9166666666677,1953,1953.0833333333344,1953.1666666666679,1953.2500000000011,1953.3333333333346,1953.4166666666679,1953.5000000000011,1953.5833333333346,1953.6666666666679,1953.7500000000014,1953.8333333333346,1953.9166666666681,1954,1954.0833333333346,1954.1666666666681,1954.2500000000014,1954.3333333333348,1954.4166666666681,1954.5000000000016,1954.5833333333348,1954.6666666666681,1954.7500000000016,1954.8333333333348,1954.9166666666683,1955,1955.0833333333351,1955.1666666666683,1955.2500000000018,1955.3333333333351,1955.4166666666683,1955.5000000000018,1955.5833333333351,1955.6666666666686,1955.7500000000018,1955.8333333333353,1955.9166666666686,1956,1956.0833333333353,1956.1666666666686,1956.250000000002,1956.3333333333353,1956.4166666666688,1956.500000000002,1956.5833333333353,1956.6666666666688,1956.750000000002,1956.8333333333355,1956.9166666666688,1957,1957.0833333333355,1957.1666666666688,1957.2500000000023,1957.3333333333355,1957.416666666669,1957.5000000000023,1957.5833333333358,1957.666666666669,1957.7500000000025,1957.8333333333358,1957.916666666669,1958,1958.0833333333358,1958.1666666666692,1958.2500000000025,1958.333333333336,1958.4166666666692,1958.5000000000025,1958.583333333336,1958.6666666666692,1958.7500000000027,1958.833333333336,1958.9166666666695,1959,1959.083333333336,1959.1666666666695,1959.2500000000027,1959.3333333333362,1959.4166666666695,1959.500000000003,1959.5833333333362,1959.6666666666697,1959.750000000003,1959.8333333333362,1959.9166666666697,1960,1960.0833333333364,1960.1666666666697,1960.2500000000032,1960.3333333333364,1960.4166666666697,1960.5000000000032,1960.5833333333364,1960.6666666666699,1960.7500000000032,1960.8333333333367,1960.9166666666699],"y":[112,118,132,129,121,135,148,148,136,119,104,118,115,126,141,135,125,149,170,170,158,133,114,140,145,150,178,163,172,178,199,199,184,162,146,166,171,180,193,181,183,218,230,242,209,191,172,194,196,196,236,235,229,243,264,272,237,211,180,201,204,188,235,227,234,264,302,293,259,229,203,229,242,233,267,269,270,315,364,347,312,274,237,278,284,277,317,313,318,374,413,405,355,306,271,306,315,301,356,348,355,422,465,467,404,347,305,336,340,318,362,348,363,435,491,505,404,359,310,337,360,342,406,396,420,472,548,559,463,407,362,405,417,391,419,461,472,535,622,606,508,461,390,432],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-a640eea7a62967dc49ff" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="htmlwidget-a640eea7a62967dc49ff">{"x":{"visdat":{"80407a023ad2":["function () ","plotlyVisDat"]},"cur_data":"80407a023ad2","attrs":{"80407a023ad2":{"x":[1949,1949.0833333333333,1949.1666666666667,1949.25,1949.3333333333335,1949.4166666666667,1949.5000000000002,1949.5833333333335,1949.6666666666667,1949.7500000000002,1949.8333333333335,1949.916666666667,1950,1950.0833333333337,1950.166666666667,1950.2500000000005,1950.3333333333337,1950.416666666667,1950.5000000000005,1950.5833333333337,1950.6666666666672,1950.7500000000005,1950.8333333333339,1950.9166666666672,1951,1951.0833333333339,1951.1666666666672,1951.2500000000007,1951.3333333333339,1951.4166666666674,1951.5000000000007,1951.5833333333339,1951.6666666666674,1951.7500000000007,1951.8333333333342,1951.9166666666674,1952,1952.0833333333342,1952.1666666666674,1952.2500000000009,1952.3333333333342,1952.4166666666677,1952.5000000000009,1952.5833333333344,1952.6666666666677,1952.7500000000011,1952.8333333333344,1952.9166666666677,1953,1953.0833333333344,1953.1666666666679,1953.2500000000011,1953.3333333333346,1953.4166666666679,1953.5000000000011,1953.5833333333346,1953.6666666666679,1953.7500000000014,1953.8333333333346,1953.9166666666681,1954,1954.0833333333346,1954.1666666666681,1954.2500000000014,1954.3333333333348,1954.4166666666681,1954.5000000000016,1954.5833333333348,1954.6666666666681,1954.7500000000016,1954.8333333333348,1954.9166666666683,1955,1955.0833333333351,1955.1666666666683,1955.2500000000018,1955.3333333333351,1955.4166666666683,1955.5000000000018,1955.5833333333351,1955.6666666666686,1955.7500000000018,1955.8333333333353,1955.9166666666686,1956,1956.0833333333353,1956.1666666666686,1956.250000000002,1956.3333333333353,1956.4166666666688,1956.500000000002,1956.5833333333353,1956.6666666666688,1956.750000000002,1956.8333333333355,1956.9166666666688,1957,1957.0833333333355,1957.1666666666688,1957.2500000000023,1957.3333333333355,1957.416666666669,1957.5000000000023,1957.5833333333358,1957.666666666669,1957.7500000000025,1957.8333333333358,1957.916666666669,1958,1958.0833333333358,1958.1666666666692,1958.2500000000025,1958.333333333336,1958.4166666666692,1958.5000000000025,1958.583333333336,1958.6666666666692,1958.7500000000027,1958.833333333336,1958.9166666666695,1959,1959.083333333336,1959.1666666666695,1959.2500000000027,1959.3333333333362,1959.4166666666695,1959.500000000003,1959.5833333333362,1959.6666666666697,1959.750000000003,1959.8333333333362,1959.9166666666697,1960,1960.0833333333364,1960.1666666666697,1960.2500000000032,1960.3333333333364,1960.4166666666697,1960.5000000000032,1960.5833333333364,1960.6666666666699,1960.7500000000032,1960.8333333333367,1960.9166666666699],"y":[112,118,132,129,121,135,148,148,136,119,104,118,115,126,141,135,125,149,170,170,158,133,114,140,145,150,178,163,172,178,199,199,184,162,146,166,171,180,193,181,183,218,230,242,209,191,172,194,196,196,236,235,229,243,264,272,237,211,180,201,204,188,235,227,234,264,302,293,259,229,203,229,242,233,267,269,270,315,364,347,312,274,237,278,284,277,317,313,318,374,413,405,355,306,271,306,315,301,356,348,355,422,465,467,404,347,305,336,340,318,362,348,363,435,491,505,404,359,310,337,360,342,406,396,420,472,548,559,463,407,362,405,417,391,419,461,472,535,622,606,508,461,390,432],"mode":"lines","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"AirPassengers Time Series","xaxis":{"domain":[0,1],"automargin":true,"title":"Time"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Passengers"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[1949,1949.0833333333333,1949.1666666666667,1949.25,1949.3333333333335,1949.4166666666667,1949.5000000000002,1949.5833333333335,1949.6666666666667,1949.7500000000002,1949.8333333333335,1949.916666666667,1950,1950.0833333333337,1950.166666666667,1950.2500000000005,1950.3333333333337,1950.416666666667,1950.5000000000005,1950.5833333333337,1950.6666666666672,1950.7500000000005,1950.8333333333339,1950.9166666666672,1951,1951.0833333333339,1951.1666666666672,1951.2500000000007,1951.3333333333339,1951.4166666666674,1951.5000000000007,1951.5833333333339,1951.6666666666674,1951.7500000000007,1951.8333333333342,1951.9166666666674,1952,1952.0833333333342,1952.1666666666674,1952.2500000000009,1952.3333333333342,1952.4166666666677,1952.5000000000009,1952.5833333333344,1952.6666666666677,1952.7500000000011,1952.8333333333344,1952.9166666666677,1953,1953.0833333333344,1953.1666666666679,1953.2500000000011,1953.3333333333346,1953.4166666666679,1953.5000000000011,1953.5833333333346,1953.6666666666679,1953.7500000000014,1953.8333333333346,1953.9166666666681,1954,1954.0833333333346,1954.1666666666681,1954.2500000000014,1954.3333333333348,1954.4166666666681,1954.5000000000016,1954.5833333333348,1954.6666666666681,1954.7500000000016,1954.8333333333348,1954.9166666666683,1955,1955.0833333333351,1955.1666666666683,1955.2500000000018,1955.3333333333351,1955.4166666666683,1955.5000000000018,1955.5833333333351,1955.6666666666686,1955.7500000000018,1955.8333333333353,1955.9166666666686,1956,1956.0833333333353,1956.1666666666686,1956.250000000002,1956.3333333333353,1956.4166666666688,1956.500000000002,1956.5833333333353,1956.6666666666688,1956.750000000002,1956.8333333333355,1956.9166666666688,1957,1957.0833333333355,1957.1666666666688,1957.2500000000023,1957.3333333333355,1957.416666666669,1957.5000000000023,1957.5833333333358,1957.666666666669,1957.7500000000025,1957.8333333333358,1957.916666666669,1958,1958.0833333333358,1958.1666666666692,1958.2500000000025,1958.333333333336,1958.4166666666692,1958.5000000000025,1958.583333333336,1958.6666666666692,1958.7500000000027,1958.833333333336,1958.9166666666695,1959,1959.083333333336,1959.1666666666695,1959.2500000000027,1959.3333333333362,1959.4166666666695,1959.500000000003,1959.5833333333362,1959.6666666666697,1959.750000000003,1959.8333333333362,1959.9166666666697,1960,1960.0833333333364,1960.1666666666697,1960.2500000000032,1960.3333333333364,1960.4166666666697,1960.5000000000032,1960.5833333333364,1960.6666666666699,1960.7500000000032,1960.8333333333367,1960.9166666666699],"y":[112,118,132,129,121,135,148,148,136,119,104,118,115,126,141,135,125,149,170,170,158,133,114,140,145,150,178,163,172,178,199,199,184,162,146,166,171,180,193,181,183,218,230,242,209,191,172,194,196,196,236,235,229,243,264,272,237,211,180,201,204,188,235,227,234,264,302,293,259,229,203,229,242,233,267,269,270,315,364,347,312,274,237,278,284,277,317,313,318,374,413,405,355,306,271,306,315,301,356,348,355,422,465,467,404,347,305,336,340,318,362,348,363,435,491,505,404,359,310,337,360,342,406,396,420,472,548,559,463,407,362,405,417,391,419,461,472,535,622,606,508,461,390,432],"mode":"lines","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -712,8 +712,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="lagplot" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="lagplot"><span class="header-section-number">5.1</span> Lagplot</h2>
+<section id="gráficos-de-rezagos" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="gráficos-de-rezagos"><span class="header-section-number">5.1</span> Gráficos de rezagos</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gglagplot</span>(cerveza,<span class="at">lags=</span><span class="dv">16</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1016,6 +1016,13 @@ Autocorrelations of series 'ausbeer', by lag
 </section>
 <section id="ejemplo-muertes-por-accidente-en-eu-1973-1978" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> <strong>Ejemplo:</strong> Muertes por accidente en EU 1973-1978</h1>
+<ul>
+<li>Interpretación de estos gráficos.</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Gráfico lineal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Gráfico estacional</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Gráficos de rezagos</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(USAccDeaths)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1025,20 +1032,31 @@ Autocorrelations of series 'ausbeer', by lag
 </figure>
 </div>
 </div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggseasonplot</span>(USAccDeaths, <span class="at">year.labels=</span><span class="cn">FALSE</span>, <span class="at">continuous=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-36-2.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gglagplot</span>(USAccDeaths,<span class="at">lags=</span><span class="dv">16</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-36-3.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1189,7 +1207,7 @@ Autocorrelations of series 'ausbeer', by lag
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1197,7 +1215,7 @@ Autocorrelations of series 'ausbeer', by lag
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-37-2.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-39-2.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1209,7 +1227,7 @@ Autocorrelations of series 'ausbeer', by lag
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-37-3.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-39-3.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1230,7 +1248,7 @@ Autocorrelations of series 'ausbeer', by lag
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1239,7 +1257,7 @@ Autocorrelations of series 'ausbeer', by lag
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-38-2.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-40-2.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1247,7 +1265,7 @@ Autocorrelations of series 'ausbeer', by lag
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab_files/figure-html/unnamed-chunk-38-3.png" class="img-fluid figure-img" width="480"></p>
+<p><img src="lab_files/figure-html/unnamed-chunk-40-3.png" class="img-fluid figure-img" width="480"></p>
 </figure>
 </div>
 </div>
