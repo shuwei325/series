@@ -575,7 +575,7 @@ Training set -5.38598e-13 4139.564 3361.871 -0.4947182 5.476378 0.3379595</code>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3361.871</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>(RMSE<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((e.train)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(e.train)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>(RMSE.train<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((e.train)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(e.train)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4139.564</code></pre>
 </div>
@@ -587,7 +587,7 @@ Training set -5.38598e-13 4139.564 3361.871 -0.4947182 5.476378 0.3379595</code>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10799.06</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>(RMSE<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((e.train)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(e.train)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>(RMSE.train<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((e.train)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(e.train)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12986.16</code></pre>
 </div>
@@ -614,15 +614,15 @@ Test set -3240.829 18319.55 15646.54 -3.827339 17.91628</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">12</span></span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>e<span class="ot">&lt;-</span> y.test <span class="sc">-</span> pred</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>(MAE <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(e))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>(MAE.test <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(e))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 15646.54</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>(RMSE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(e<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>(RMSE.test <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">sum</span>(e<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18319.55</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>(MAPE <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(<span class="dv">100</span><span class="sc">*</span>e<span class="sc">/</span>y.test))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>(MAPE.test <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">abs</span>(<span class="dv">100</span><span class="sc">*</span>e<span class="sc">/</span>y.test))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 17.30306</code></pre>
 </div>
@@ -727,7 +727,7 @@ Test set      0.47164129 0.4945344</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3137.288</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>(RMSE<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((e.train)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(e.train)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>(RMSE.train<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>((e.train)<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">length</span>(e.train)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4061.86</code></pre>
 </div>
@@ -738,15 +738,15 @@ Test set      0.47164129 0.4945344</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="dv">12</span></span>
 <span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>e<span class="ot">&lt;-</span> y.test <span class="sc">-</span> pronostico<span class="sc">$</span>mean</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>(MAE<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="fu">abs</span>(e))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>(MAE.test<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="fu">abs</span>(e))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5903.98</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>(RMSE<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>(e<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>(RMSE.test<span class="ot">&lt;-</span><span class="fu">sqrt</span>(<span class="fu">sum</span>(e<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span>n))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7121.968</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>(MAPE<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="fu">abs</span>(<span class="dv">100</span><span class="sc">*</span>e<span class="sc">/</span>y.test))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>(MAPE.test<span class="ot">&lt;-</span><span class="fu">sum</span>(<span class="fu">abs</span>(<span class="dv">100</span><span class="sc">*</span>e<span class="sc">/</span>y.test))<span class="sc">/</span>n)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 6.857</code></pre>
 </div>

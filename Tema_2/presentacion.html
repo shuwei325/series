@@ -884,15 +884,15 @@ Se calcula una media móvil centrada de la siguiente forma: <span class="math di
 <li>Ajustar el modelo con <span class="math inline">\(Z_1,...,Z_{T'}\)</span> y pronosticar los valores de <span class="math inline">\(\hat{Z}_{T'+1},...,\hat{Z}_{T'+h}\)</span> (<span class="alert">pronóstico a <span class="math inline">\(h\)</span> paso para adelante</span>).</li>
 <li>Definan las siguientes medidas:
 <ul>
-<li><span class="alert">Error absoluto medio (mean absolute error, MAE)</span> <span class="math display">\[EAM = \frac{\sum\limits_{i=1}^h |e_{T+i}|}{h}\]</span></li>
+<li><span class="alert">Error absoluto medio (mean absolute error, MAE)</span> <span class="math display">\[\operatorname{MAE} = \frac{\sum\limits_{i=1}^h |e_{T+i}|}{h}\]</span></li>
 </ul></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
-<li><p><span class="alert">Error cuadrático medio (mean squared error, MSE)</span> <span class="math display">\[ECM = \frac{\sum\limits_{i=1}^h (e_{T+i})^2}{h}\]</span></p></li>
-<li><p><span class="alert">Error porcentual absoluto medio (mean absolute percentage error, MAPE)</span> <span class="math display">\[EPAM = \frac{\sum\limits_{i=1}^h |EP_{T+i}|}{h}\]</span> donde <span class="math inline">\(EP_{j}=100 \left[ \frac{Z_j-\hat{Z_j}}{Z_j} \right]\)</span>.</p></li>
+<li><p><span class="alert">Error cuadrático medio (mean squared error, MSE)</span> <span class="math display">\[\operatorname{MSE} = \frac{\sum\limits_{i=1}^h (e_{T+i})^2}{h}\]</span></p></li>
+<li><p><span class="alert">Error porcentual absoluto medio (mean absolute percentage error, MAPE)</span> <span class="math display">\[\operatorname{MAPE} = \frac{\sum\limits_{i=1}^h |EP_{T+i}|}{h}\]</span> donde <span class="math inline">\(EP_{j}=100 \left[ \frac{Z_j-\hat{Z_j}}{Z_j} \right]\)</span>.</p></li>
 </ul>
 <p><a href="./lab.html#pronósticos"><span class="button">el Lab</span></a></p>
 
