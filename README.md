@@ -12,8 +12,8 @@ básicos del análisis de series cronológicas.
 | 1\. Introducción | [Tema 1](./Tema_1/presentacion.html) | [Lab1](./Tema_1/lab.html) |
 | 2 Descomposición | [Tema 2](./Tema_2/presentacion.html) | [Lab2](./Tema_2/lab.html) / [archivos](./Tema_2/Tema_2.zip) |
 | 3\. Suavizamiento | [Tema 3](./Tema_3/presentacion.html) | [Lab3](./Tema_3/lab.html) / [archivos](./Tema_3/Tema_3.zip) |
-| 4.Regresión | [Tema 4](./Tema_4/presentacion.html) | [Lab4](./Tema_4/lab.html) |
-| 5\. Modelos | [Tema 5](./Tema_5/presentacion.html) | [Lab5](./Tema_5/lab.html) / [archivos](./Tema_5/Tema_5.zip) |
+| 4.Regresión | [Tema 4](./Tema_4/presentacion.html) |  |
+| 5\. Modelos | [Tema 5](./Tema_5/presentacion.html) | [archivos](./Tema_5/Tema_5.zip) |
 | 6\. ARIMA | [Tema 6_1](./Tema_6/presentacion1.html) |  |
 |  | [Tema 6_2](./Tema_6/presentacion2.html) |  |
 |  | [Tema 6_3](./Tema_6/presentacion3.html) | [Lab6a 6_1](./Tema_6/laba.html) |

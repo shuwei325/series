@@ -213,6 +213,16 @@
 </div>
 
 </section>
+<section id="paquetes-de-r" class="slide level2">
+<h2>Paquetes de R</h2>
+<p>Para este tema, se necesita cargar estos paquetes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(forecast)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(fpp2)</span>
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(astsa)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section>
 <section id="componentes-de-las-series-temporales" class="title-slide slide level1 agenda-slide center">
 <h1>Componentes de las series temporales</h1>
@@ -313,7 +323,7 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">autoplot</span>(AirPassengers)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">autoplot</span>(AirPassengers)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-airpassengers" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -329,7 +339,7 @@ Figura&nbsp;1: Pasajeros
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">autoplot</span>(<span class="fu">log</span>(AirPassengers)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">autoplot</span>(<span class="fu">log</span>(AirPassengers)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-logairpassengers" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -359,7 +369,7 @@ Figura&nbsp;2: Log-pasajeros
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">autoplot</span>(varve)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">autoplot</span>(varve)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-varve" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -375,7 +385,7 @@ Figura&nbsp;3: Varva
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">autoplot</span>(<span class="fu">log</span>(varve))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">autoplot</span>(<span class="fu">log</span>(varve))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-logvarge" class="quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-fig">
@@ -437,10 +447,10 @@ MA_{t} = \frac{1}{m} \sum_{j=-k}^k Z_{t+j},
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>ejemploMA <span class="ot">&lt;-</span> <span class="fu">cbind</span>(AirPassengers,</span>
-<span id="cb5-2"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">3</span>),</span>
-<span id="cb5-3"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">6</span>))</span>
-<span id="cb5-4"><a href=""></a><span class="fu">head</span>(ejemploMA,<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>ejemploMA <span class="ot">&lt;-</span> <span class="fu">cbind</span>(AirPassengers,</span>
+<span id="cb6-2"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">3</span>),</span>
+<span id="cb6-3"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">6</span>))</span>
+<span id="cb6-4"><a href=""></a><span class="fu">head</span>(ejemploMA,<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         AirPassengers ma(AirPassengers, 3) ma(AirPassengers, 6)
 Jan 1949           112                   NA                   NA
@@ -454,7 +464,7 @@ Aug 1949           148             144.0000             133.0833
 Sep 1949           136             134.3333             130.2500
 Oct 1949           119             119.6667             126.0833</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">tail</span>(ejemploMA,<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">tail</span>(ejemploMA,<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         AirPassengers ma(AirPassengers, 3) ma(AirPassengers, 6)
 Mar 1960           419             423.6667             438.3333
@@ -752,9 +762,9 @@ Se calcula una media móvil centrada de la siguiente forma: <span class="math di
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>y.stl1<span class="ot">&lt;-</span><span class="fu">stl</span>(y,<span class="at">t.window=</span><span class="dv">20</span>, </span>
-<span id="cb9-2"><a href=""></a>            <span class="at">s.window=</span><span class="st">"periodic"</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
-<span id="cb9-3"><a href=""></a><span class="fu">plot</span>(y.stl1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>y.stl1<span class="ot">&lt;-</span><span class="fu">stl</span>(y,<span class="at">t.window=</span><span class="dv">20</span>, </span>
+<span id="cb10-2"><a href=""></a>            <span class="at">s.window=</span><span class="st">"periodic"</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
+<span id="cb10-3"><a href=""></a><span class="fu">plot</span>(y.stl1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -765,9 +775,9 @@ Se calcula una media móvil centrada de la siguiente forma: <span class="math di
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>y.stl2<span class="ot">&lt;-</span><span class="fu">stl</span>(y,<span class="at">t.window=</span><span class="dv">5</span>, </span>
-<span id="cb10-2"><a href=""></a>            <span class="at">s.window=</span><span class="st">"periodic"</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
-<span id="cb10-3"><a href=""></a><span class="fu">plot</span>(y.stl2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>y.stl2<span class="ot">&lt;-</span><span class="fu">stl</span>(y,<span class="at">t.window=</span><span class="dv">5</span>, </span>
+<span id="cb11-2"><a href=""></a>            <span class="at">s.window=</span><span class="st">"periodic"</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a href=""></a><span class="fu">plot</span>(y.stl2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -783,8 +793,8 @@ Se calcula una media móvil centrada de la siguiente forma: <span class="math di
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>y.stl1<span class="ot">&lt;-</span><span class="fu">stl</span>(y, <span class="at">s.window=</span><span class="st">"periodic"</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
-<span id="cb11-2"><a href=""></a><span class="fu">plot</span>(y.stl1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>y.stl1<span class="ot">&lt;-</span><span class="fu">stl</span>(y, <span class="at">s.window=</span><span class="st">"periodic"</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
+<span id="cb12-2"><a href=""></a><span class="fu">plot</span>(y.stl1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -795,8 +805,8 @@ Se calcula una media móvil centrada de la siguiente forma: <span class="math di
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>y.stl2<span class="ot">&lt;-</span><span class="fu">stl</span>(y, <span class="at">s.window=</span> <span class="dv">7</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
-<span id="cb12-2"><a href=""></a><span class="fu">plot</span>(y.stl2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>y.stl2<span class="ot">&lt;-</span><span class="fu">stl</span>(y, <span class="at">s.window=</span> <span class="dv">7</span>, <span class="at">robust=</span><span class="cn">TRUE</span>)</span>
+<span id="cb13-2"><a href=""></a><span class="fu">plot</span>(y.stl2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>

@@ -213,6 +213,21 @@
 </div>
 
 </section>
+<section id="paquetes-de-r" class="slide level2">
+<h2>Paquetes de R</h2>
+<p>Para este tema, se necesita cargar estos paquetes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(forecast)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(fpp2)</span>
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(astsa)</span>
+<span id="cb1-5"><a href=""></a><span class="fu">library</span>(car)</span>
+<span id="cb1-6"><a href=""></a><span class="fu">library</span>(astsa)</span>
+<span id="cb1-7"><a href=""></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-8"><a href=""></a><span class="fu">library</span>(gamair)</span>
+<span id="cb1-9"><a href=""></a><span class="fu">library</span>(mgcv)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section>
 <section id="introducción" class="title-slide slide level1 agenda-slide center">
 <h1>Introducción</h1>
@@ -306,7 +321,7 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">head</span>(uschange)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">head</span>(uschange)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        Consumption     Income Production   Savings Unemployment
 1970 Q1   0.6159862  0.9722610 -2.4527003 4.8103115          0.9
@@ -319,8 +334,8 @@
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">autoplot</span>(uschange[,<span class="fu">c</span>(<span class="st">"Consumption"</span>,<span class="st">"Income"</span>)]) <span class="sc">+</span></span>
-<span id="cb3-2"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"% change"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">autoplot</span>(uschange[,<span class="fu">c</span>(<span class="st">"Consumption"</span>,<span class="st">"Income"</span>)]) <span class="sc">+</span></span>
+<span id="cb4-2"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"% change"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -336,13 +351,13 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>uschange <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href=""></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Income, <span class="at">y=</span>Consumption)) <span class="sc">+</span></span>
-<span id="cb4-4"><a href=""></a>    <span class="fu">ylab</span>(<span class="st">"Consumption (quarterly % change)"</span>) <span class="sc">+</span></span>
-<span id="cb4-5"><a href=""></a>    <span class="fu">xlab</span>(<span class="st">"Income (quarterly % change)"</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href=""></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb4-7"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>uschange <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Income, <span class="at">y=</span>Consumption)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href=""></a>    <span class="fu">ylab</span>(<span class="st">"Consumption (quarterly % change)"</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href=""></a>    <span class="fu">xlab</span>(<span class="st">"Income (quarterly % change)"</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href=""></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-7"><a href=""></a>    <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -356,7 +371,7 @@
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">lm</span>(Consumption <span class="sc">~</span> Income, <span class="at">data=</span>uschange)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">lm</span>(Consumption <span class="sc">~</span> Income, <span class="at">data=</span>uschange)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -366,7 +381,7 @@ Coefficients:
 (Intercept)       Income  
      0.5451       0.2806  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">tslm</span>(Consumption <span class="sc">~</span> Income, <span class="at">data=</span>uschange)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">tslm</span>(Consumption <span class="sc">~</span> Income, <span class="at">data=</span>uschange)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -445,28 +460,28 @@ Y=X \beta+\epsilon
 <li>El objetivo es generar pronósticos del consumo más precisos usando otros predictores, además del ingreso personal.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">autoplot</span>(uschange[,<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">facets =</span> <span class="cn">TRUE</span>, <span class="at">colour=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb9-2"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
-<span id="cb9-3"><a href=""></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="st">"none"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">autoplot</span>(uschange[,<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">facets =</span> <span class="cn">TRUE</span>, <span class="at">colour=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb10-2"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a href=""></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="st">"none"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-7-1.png" width="384" class="r-stretch quarto-figure-center"><p class="caption">Variaciones porcentuales trimestrales en la producción industrial y ahorros personales y variaciones trimestrales en la tasa de desempleo de los EE. UU. Durante el período 1970T1-2016T3 (Hyndman)</p></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>uschange <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href=""></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href=""></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>uschange <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href=""></a>  GGally<span class="sc">::</span><span class="fu">ggpairs</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-8-1.png" width="480" class="r-stretch quarto-figure-center"><p class="caption">Matriz de diagrama de dispersión del gasto de consumo de EE. UU. y los cuatro predictores.</p></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>modreg <span class="ot">&lt;-</span> <span class="fu">tslm</span>(</span>
-<span id="cb11-2"><a href=""></a>  Consumption <span class="sc">~</span> Income <span class="sc">+</span> Production <span class="sc">+</span> Unemployment <span class="sc">+</span> Savings,</span>
-<span id="cb11-3"><a href=""></a>  <span class="at">data=</span>uschange)</span>
-<span id="cb11-4"><a href=""></a><span class="fu">summary</span>(modreg)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>modreg <span class="ot">&lt;-</span> <span class="fu">tslm</span>(</span>
+<span id="cb12-2"><a href=""></a>  Consumption <span class="sc">~</span> Income <span class="sc">+</span> Production <span class="sc">+</span> Unemployment <span class="sc">+</span> Savings,</span>
+<span id="cb12-3"><a href=""></a>  <span class="at">data=</span>uschange)</span>
+<span id="cb12-4"><a href=""></a><span class="fu">summary</span>(modreg)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -496,18 +511,18 @@ F-statistic: 139.5 on 4 and 182 DF,  p-value: &lt; 2.2e-16</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">autoplot</span>(uschange[,<span class="st">'Consumption'</span>], <span class="at">series=</span><span class="st">"Data"</span>) <span class="sc">+</span></span>
-<span id="cb13-2"><a href=""></a>  forecast<span class="sc">::</span><span class="fu">autolayer</span>(<span class="fu">fitted</span>(modreg), <span class="at">series=</span><span class="st">"Fitted"</span>) <span class="sc">+</span></span>
-<span id="cb13-3"><a href=""></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb13-4"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Cambio porcentual de gastos de consumo en EE.UUU "</span>) <span class="sc">+</span></span>
-<span id="cb13-5"><a href=""></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">" "</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">autoplot</span>(uschange[,<span class="st">'Consumption'</span>], <span class="at">series=</span><span class="st">"Data"</span>) <span class="sc">+</span></span>
+<span id="cb14-2"><a href=""></a>  forecast<span class="sc">::</span><span class="fu">autolayer</span>(<span class="fu">fitted</span>(modreg), <span class="at">series=</span><span class="st">"Fitted"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href=""></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Cambio porcentual de gastos de consumo en EE.UUU "</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href=""></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">" "</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-10-1.png" width="672" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">checkresiduals</span>(modreg)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">checkresiduals</span>(modreg)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -575,8 +590,8 @@ LM test = 14.874, df = 8, p-value = 0.06163</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">tslm</span>(aussies <span class="sc">~</span> guinearice)</span>
-<span id="cb16-2"><a href=""></a><span class="fu">summary</span>(fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">tslm</span>(aussies <span class="sc">~</span> guinearice)</span>
+<span id="cb17-2"><a href=""></a><span class="fu">summary</span>(fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -600,7 +615,7 @@ F-statistic: 908.1 on 1 and 40 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">checkresiduals</span>(fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">checkresiduals</span>(fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -676,15 +691,15 @@ LM test = 28.813, df = 8, p-value = 0.000342</code></pre>
 <p>Vamos a ajustar un modelo de tendencia cuadrática a la serie de graduados de ITCR de 1975 a 2002: <span class="math display">\[Y_t=\beta_0+\beta_1 t +\beta_2 t^2 + \epsilon_t, t=1,...,T\]</span></p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>itcrgrad<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"ITCR.csv"</span>,<span class="at">sep=</span><span class="st">","</span>)</span>
-<span id="cb20-2"><a href=""></a>y<span class="ot">&lt;-</span><span class="fu">ts</span>(itcrgrad<span class="sc">$</span>graduados,<span class="at">start=</span><span class="dv">1975</span>)</span>
-<span id="cb20-3"><a href=""></a>tiempo<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(y))</span>
-<span id="cb20-4"><a href=""></a>tiempo2<span class="ot">&lt;-</span>tiempo<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb20-5"><a href=""></a>mod<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>tiempo<span class="sc">+</span>tiempo2)</span>
-<span id="cb20-6"><a href=""></a></span>
-<span id="cb20-7"><a href=""></a><span class="fu">autoplot</span>(y) <span class="sc">+</span></span>
-<span id="cb20-8"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"ITCR"</span>) <span class="sc">+</span></span>
-<span id="cb20-9"><a href=""></a>  <span class="fu">autolayer</span>(<span class="fu">ts</span>(mod<span class="sc">$</span>fitted.values,<span class="at">start=</span><span class="dv">1975</span>), <span class="at">series =</span> <span class="st">"ajustado"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>itcrgrad<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"ITCR.csv"</span>,<span class="at">sep=</span><span class="st">","</span>)</span>
+<span id="cb21-2"><a href=""></a>y<span class="ot">&lt;-</span><span class="fu">ts</span>(itcrgrad<span class="sc">$</span>graduados,<span class="at">start=</span><span class="dv">1975</span>)</span>
+<span id="cb21-3"><a href=""></a>tiempo<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(y))</span>
+<span id="cb21-4"><a href=""></a>tiempo2<span class="ot">&lt;-</span>tiempo<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb21-5"><a href=""></a>mod<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>tiempo<span class="sc">+</span>tiempo2)</span>
+<span id="cb21-6"><a href=""></a></span>
+<span id="cb21-7"><a href=""></a><span class="fu">autoplot</span>(y) <span class="sc">+</span></span>
+<span id="cb21-8"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"ITCR"</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href=""></a>  <span class="fu">autolayer</span>(<span class="fu">ts</span>(mod<span class="sc">$</span>fitted.values,<span class="at">start=</span><span class="dv">1975</span>), <span class="at">series =</span> <span class="st">"ajustado"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -698,7 +713,7 @@ LM test = 28.813, df = 8, p-value = 0.000342</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">summary</span>(mod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">summary</span>(mod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -735,7 +750,7 @@ F-statistic: 210.6 on 2 and 25 DF,  p-value: 2.268e-16</code></pre>
 </ul></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">hist</span>(mod<span class="sc">$</span>residuals,<span class="at">main=</span><span class="st">""</span>,<span class="at">xlab=</span><span class="st">"residuales"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">hist</span>(mod<span class="sc">$</span>residuals,<span class="at">main=</span><span class="st">""</span>,<span class="at">xlab=</span><span class="st">"residuales"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -746,7 +761,7 @@ F-statistic: 210.6 on 2 and 25 DF,  p-value: 2.268e-16</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>car<span class="sc">::</span><span class="fu">qqPlot</span>(mod<span class="sc">$</span>residuals,<span class="at">ylab=</span><span class="st">"residuales"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>car<span class="sc">::</span><span class="fu">qqPlot</span>(mod<span class="sc">$</span>residuals,<span class="at">ylab=</span><span class="st">"residuales"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -759,7 +774,7 @@ F-statistic: 210.6 on 2 and 25 DF,  p-value: 2.268e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">shapiro.test</span>(mod<span class="sc">$</span>residuals)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">shapiro.test</span>(mod<span class="sc">$</span>residuals)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -776,14 +791,14 @@ W = 0.97509, p-value = 0.7211</code></pre>
 <li>Los residuales en el tiempo:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">ts.plot</span>(mod<span class="sc">$</span>residuals,<span class="at">ylab=</span><span class="st">"residuales"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">ts.plot</span>(mod<span class="sc">$</span>residuals,<span class="at">ylab=</span><span class="st">"residuales"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-20-1.png" width="384" class="r-stretch"></section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">checkresiduals</span>(mod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">checkresiduals</span>(mod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -809,14 +824,14 @@ LM test = 3.9215, df = 6, p-value = 0.6873</code></pre>
 <section id="ejemplo-de-turistas" class="slide level2">
 <h2>Ejemplo de turistas</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>turistas<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"turistas.csv"</span>,<span class="at">sep=</span><span class="st">";"</span>)</span>
-<span id="cb31-2"><a href=""></a>y<span class="ot">&lt;-</span><span class="fu">ts</span>(turistas<span class="sc">$</span>turistas,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1991</span>,<span class="dv">1</span>),<span class="at">frequency=</span><span class="dv">12</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>turistas<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"turistas.csv"</span>,<span class="at">sep=</span><span class="st">";"</span>)</span>
+<span id="cb32-2"><a href=""></a>y<span class="ot">&lt;-</span><span class="fu">ts</span>(turistas<span class="sc">$</span>turistas,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1991</span>,<span class="dv">1</span>),<span class="at">frequency=</span><span class="dv">12</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Sin transformación <span class="math inline">\((Y_t)\)</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">autoplot</span>(y) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">autoplot</span>(y) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -828,7 +843,7 @@ LM test = 3.9215, df = 6, p-value = 0.6873</code></pre>
 </div><div class="column" style="width:50%;">
 <p>Con transformación <span class="math inline">\((\ln Y_t)\)</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">autoplot</span>(<span class="fu">log</span>(y))  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">autoplot</span>(<span class="fu">log</span>(y))  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -849,14 +864,14 @@ LM test = 3.9215, df = 6, p-value = 0.6873</code></pre>
 <p><span class="math display">\[ln Y_t=\alpha_0+\alpha_1 t + \alpha_2 t^2 +\beta_1 I_{1}+...+\beta_11 I_{11}+\epsilon_t\]</span></p>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>w<span class="ot">&lt;-</span><span class="fu">log</span>(y)</span>
-<span id="cb34-2"><a href=""></a>tiempo<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(y))</span>
-<span id="cb34-3"><a href=""></a>tiempo2<span class="ot">&lt;-</span>tiempo<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb34-4"><a href=""></a>mes<span class="ot">&lt;-</span><span class="fu">rep</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">12</span>),<span class="dv">10</span>)</span>
-<span id="cb34-5"><a href=""></a>mes<span class="ot">&lt;-</span><span class="fu">as.factor</span>(mes)</span>
-<span id="cb34-6"><a href=""></a></span>
-<span id="cb34-7"><a href=""></a>datos1<span class="ot">&lt;-</span><span class="fu">data.frame</span>(w,tiempo,tiempo2,mes)</span>
-<span id="cb34-8"><a href=""></a><span class="fu">head</span>(datos1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>w<span class="ot">&lt;-</span><span class="fu">log</span>(y)</span>
+<span id="cb35-2"><a href=""></a>tiempo<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">1</span>,<span class="fu">length</span>(y))</span>
+<span id="cb35-3"><a href=""></a>tiempo2<span class="ot">&lt;-</span>tiempo<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb35-4"><a href=""></a>mes<span class="ot">&lt;-</span><span class="fu">rep</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">12</span>),<span class="dv">10</span>)</span>
+<span id="cb35-5"><a href=""></a>mes<span class="ot">&lt;-</span><span class="fu">as.factor</span>(mes)</span>
+<span id="cb35-6"><a href=""></a></span>
+<span id="cb35-7"><a href=""></a>datos1<span class="ot">&lt;-</span><span class="fu">data.frame</span>(w,tiempo,tiempo2,mes)</span>
+<span id="cb35-8"><a href=""></a><span class="fu">head</span>(datos1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>         w tiempo tiempo2 mes
@@ -867,7 +882,7 @@ LM test = 3.9215, df = 6, p-value = 0.6873</code></pre>
 5 10.36113      5      25   5
 6 10.51486      6      36   6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">tail</span>(datos1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">tail</span>(datos1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           w tiempo tiempo2 mes
 115 11.42852    115   13225   7
@@ -884,8 +899,8 @@ LM test = 3.9215, df = 6, p-value = 0.6873</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>mod<span class="ot">&lt;-</span><span class="fu">lm</span>(w<span class="sc">~</span>tiempo<span class="sc">+</span>tiempo2<span class="sc">+</span>mes,datos1)</span>
-<span id="cb38-2"><a href=""></a><span class="fu">round</span>(<span class="fu">summary</span>(mod)<span class="sc">$</span>coefficients,<span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a>mod<span class="ot">&lt;-</span><span class="fu">lm</span>(w<span class="sc">~</span>tiempo<span class="sc">+</span>tiempo2<span class="sc">+</span>mes,datos1)</span>
+<span id="cb39-2"><a href=""></a><span class="fu">round</span>(<span class="fu">summary</span>(mod)<span class="sc">$</span>coefficients,<span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Estimate Std. Error  t value Pr(&gt;|t|)
 (Intercept)  10.9420     0.0294 372.1819   0.0000
@@ -906,8 +921,8 @@ mes12        -0.1042     0.0325  -3.2068   0.0018</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>mod2<span class="ot">&lt;-</span><span class="fu">tslm</span>(w<span class="sc">~</span>trend<span class="sc">+</span><span class="fu">I</span>(trend<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span>season,datos1)</span>
-<span id="cb40-2"><a href=""></a><span class="fu">round</span>(<span class="fu">summary</span>(mod2)<span class="sc">$</span>coefficients,<span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>mod2<span class="ot">&lt;-</span><span class="fu">tslm</span>(w<span class="sc">~</span>trend<span class="sc">+</span><span class="fu">I</span>(trend<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span>season,datos1)</span>
+<span id="cb41-2"><a href=""></a><span class="fu">round</span>(<span class="fu">summary</span>(mod2)<span class="sc">$</span>coefficients,<span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Estimate Std. Error  t value Pr(&gt;|t|)
 (Intercept)  10.9420     0.0294 372.1819   0.0000
@@ -931,12 +946,12 @@ season12     -0.1042     0.0325  -3.2068   0.0018</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>pronostico<span class="ot">&lt;-</span><span class="fu">forecast</span>(mod2,<span class="at">h=</span><span class="dv">12</span>)</span>
-<span id="cb42-2"><a href=""></a></span>
-<span id="cb42-3"><a href=""></a><span class="fu">autoplot</span>(w) <span class="sc">+</span></span>
-<span id="cb42-4"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"turistas"</span>) <span class="sc">+</span></span>
-<span id="cb42-5"><a href=""></a>  <span class="fu">autolayer</span>(mod2<span class="sc">$</span>fitted.values, <span class="at">series =</span> <span class="st">"ajustado"</span>) <span class="sc">+</span></span>
-<span id="cb42-6"><a href=""></a>  <span class="fu">autolayer</span>(pronostico, <span class="at">series =</span> <span class="st">"pronostico"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a>pronostico<span class="ot">&lt;-</span><span class="fu">forecast</span>(mod2,<span class="at">h=</span><span class="dv">12</span>)</span>
+<span id="cb43-2"><a href=""></a></span>
+<span id="cb43-3"><a href=""></a><span class="fu">autoplot</span>(w) <span class="sc">+</span></span>
+<span id="cb43-4"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"turistas"</span>) <span class="sc">+</span></span>
+<span id="cb43-5"><a href=""></a>  <span class="fu">autolayer</span>(mod2<span class="sc">$</span>fitted.values, <span class="at">series =</span> <span class="st">"ajustado"</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href=""></a>  <span class="fu">autolayer</span>(pronostico, <span class="at">series =</span> <span class="st">"pronostico"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-28-1.png" width="480" class="r-stretch"></section></section>
@@ -974,11 +989,11 @@ season12     -0.1042     0.0325  -3.2068   0.0018</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a>y<span class="ot">&lt;-</span><span class="fu">ts</span>(turistas<span class="sc">$</span>turistas,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1991</span>,<span class="dv">1</span>),<span class="at">frequency=</span><span class="dv">12</span>)</span>
-<span id="cb43-2"><a href=""></a>y.train<span class="ot">&lt;-</span><span class="fu">window</span>(y,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1991</span>,<span class="dv">1</span>),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">1999</span>,<span class="dv">12</span>))</span>
-<span id="cb43-3"><a href=""></a>y.test<span class="ot">&lt;-</span><span class="fu">window</span>(y,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">2000</span>,<span class="dv">1</span>),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">2000</span>,<span class="dv">12</span>))</span>
-<span id="cb43-4"><a href=""></a>mod4<span class="ot">&lt;-</span><span class="fu">tslm</span>(y.train<span class="sc">~</span>trend<span class="sc">+</span><span class="fu">I</span>(trend<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span>season)</span>
-<span id="cb43-5"><a href=""></a><span class="fu">summary</span>(mod4)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>y<span class="ot">&lt;-</span><span class="fu">ts</span>(turistas<span class="sc">$</span>turistas,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1991</span>,<span class="dv">1</span>),<span class="at">frequency=</span><span class="dv">12</span>)</span>
+<span id="cb44-2"><a href=""></a>y.train<span class="ot">&lt;-</span><span class="fu">window</span>(y,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1991</span>,<span class="dv">1</span>),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">1999</span>,<span class="dv">12</span>))</span>
+<span id="cb44-3"><a href=""></a>y.test<span class="ot">&lt;-</span><span class="fu">window</span>(y,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">2000</span>,<span class="dv">1</span>),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">2000</span>,<span class="dv">12</span>))</span>
+<span id="cb44-4"><a href=""></a>mod4<span class="ot">&lt;-</span><span class="fu">tslm</span>(y.train<span class="sc">~</span>trend<span class="sc">+</span><span class="fu">I</span>(trend<span class="sc">^</span><span class="dv">2</span>)<span class="sc">+</span>season)</span>
+<span id="cb44-5"><a href=""></a><span class="fu">summary</span>(mod4)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1014,8 +1029,8 @@ F-statistic:  78.6 on 13 and 94 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>pronostico<span class="ot">&lt;-</span><span class="fu">forecast</span>(mod4,<span class="at">h=</span><span class="dv">12</span>)</span>
-<span id="cb45-2"><a href=""></a>pronostico</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>pronostico<span class="ot">&lt;-</span><span class="fu">forecast</span>(mod4,<span class="at">h=</span><span class="dv">12</span>)</span>
+<span id="cb46-2"><a href=""></a>pronostico</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 80     Hi 80    Lo 95     Hi 95
 Jan 2000      105476.42 97842.25 113110.58 93731.85 117220.99
@@ -1039,7 +1054,7 @@ Dec 2000      100091.16 92188.58 107993.74 87933.65 112248.67</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">accuracy</span>(pronostico)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">accuracy</span>(pronostico)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       ME     RMSE      MAE        MPE     MAPE      MASE
 Training set 5.729326e-13 5050.477 4024.289 -0.3434747 6.726303 0.6524221
@@ -1049,7 +1064,7 @@ Training set 0.623945</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">accuracy</span>(pronostico,y.test)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a><span class="fu">accuracy</span>(pronostico,y.test)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       ME     RMSE      MAE        MPE     MAPE      MASE
 Training set 5.729326e-13 5050.477 4024.289 -0.3434747 6.726303 0.6524221
@@ -1111,8 +1126,8 @@ Test set     0.5177485 0.5156388</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a><span class="fu">data</span>(cairo)</span>
-<span id="cb51-2"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a><span class="fu">data</span>(cairo)</span>
+<span id="cb52-2"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1134,11 +1149,11 @@ Test set     0.5177485 0.5156388</code></pre>
 <li>Ajuste de un GAM</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>ctamm <span class="ot">&lt;-</span> <span class="fu">gamm</span>(temp<span class="sc">~</span><span class="fu">s</span>(day.of.year,<span class="at">bs=</span><span class="st">"cc"</span>,<span class="at">k=</span><span class="dv">20</span>)<span class="sc">+</span><span class="fu">s</span>(time,<span class="at">bs=</span><span class="st">"cr"</span>),</span>
-<span id="cb52-2"><a href=""></a>              <span class="at">data=</span>cairo,<span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>year))</span>
-<span id="cb52-3"><a href=""></a>pred<span class="ot">&lt;-</span><span class="fu">fitted</span>(ctamm<span class="sc">$</span>gam)</span>
-<span id="cb52-4"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span>
-<span id="cb52-5"><a href=""></a><span class="fu">points</span>(cairo<span class="sc">$</span>time,pred,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>ctamm <span class="ot">&lt;-</span> <span class="fu">gamm</span>(temp<span class="sc">~</span><span class="fu">s</span>(day.of.year,<span class="at">bs=</span><span class="st">"cc"</span>,<span class="at">k=</span><span class="dv">20</span>)<span class="sc">+</span><span class="fu">s</span>(time,<span class="at">bs=</span><span class="st">"cr"</span>),</span>
+<span id="cb53-2"><a href=""></a>              <span class="at">data=</span>cairo,<span class="at">correlation=</span><span class="fu">corAR1</span>(<span class="at">form=</span><span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>year))</span>
+<span id="cb53-3"><a href=""></a>pred<span class="ot">&lt;-</span><span class="fu">fitted</span>(ctamm<span class="sc">$</span>gam)</span>
+<span id="cb53-4"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span>
+<span id="cb53-5"><a href=""></a><span class="fu">points</span>(cairo<span class="sc">$</span>time,pred,<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-34-1.png" width="480" class="r-stretch"></section>
@@ -1150,9 +1165,9 @@ Test set     0.5177485 0.5156388</code></pre>
 <li>Periodograma (análisis espectral)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="fu">library</span>(astsa)</span>
-<span id="cb53-2"><a href=""></a>x<span class="ot">&lt;-</span>cairo<span class="sc">$</span>temp</span>
-<span id="cb53-3"><a href=""></a>x.spec <span class="ot">&lt;-</span><span class="fu">mvspec</span>(x,<span class="at">log=</span><span class="st">"no"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="fu">library</span>(astsa)</span>
+<span id="cb54-2"><a href=""></a>x<span class="ot">&lt;-</span>cairo<span class="sc">$</span>temp</span>
+<span id="cb54-3"><a href=""></a>x.spec <span class="ot">&lt;-</span><span class="fu">mvspec</span>(x,<span class="at">log=</span><span class="st">"no"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1163,9 +1178,9 @@ Test set     0.5177485 0.5156388</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="fu">plot</span>(x.spec)</span>
-<span id="cb54-2"><a href=""></a>frecuencia<span class="ot">&lt;-</span>x.spec<span class="sc">$</span>freq[x.spec<span class="sc">$</span>spec<span class="sc">==</span><span class="fu">max</span>(x.spec<span class="sc">$</span>spec)]</span>
-<span id="cb54-3"><a href=""></a><span class="fu">abline</span>(<span class="at">v=</span>frecuencia,<span class="at">col=</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="fu">plot</span>(x.spec)</span>
+<span id="cb55-2"><a href=""></a>frecuencia<span class="ot">&lt;-</span>x.spec<span class="sc">$</span>freq[x.spec<span class="sc">$</span>spec<span class="sc">==</span><span class="fu">max</span>(x.spec<span class="sc">$</span>spec)]</span>
+<span id="cb55-3"><a href=""></a><span class="fu">abline</span>(<span class="at">v=</span>frecuencia,<span class="at">col=</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1173,7 +1188,7 @@ Test set     0.5177485 0.5156388</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="dv">1</span><span class="sc">/</span>frecuencia</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="dv">1</span><span class="sc">/</span>frecuencia</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 349.0909</code></pre>
 </div>
@@ -1188,12 +1203,12 @@ Test set     0.5177485 0.5156388</code></pre>
 </ul>
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a>cos1<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb57-2"><a href=""></a>sin1<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb57-3"><a href=""></a>data<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">x=</span>x,<span class="at">time=</span>cairo<span class="sc">$</span>time,<span class="at">cos=</span>cos1,<span class="at">sen=</span>sin1)</span>
-<span id="cb57-4"><a href=""></a>mod<span class="ot">&lt;-</span><span class="fu">lm</span>(x<span class="sc">~</span>cos1<span class="sc">+</span>sin1,<span class="at">data=</span>data)</span>
-<span id="cb57-5"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span>
-<span id="cb57-6"><a href=""></a><span class="fu">points</span>(cairo<span class="sc">$</span>time,<span class="fu">fitted</span>(mod),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a>cos1<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb58-2"><a href=""></a>sin1<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb58-3"><a href=""></a>data<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">x=</span>x,<span class="at">time=</span>cairo<span class="sc">$</span>time,<span class="at">cos=</span>cos1,<span class="at">sen=</span>sin1)</span>
+<span id="cb58-4"><a href=""></a>mod<span class="ot">&lt;-</span><span class="fu">lm</span>(x<span class="sc">~</span>cos1<span class="sc">+</span>sin1,<span class="at">data=</span>data)</span>
+<span id="cb58-5"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span>
+<span id="cb58-6"><a href=""></a><span class="fu">points</span>(cairo<span class="sc">$</span>time,<span class="fu">fitted</span>(mod),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -1214,8 +1229,8 @@ Test set     0.5177485 0.5156388</code></pre>
 <li>Las 8 frecuencias más importantes:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a>spectro_orden <span class="ot">&lt;-</span> x.spec<span class="sc">$</span>details <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(spectrum))</span>
-<span id="cb58-2"><a href=""></a>spectro_orden[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a>spectro_orden <span class="ot">&lt;-</span> x.spec<span class="sc">$</span>details <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(spectrum))</span>
+<span id="cb59-2"><a href=""></a>spectro_orden[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  frequency   period  spectrum
 1    0.0029 349.0909 91251.731
@@ -1233,32 +1248,32 @@ Test set     0.5177485 0.5156388</code></pre>
 
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a>frecuencia1 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">1</span>] </span>
-<span id="cb60-2"><a href=""></a>frecuencia2 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">2</span>]</span>
-<span id="cb60-3"><a href=""></a>frecuencia3 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">3</span>]</span>
-<span id="cb60-4"><a href=""></a>frecuencia4 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">4</span>]</span>
-<span id="cb60-5"><a href=""></a>frecuencia5 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">5</span>]</span>
-<span id="cb60-6"><a href=""></a>cos1<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia1<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-7"><a href=""></a>sin1<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia1<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-8"><a href=""></a>cos2<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia2<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-9"><a href=""></a>sin2<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia2<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-10"><a href=""></a>cos3<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia3<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-11"><a href=""></a>sin3<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia3<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-12"><a href=""></a>cos4<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia4<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-13"><a href=""></a>sin4<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia4<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-14"><a href=""></a>cos5<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia5<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-15"><a href=""></a>sin5<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia5<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
-<span id="cb60-16"><a href=""></a></span>
-<span id="cb60-17"><a href=""></a>data<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">x=</span>x,</span>
-<span id="cb60-18"><a href=""></a>                <span class="at">cos1=</span>cos1,<span class="at">sen1=</span>sin1,</span>
-<span id="cb60-19"><a href=""></a>                <span class="at">cos2=</span>cos2,<span class="at">sen2=</span>sin2,</span>
-<span id="cb60-20"><a href=""></a>                <span class="at">cos3=</span>cos3,<span class="at">sen3=</span>sin3,</span>
-<span id="cb60-21"><a href=""></a>                <span class="at">cos4=</span>cos4,<span class="at">sen4=</span>sin4,</span>
-<span id="cb60-22"><a href=""></a>                <span class="at">cos5=</span>cos5,<span class="at">sen5=</span>sin5)</span>
-<span id="cb60-23"><a href=""></a></span>
-<span id="cb60-24"><a href=""></a>mod2<span class="ot">&lt;-</span><span class="fu">lm</span>(x<span class="sc">~</span>.,<span class="at">data=</span>data)</span>
-<span id="cb60-25"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span>
-<span id="cb60-26"><a href=""></a><span class="fu">points</span>(cairo<span class="sc">$</span>time,<span class="fu">fitted</span>(mod2),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a>frecuencia1 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">1</span>] </span>
+<span id="cb61-2"><a href=""></a>frecuencia2 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">2</span>]</span>
+<span id="cb61-3"><a href=""></a>frecuencia3 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">3</span>]</span>
+<span id="cb61-4"><a href=""></a>frecuencia4 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">4</span>]</span>
+<span id="cb61-5"><a href=""></a>frecuencia5 <span class="ot">&lt;-</span> spectro_orden<span class="sc">$</span>frequency[<span class="dv">5</span>]</span>
+<span id="cb61-6"><a href=""></a>cos1<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia1<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-7"><a href=""></a>sin1<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia1<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-8"><a href=""></a>cos2<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia2<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-9"><a href=""></a>sin2<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia2<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-10"><a href=""></a>cos3<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia3<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-11"><a href=""></a>sin3<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia3<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-12"><a href=""></a>cos4<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia4<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-13"><a href=""></a>sin4<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia4<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-14"><a href=""></a>cos5<span class="ot">&lt;-</span><span class="fu">cos</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia5<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-15"><a href=""></a>sin5<span class="ot">&lt;-</span><span class="fu">sin</span>(<span class="dv">2</span><span class="sc">*</span>pi<span class="sc">*</span>frecuencia5<span class="sc">*</span>cairo<span class="sc">$</span>time)</span>
+<span id="cb61-16"><a href=""></a></span>
+<span id="cb61-17"><a href=""></a>data<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">x=</span>x,</span>
+<span id="cb61-18"><a href=""></a>                <span class="at">cos1=</span>cos1,<span class="at">sen1=</span>sin1,</span>
+<span id="cb61-19"><a href=""></a>                <span class="at">cos2=</span>cos2,<span class="at">sen2=</span>sin2,</span>
+<span id="cb61-20"><a href=""></a>                <span class="at">cos3=</span>cos3,<span class="at">sen3=</span>sin3,</span>
+<span id="cb61-21"><a href=""></a>                <span class="at">cos4=</span>cos4,<span class="at">sen4=</span>sin4,</span>
+<span id="cb61-22"><a href=""></a>                <span class="at">cos5=</span>cos5,<span class="at">sen5=</span>sin5)</span>
+<span id="cb61-23"><a href=""></a></span>
+<span id="cb61-24"><a href=""></a>mod2<span class="ot">&lt;-</span><span class="fu">lm</span>(x<span class="sc">~</span>.,<span class="at">data=</span>data)</span>
+<span id="cb61-25"><a href=""></a><span class="fu">plot</span>(cairo<span class="sc">$</span>temp<span class="sc">~</span>cairo<span class="sc">$</span>time,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylab=</span><span class="st">"temp"</span>,<span class="at">xlab=</span><span class="st">"time"</span>)</span>
+<span id="cb61-26"><a href=""></a><span class="fu">points</span>(cairo<span class="sc">$</span>time,<span class="fu">fitted</span>(mod2),<span class="at">type=</span><span class="st">"l"</span>,<span class="at">col=</span><span class="dv">2</span>,<span class="at">lwd=</span><span class="dv">2</span>)  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
