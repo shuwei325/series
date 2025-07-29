@@ -16,11 +16,11 @@ básicos del análisis de series cronológicas.
 | 5\. Modelos | [Tema 5](./Tema_5/presentacion.html) | [archivos](./Tema_5/Tema_5.zip) |
 | 6\. ARIMA | [Tema 6_1](./Tema_6/presentacion1.html) |  |
 |  | [Tema 6_2](./Tema_6/presentacion2.html) |  |
-|  | [Tema 6_3](./Tema_6/presentacion3.html) | [Lab6a 6_1](./Tema_6/laba.html) |
-|  | [Tema 6_4](./Tema_6/presentacion4.html) | [Lab6b 6_2](./Tema_6/labb.html) |
-| 7\. Regresión dinámica | [Tema 7](./Tema_7/presentacion.html) | [Lab7](./Tema_7/lab7.html) / [archivos](./Tema_7/Tema_7.zip) |
-| 8a. ARCH/GARCH | [Tema 8a](./Tema_8a/presentacion.html) | [Lab8a 8a](./Tema_8a/lab8a.html) |
-| 8b. Multivariado | [Tema 8b](./Tema_8b/presentacion.html) | [Lab8b](./Tema_8b/lab8b.html) / [archivos](./Tema_8/archivos.zip) |
+|  | [Tema 6_3](./Tema_6/presentacion3.html) | [Lab6_1](./Tema_6/lab1.html) |
+|  | [Tema 6_4](./Tema_6/presentacion4.html) | [Lab6_2](./Tema_6/lab2.html) |
+| 7\. Regresión dinámica | [Tema 7](./Tema_7/presentacion.html) | [Lab7](./Tema_7/lab.html) / [archivos](./Tema_7/Tema_7.zip) |
+| 8\. ARCH/GARCH | [Tema 8](./Tema_8/presentacion.html) | [Lab8](./Tema_8/lab.html) |
+| 9\. Multivariado | [Tema 9](./Tema_9/presentacion.html) | [Lab8b](./Tema_9/lab.html) / [archivos](./Tema_8/archivos.zip) |
 
 # Ejercicios
 
