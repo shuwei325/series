@@ -20,7 +20,7 @@ básicos del análisis de series cronológicas.
 |  | [Tema 6_4](./Tema_6/presentacion4.html) | [Lab6_2](./Tema_6/lab2.html) |
 | 7\. Regresión dinámica | [Tema 7](./Tema_7/presentacion.html) | [Lab7](./Tema_7/lab.html) / [archivos](./Tema_7/Tema_7.zip) |
 | 8\. ARCH/GARCH | [Tema 8](./Tema_8/presentacion.html) | [Lab8](./Tema_8/lab.html) |
-| 9\. Multivariado | [Tema 9](./Tema_9/presentacion.html) | [Lab8b](./Tema_9/lab.html) / [archivos](./Tema_8/archivos.zip) |
+| 9\. Multivariado | [Tema 9](./Tema_9/presentacion.html) | [Lab8b](./Tema_9/lab.html) / [archivos](./Tema_9/archivos.zip) |
 
 # Ejercicios
 
