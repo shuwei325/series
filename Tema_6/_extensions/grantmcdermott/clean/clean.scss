@@ -257,7 +257,7 @@ $selection-bg: #26351c !default;
 
 .reveal table th,
 .reveal table td {
-  border: none; /* Remove internal row lines */
+  border: 1px solid black; /* Remove internal row lines */
   padding: .23em; /* Adjust padding as needed */
   text-align: left; /* Adjust text alignment as needed */
   font-weight: lighter; /* Lighter font weight for main table text */
@@ -300,3 +300,9 @@ $selection-bg: #26351c !default;
   height: auto;
   object-fit: contain;
 }
+
+
+
+
+
+

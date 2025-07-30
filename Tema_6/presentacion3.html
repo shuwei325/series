@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="presentacion3_files/libs/revealjs/dist/theme/quarto-0db3be03a49e940b09f8f33a2d93b3d8.css">
+  <link rel="stylesheet" href="presentacion3_files/libs/revealjs/dist/theme/quarto-5a91e8cc2f5341be4c1cec41f45758ab.css">
   <link href="presentacion3_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="presentacion3_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="presentacion3_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -255,19 +255,19 @@
 <section id="introducción-1" class="slide level2">
 <h2>Introducción</h2>
 <ul>
-<li><p>El enfoque de Box-Jenkins es adecuado para series estacionarias ya que requiere estimar la f.a.c. y f.a.c.p.</p></li>
+<li><p>El enfoque de Box-Jenkins es adecuado para series estacionarias ya que requiere estimar la ACF y PACF.</p></li>
 <li><p>En la práctica, las series no estacionarias se pueden realizar transformaciones apropiadas en series estacionarias.</p>
 <ul>
 <li>Transformación logarítmica y diferenciación.</li>
 <li>El uso de algún método para eliminar la tendencia.</li>
 </ul></li>
-<li><p>El enfoque de B&amp;J consiste en 3 etapas:</p></li>
-</ul>
+<li><p>El enfoque de B&amp;J consiste en 3 etapas:</p>
 <ol type="1">
 <li>Identificación.</li>
 <li>Estimación.</li>
 <li>Chequeo.</li>
-</ol>
+</ol></li>
+</ul>
 </section></section>
 <section>
 <section id="identificación" class="title-slide slide level1 agenda-slide center">
@@ -303,10 +303,10 @@
 <ul>
 <li><p>Asegúrese que la serie es estacionaria.</p></li>
 <li><p>Si no es estacionaria, realice una transformación apropiada para que sea estacionaria.</p></li>
-<li><p>Se trata de calcular las f.a.c. y f.a.c.p. muestrales y analizarlas para encontrar uno o varios modelos ARIMA que sean apropiados para describir los datos.</p></li>
-<li><p>Box &amp; Jenkins (1976) recomiendan examinar un número de rezagos de las f.a.c. y f.a.c.p. a lo más igual a <span class="math inline">\(1/4\)</span> de las observaciones de la serie.</p></li>
-<li><p>Si la media es estacionaria (constante), la f.a.c. estimada debe caer rápidamente a cero.</p></li>
-<li><p>Si la media no es estacionaria (no es constante), la f.a.c. estimada cae lentamente a cero.</p></li>
+<li><p>Se trata de calcular las ACF y PACF. muestrales y analizarlas para encontrar uno o varios modelos ARIMA que sean apropiados para describir los datos.</p></li>
+<li><p>Box &amp; Jenkins (1976) recomiendan examinar un número de rezagos de las ACF y PACF a lo más igual a <span class="math inline">\(1/4\)</span> de las observaciones de la serie.</p></li>
+<li><p>Si la media es estacionaria (constante), la ACF estimada debe caer rápidamente a cero.</p></li>
+<li><p>Si la media no es estacionaria (no es constante), la ACF estimada cae lentamente a cero.</p></li>
 <li><p>Aunque en la práctica los modelos AR(1), AR(2), MA(1), MA(2) y ARMA(1,1) ocurren muy frecuentemente, en muchas ocaciones la etapa de identificación puede ser difícil debido a una gran variedad de modelos que existen.</p></li>
 </ul>
 </section>
@@ -320,7 +320,7 @@
 <section class="slide level2">
 
 <ul>
-<li>Para el caso del f.a.c.p. muestral <span class="math inline">\(r_{kk}\)</span>, éste se distribuye aproximadamente normal para <span class="math inline">\(T\)</span> grande, con media 0 y error estándar: <span class="math display">\[e.e.(r_{kk})=\frac{1}{\sqrt{T}}.\]</span></li>
+<li>Para el caso del PACF muestral <span class="math inline">\(r_{kk}\)</span>, éste se distribuye aproximadamente normal para <span class="math inline">\(T\)</span> grande, con media 0 y error estándar: <span class="math display">\[e.e.(r_{kk})=\frac{1}{\sqrt{T}}.\]</span></li>
 <li>En los paquetes estadísticos generalmente ya proporcionan los correlogramas con las bandas de confianza alrededor de cero con <span class="math inline">\(\pm 2\)</span> errores estándares.</li>
 </ul>
 </section></section>
@@ -374,7 +374,10 @@
 </section>
 <section id="estimación-por-máxima-verosimilitud" class="slide level2">
 <h2>Estimación por máxima verosimilitud</h2>
-<p><strong>función de verosimilitud condicional:</strong> - Bajo el supuesto de que <span class="math inline">\(a_t\)</span> son ruidos blancos gaussianos, tenemos que la función de densidad conjunta de <span class="math inline">\(a_1,...,a_T\)</span> es <span class="math display">\[f(a_1,...,a_T)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{a_t^2}{2 \sigma_a^2} \right\rbrace\]</span> - Para el caso de AR(1), <span class="math display">\[a_t=Z_t-C-\phi_1 Z_{t-1},~~\text{para}~~ t=1,...,T,\]</span> se tiene que</p>
+<p><span class="alert">Función de verosimilitud condicional:</span> - Bajo el supuesto de que <span class="math inline">\(a_t\)</span> son ruidos blancos gaussianos, tenemos que la función de densidad conjunta de <span class="math inline">\(a_1,...,a_T\)</span> es <span class="math display">\[f(a_1,...,a_T)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{a_t^2}{2 \sigma_a^2} \right\rbrace\]</span></p>
+<ul>
+<li>Para el caso de AR(1), <span class="math display">\[a_t=Z_t-C-\phi_1 Z_{t-1},~~\text{para}~~ t=1,...,T,\]</span> se tiene que</li>
+</ul>
 <p><span class="math display">\[L(C,\phi_1,\sigma_a^2|Z_1,...,Z_T)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
 </section>
 <section class="slide level2">
@@ -384,7 +387,10 @@
 <li>Luego, la función log-verosimilitud es definida como <span class="math display">\[l(C,\phi_1,\sigma_a^2)=
 -(\frac{n}{2}) \log(2 \pi)-n \log(\sigma_a) \left\lbrace -\sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace\]</span></li>
 </ul>
-<p><span class="math display">\[\Rightarrow l(C,\phi_1,\sigma_a^2)\propto -n \log(\sigma_a)  -\left\lbrace \sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span> - La idea es maximizar <span class="math inline">\(l(C,\phi_1,\sigma_a^2)\)</span>.</p>
+<p><span class="math display">\[\Rightarrow l(C,\phi_1,\sigma_a^2)\propto -n \log(\sigma_a)  -\left\lbrace \sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
+<ul>
+<li>La idea es maximizar <span class="math inline">\(l(C,\phi_1,\sigma_a^2)\)</span>.</li>
+</ul>
 </section>
 <section class="slide level2">
 
@@ -395,7 +401,7 @@
 </section>
 <section class="slide level2">
 
-<p><strong>función de verosimilitud no condicional:</strong></p>
+<p><span class="alert">función de verosimilitud no condicional:</span></p>
 <ul>
 <li>Bajo el supuesto de normalidad, el modelo ARMA tiene su media y matriz de autocovariancia teórica definida y su función de log-verosimilitud es: <span class="math display">\[l(\boldsymbol{\theta}|Z_1,...,Z_T) \cong -n \log\sigma_a -\frac{S(\boldsymbol{\theta},\boldsymbol{Z})}{2 \sigma_a^2},\]</span> donde<br> <span class="math inline">\(\boldsymbol{\theta}=(C,\phi_1,...,\phi_p,\theta_1,...,\theta_q,\sigma_a^2)\)</span><br> <span class="math inline">\(S(\boldsymbol{\theta},\boldsymbol{Z})=\sum\limits_{t=1}^T a_t^2(\boldsymbol{\theta},\boldsymbol{Z})\)</span> (suma de cuadrados no condicional)</li>
 </ul>
@@ -440,16 +446,16 @@
 <ul>
 <li>Para los rezagos 1, 2 y 3: el valor absoluto del estadístico t sea menor que 1.25.</li>
 <li>Para los rezagos mayores que 3: el valor absoluto del estadístico t sea menor que 1.6.</li>
-<li>Estos valores son llamados <strong>valores de alerta</strong>.</li>
+<li>Estos valores son llamados <span class="alert">valores de alerta</span>.</li>
 </ul></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
-<li><p>Note que si algún valor t de una f.a.c. residual es mayor que los valores críticos, se rechaza la <span class="math inline">\(H_0\)</span> de que <span class="math inline">\(\rho_k=0\)</span>. Por lo que se concluye que los <span class="math inline">\(a_t\)</span> no es ruido blanco.</p></li>
+<li><p>Note que si algún valor t de una ACF residual es mayor que los valores críticos, se rechaza la <span class="math inline">\(H_0\)</span> de que <span class="math inline">\(\rho_k=0\)</span>. Por lo que se concluye que los <span class="math inline">\(a_t\)</span> no es ruido blanco.</p></li>
 <li><p>La presencia de autocorrelaciones en los residuos <span class="math inline">\(a_t\)</span> implica que hay algún patrón temporal en la serie <span class="math inline">\(Z_t\)</span> que no ha sido modelizado con el ARIMA.</p></li>
-<li><p>Si este es el caso, se debe identificar un nuevo modelo re-examinando la f.a.c. y la f.a.c.p. de la serie <span class="math inline">\(Z_t\)</span>, y repetir las etapas de estimación y verificación.</p></li>
+<li><p>Si este es el caso, se debe identificar un nuevo modelo re-examinando la ACF y la PACF de la serie <span class="math inline">\(Z_t\)</span>, y repetir las etapas de estimación y verificación.</p></li>
 <li><p>El proceso termina hasta llegar a un modelo con residuos no autocorrelacionados.</p></li>
 </ul>
 </section>
@@ -457,7 +463,7 @@
 
 <ul>
 <li><p>Note que el procedimiento anterior se trata de realizar contrastes de hipótesis por separado para cada rezago <span class="math inline">\(k\)</span>.</p></li>
-<li><p>Se puede realizar <strong>el contraste Q de Ljung-Box</strong>: <span class="math display">\[H_0: \rho_1(a)=\rho_2(a)=...=\rho_K(a)=0\]</span> con la estadística: <span class="math display">\[Q=T(T+2) \sum\limits_{k=1}^K \frac{1}{T-k} r_k^2(\hat{a}).\]</span> Bajo <span class="math inline">\(H_0\)</span>, <span class="math inline">\(Q\)</span> se distribuye aproximadamente como <span class="math inline">\(\chi_{K-m}^2\)</span> donde <span class="math inline">\(m\)</span> es el número de parámetros estimados en el modelo ARIMA.</p></li>
+<li><p>Se puede realizar <span class="alert">el contraste Q de Ljung-Box</span>: <span class="math display">\[H_0: \rho_1(a)=\rho_2(a)=...=\rho_K(a)=0\]</span> con la estadística: <span class="math display">\[Q=T(T+2) \sum\limits_{k=1}^K \frac{1}{T-k} r_k^2(\hat{a}).\]</span> Bajo <span class="math inline">\(H_0\)</span>, <span class="math inline">\(Q\)</span> se distribuye aproximadamente como <span class="math inline">\(\chi_{K-m}^2\)</span> donde <span class="math inline">\(m\)</span> es el número de parámetros estimados en el modelo ARIMA.</p></li>
 <li><p>Para <span class="math inline">\(Q\)</span> grande, significa que las primeras <span class="math inline">\(K\)</span> autocorrelaciones residuales son significativamente diferentes que cero. Si este es el caso, se debe volver a la etapa de identificación de un nuevo modelo.</p></li>
 </ul>
 <!-- --- -->
@@ -501,16 +507,16 @@
 <section id="criterio-de-información-1" class="slide level2">
 <h2>Criterio de información</h2>
 <ul>
-<li><strong>Criterio de información de Akaike</strong> <span class="math inline">\((AIC)\)</span>:</li>
+<li><span class="alert">Criterio de información de Akaike <span class="math inline">\((AIC)\)</span></span>:</li>
 </ul>
 <p><span class="math display">\[AIC= -2 \ln L + 2 k\]</span> donde <br> <span class="math inline">\(L\)</span> es la función de verosimilitud, <br> <span class="math inline">\(k=p+q+c+1\)</span> <span class="math inline">\(c=1\)</span> si <span class="math inline">\(C \neq 0\)</span> y <span class="math inline">\(c=0\)</span> si <span class="math inline">\(C = 0\)</span></p>
 <p>Note que <span class="math inline">\((p+q+c+1)\)</span> es la cantidad de parámetros estimados.</p>
 <ul>
-<li><span class="math inline">\(AIC_c\)</span>:</li>
+<li><span class="alert">AIC corregido <span class="math inline">\((AIC_c)\)</span></span>:</li>
 </ul>
 <p><span class="math display">\[AIC_c= AIC + \frac{2(p+q+c+1)(p+q+c+2)}{T-p-q-c-2}\]</span></p>
 <ul>
-<li><strong>Criterio de información Bayesiana</strong> <span class="math inline">\((BIC)\)</span>: <span class="math display">\[BIC= AIC + (\log T - 2) (p+q+c+1)\]</span></li>
+<li><span class="alert">Criterio de información Bayesiana <span class="math inline">\((BIC)\)</span></span>: <span class="math display">\[BIC= AIC + (\log T - 2) (p+q+c+1)\]</span></li>
 </ul>
 </section></section>
 <section>
@@ -556,7 +562,7 @@
 <ul>
 <li>El contraste se puede realizar mediante la estadística <span class="math inline">\(\hat{\tau}\)</span> de Dickey-Fuller:</li>
 </ul>
-<p><span class="math display">\[\hat{\tau}=\frac{\hat{\phi}^*}{e.e.(\hat{\phi}^*)}.\]</span> - La distribución de <span class="math inline">\(\hat{\tau}\)</span> no es conocida y se obtiene los percentiles y los valores críticos de la distribución de <span class="math inline">\(\hat{\tau}\)</span> por medio de simulaciones. - Si se rechaza la <span class="math inline">\(H_0\)</span>, la serie es estacionaria. - Si no se rechaza la <span class="math inline">\(H_0\)</span>, la serie es no estacionaria, y se tiene que: <span class="math display">\[Z_t-Z_{t-1}=a_t,\]</span> la cual es denominada <strong>camino aleatorio</strong>.</p>
+<p><span class="math display">\[\hat{\tau}=\frac{\hat{\phi}^*}{e.e.(\hat{\phi}^*)}.\]</span> - La distribución de <span class="math inline">\(\hat{\tau}\)</span> no es conocida y se obtiene los percentiles y los valores críticos de la distribución de <span class="math inline">\(\hat{\tau}\)</span> por medio de simulaciones. - Si se rechaza la <span class="math inline">\(H_0\)</span>, la serie es estacionaria. - Si no se rechaza la <span class="math inline">\(H_0\)</span>, la serie es no estacionaria, y se tiene que: <span class="math display">\[Z_t-Z_{t-1}=a_t,\]</span> la cual es denominada <span class="alert">camino aleatorio</span>.</p>
 </section>
 <section class="slide level2">
 

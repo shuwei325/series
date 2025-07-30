@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="presentacion4_files/libs/revealjs/dist/theme/quarto-0db3be03a49e940b09f8f33a2d93b3d8.css">
+  <link rel="stylesheet" href="presentacion4_files/libs/revealjs/dist/theme/quarto-5a91e8cc2f5341be4c1cec41f45758ab.css">
   <link href="presentacion4_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="presentacion4_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="presentacion4_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -236,16 +236,10 @@
 <p>Introducción</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>Las acf y pacf para series sestacionales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
 <p>SAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>SMA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>MA(1) estacional puro, SMA(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>SARIMA</p>
@@ -267,40 +261,6 @@
 <ul>
 <li>Por ejemplo, para datos mensuales, <span class="math inline">\(Z_t\)</span> sea similar a las observaciones en <span class="math inline">\(Z_{t+ 12 k}\)</span> para <span class="math inline">\(k=\pm 1,\pm2,...\)</span>.</li>
 </ul></li>
-</ul>
-</section></section>
-<section>
-<section id="las-acf-y-pacf-para-series-sestacionales" class="title-slide slide level1 agenda-slide center">
-<h1>Las acf y pacf para series sestacionales</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-active">
-<p>Las acf y pacf para series sestacionales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>SAR(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>SMA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>MA(1) estacional puro, SMA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>SARIMA</p>
-</div></li>
-</ol>
-</div>
-</section>
-<section id="las-acf-y-pacf-para-series-sestacionales-1" class="slide level2">
-<h2>Las acf y pacf para series sestacionales</h2>
-<ul>
 <li><p>Se espera que <span class="math inline">\(Z_t\)</span> tenga correlación alta con <span class="math inline">\(Z_{t+sk}\)</span> para <span class="math inline">\(k=\pm 1,\pm2,...\)</span>.</p></li>
 <li><p>De esta forma, se puede detectar la estacionalidad con el correlograma.</p></li>
 </ul>
@@ -316,9 +276,6 @@
 <li><div class="agenda-inactive agenda-pre-active">
 <p>Introducción</p>
 </div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Las acf y pacf para series sestacionales</p>
-</div></li>
 <li><div class="agenda-active">
 <p>SAR(1)</p>
 </div></li>
@@ -326,30 +283,72 @@
 <p>SMA(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>MA(1) estacional puro, SMA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
 <p>SARIMA</p>
 </div></li>
 </ol>
 </div>
 </section>
-<section id="ar1-estacional-puro-sar1" class="slide level2">
-<h2>AR(1) estacional puro: SAR(1)</h2>
+<section id="ar1-estacional-sar1" class="slide level2">
+<h2>AR(1) estacional: SAR(1)</h2>
 <ul>
 <li><p>Este proceso está definido por: <span class="math display">\[Z_t=C+\Phi_s Z_{t-s}+a_t\]</span></p></li>
-<li><p>La acf es:</p></li>
+<li><p>La ACF es:</p></li>
 </ul>
-<p><span class="math display">\[\rho_k=\Phi_s^{k/s},~k=0, \pm s,\pm 2s,\pm 3s,...\]</span> <span class="math display">\[\rho_k=0,~ \text{para otros valores de }k&gt;0.\]</span> - La pacf es diferente que cero en el rezago <span class="math inline">\(s\)</span>.</p>
+<p><span class="math display">\[\begin{align*}
+\rho_k &amp;= \Phi_s^{k/s}, \quad k = 0, \pm s, \pm 2s, \pm 3s, \dots \\
+\rho_k &amp;= 0, \quad \text{para otros valores de } k &gt; 0.
+\end{align*}\]</span></p>
+<ul>
+<li>La PACF es diferente que cero en el rezago <span class="math inline">\(s\)</span>.</li>
+</ul>
 </section>
 <section id="la-acf-y-pacf-teórica-del-sar112" class="slide level2">
 <h2>La acf y pacf teórica del SAR(1)<sub>12</sub></h2>
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
-<section class="slide level2">
-
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section></section>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-2-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-2-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-3-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-3-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-3-3.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section></section>
+<section>
 <section id="sma1" class="title-slide slide level1 agenda-slide center">
 <h1>SMA(1)</h1>
 <div class="agenda-heading">
@@ -361,16 +360,10 @@
 <p>Introducción</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>Las acf y pacf para series sestacionales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
 <p>SAR(1)</p>
 </div></li>
 <li><div class="agenda-active">
 <p>SMA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>MA(1) estacional puro, SMA(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>SARIMA</p>
@@ -378,52 +371,68 @@
 </ol>
 </div>
 </section>
-
-<section>
-<section id="ma1-estacional-puro-sma1" class="title-slide slide level1 agenda-slide center">
-<h1>MA(1) estacional puro, SMA(1)</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Las acf y pacf para series sestacionales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>SAR(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>SMA(1)</p>
-</div></li>
-<li><div class="agenda-active">
-<p>MA(1) estacional puro, SMA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>SARIMA</p>
-</div></li>
-</ol>
-</div>
+<section id="ma1-estacional-sma1" class="slide level2">
+<h2>MA(1) estacional, SMA(1)</h2>
 <ul>
-<li><p>Este proceso está definido por: <span class="math display">\[Z_t=C+a_t-\Theta_s a_{t-s}\]</span></p></li>
-<li><p>La f.a.c. es:</p></li>
+<li><p>Este proceso está definido por:</p>
+<p><span class="math display">\[Z_t=C+a_t-\Theta_s a_{t-s}\]</span></p></li>
+<li><p>La ACF es:</p></li>
 </ul>
-<p><span class="math display">\[\rho_0=1\]</span> <span class="math display">\[\rho_s=\frac{-\Theta_s }{1+\Theta_s^2}\]</span> <span class="math display">\[\rho_{ks}=0\]</span></p>
+<p><span class="math display">\[\begin{align*}
+\rho_0 &amp;= 1 \\
+\rho_s &amp;= \frac{-\Theta_s}{1 + \Theta_s^2} \\
+\rho_{ks} &amp;= 0, \quad \text{para } k &gt; 1
+\end{align*}\]</span></p>
 <ul>
-<li>La f.a.c.p. decae exponencialmente o sinusoidalmente a cero en los rezagos <span class="math inline">\(ks, k=1,2,...\)</span>.</li>
+<li>La PACF decae exponencialmente o sinusoidalmente a cero en los rezagos <span class="math inline">\(ks, k=1,2,...\)</span>.</li>
 </ul>
 </section>
 <section id="la-acf-y-pacf-teórica-del-sma112" class="slide level2">
 <h2>La acf y pacf teórica del SMA(1)<sub>12</sub></h2>
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
-<section class="slide level2">
-
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-4-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-4-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-5-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-5-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-5-3.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
 <section id="nota" class="slide level2">
 <h2>Nota</h2>
 <ul>
@@ -433,17 +442,14 @@
 <section id="diferenciación-estacional" class="slide level2">
 <h2>Diferenciación estacional</h2>
 <ul>
-<li><p>Cuando la f.a.c. muestran estacas en los rezagos <span class="math inline">\(s, 2s, 3s,...\)</span>, que no caen rápidamente a cero, la serie tiene una media no estacionaria y es necesario hacer una diferenciación estacional de longitud <span class="math inline">\(s\)</span> para obtener una media estacionaria.</p></li>
-<li><p><strong>La diferenciación estacional de primer orden</strong> es definida por:</p></li>
+<li><p>Cuando la ACF muestran estacas en los rezagos <span class="math inline">\(s, 2s, 3s,...\)</span>, que no caen rápidamente a cero, la serie tiene una media no estacionaria y es necesario hacer una diferenciación estacional de longitud <span class="math inline">\(s\)</span> para obtener una media estacionaria.</p></li>
+<li><p><span class="alert">La diferenciación estacional de primer orden</span> es definida por:</p></li>
 </ul>
 <p><span class="math display">\[\nabla_s Z_t=Z_t-B^{s}Z_t=(1-B^{s})Z_t=Z_t-Z_{t-s}\]</span></p>
 <ul>
-<li><strong>La diferenciación estacional de segundo orden</strong> es definida por:</li>
+<li><span class="alert">La diferenciación estacional de segundo orden</span> es definida por:</li>
 </ul>
 <p><span class="math display">\[\nabla_s^2 Z_t=\nabla_s (\nabla_s Z_t)=(1-B^{s})(1-B^{s})Z_t=Z_t-2Z_{t-s}+Z_{t-2s}\]</span></p>
-</section>
-<section class="slide level2">
-
 <ul>
 <li>De la misma forma, se puede extender a <span class="math inline">\(D\)</span> diferencias estacionales.</li>
 </ul>
@@ -461,16 +467,10 @@
 <p>Introducción</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>Las acf y pacf para series sestacionales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
 <p>SAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
 <p>SMA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>MA(1) estacional puro, SMA(1)</p>
 </div></li>
 <li><div class="agenda-active">
 <p>SARIMA</p>
@@ -481,10 +481,14 @@
 <section id="modelos-arima-estacionales-sarima" class="slide level2">
 <h2>Modelos ARIMA estacionales (SARIMA)</h2>
 <ul>
-<li><p>En la práctica, los patrones estacionales y no estacionales se mezclan y es necesario separarlos mediante un cuidadoso examen de las f.a.c. y f.a.c.p.</p></li>
+<li><p>En la práctica, los patrones estacionales y no estacionales se mezclan y es necesario separarlos mediante un cuidadoso examen de las ACF y PACF.</p></li>
 <li><p>Similarmente a un modelo no estacional, el modelo multiplicativo estacional es ajustado primero por un modelo ARIMA(P,D,Q):</p></li>
 </ul>
-<p><span class="math display">\[(1-\Phi_s B^s -\Phi_{2s}  B^{2s}-...-\Phi_{Ps} B^{sP})(1-B^s)^D \tilde{Z}_t=\]</span> <span class="math display">\[(1-\Theta_{s} B^s-\Theta_{2s} B^{2s}-...-\Theta_{Qs} B^{Qs})b_t.\]</span> - Si la serie contiene solo el patrón estacional, <span class="math inline">\(b_t\)</span> es ruido blanco. - Si la serie posee también un patrón no estacional, <span class="math inline">\(b_t\)</span> debe describirse con un modelo ARIMA no estacional.</p>
+<p><span class="math display">\[(1-\Phi_s B^s -\Phi_{2s}  B^{2s}-...-\Phi_{Ps} B^{sP})(1-B^s)^D \tilde{Z}_t=\]</span> <span class="math display">\[(1-\Theta_{s} B^s-\Theta_{2s} B^{2s}-...-\Theta_{Qs} B^{Qs})b_t.\]</span></p>
+<ul>
+<li><p>Si la serie contiene solo el patrón estacional, <span class="math inline">\(b_t\)</span> es ruido blanco.</p></li>
+<li><p>Si la serie posee también un patrón no estacional, <span class="math inline">\(b_t\)</span> debe describirse con un modelo ARIMA no estacional.</p></li>
+</ul>
 </section>
 <section class="slide level2">
 
@@ -505,30 +509,109 @@
 <ul>
 <li>Considere el modelo <span class="math inline">\(SARIMA(0,0,1)(1,0,0)_{12}\)</span></li>
 </ul>
-<p><span class="math display">\[Z_t=0.8 Z_{t−12}+a_t- 0.5 a_{t−1}\]</span> - Escriba el modelo en forma compacta (usando operadores de rezago).</p>
+<p><span class="math display">\[Z_t=0.8 Z_{t−12}+a_t- 0.5 a_{t−1}\]</span></p>
+<ul>
+<li>Escriba el modelo en forma compacta (usando operadores de rezago).</li>
+</ul>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>Las f.a.c. y f.a.c.p. teóricas del <span class="math inline">\(SARIMA(0,0,1)(1,0,0)_{12}\)</span>.</li>
 </ul>
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
-<section class="slide level2">
-
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-6-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-6-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-7-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-7-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-7-3.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
 <section class="slide level2">
 
 <ul>
 <li>Las f.a.c. y f.a.c.p. teóricas del <span class="math inline">\(SARIMA(1,0,0)(0,0,1)_{12}\)</span>.</li>
 </ul>
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
-<section class="slide level2">
-
-
-<img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-8-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-8-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-9-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-9-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion4_files/figure-revealjs/unnamed-chunk-9-3.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
 <section id="próximos-temas" class="slide level2">
 <h2>Próximos temas</h2>
 <h3 id="tema-7-modelos-de-regresión-dinámica">Tema 7: Modelos de regresión dinámica</h3>

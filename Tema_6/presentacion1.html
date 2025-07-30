@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="presentacion1_files/libs/revealjs/dist/theme/quarto-0db3be03a49e940b09f8f33a2d93b3d8.css">
+  <link rel="stylesheet" href="presentacion1_files/libs/revealjs/dist/theme/quarto-5a91e8cc2f5341be4c1cec41f45758ab.css">
   <link href="presentacion1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="presentacion1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="presentacion1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -220,29 +220,25 @@
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href=""></a><span class="fu">library</span>(forecast)</span>
 <span id="cb1-3"><a href=""></a><span class="fu">library</span>(fpp2)</span>
-<span id="cb1-4"><a href=""></a><span class="fu">library</span>(astsa)</span>
-<span id="cb1-5"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(astsa)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section>
-<section id="introducción" class="title-slide slide level1 agenda-slide center">
-<h1>Introducción</h1>
+<section id="modelos-arima" class="title-slide slide level1 agenda-slide center">
+<h1>Modelos ARIMA</h1>
 <div class="agenda-heading">
 <p>Contenido</p>
 </div>
 <div class="agenda">
 <ol>
 <li><div class="agenda-active">
-<p>Introducción</p>
+<p>Modelos ARIMA</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>AR(1)</p>
+<p>AR(1) y AR(2)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>AR(2)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>MA(1)</p>
+<p>MA(1) y MA(2)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>ARMA(1,1)</p>
@@ -250,33 +246,30 @@
 </ol>
 </div>
 </section>
-<section id="introducción-1" class="slide level2">
-<h2>Introducción</h2>
+<section id="modelos-arima-1" class="slide level2">
+<h2>Modelos ARIMA</h2>
 <ul>
-<li>ARIMA se refiere a <em>AutoRegressive Integrated Moving Average</em>.</li>
+<li>ARIMA se refiere a <span class="alert">AutoRegressive Integrated Moving Average</span>.</li>
 <li>Es un conjunto de modelos en que cada modelo tiene una función de autocorrelación teórica y una función de autocorrelación parcial teórica específica.</li>
 <li>La idea del enfoque de Box-Jenkins es que compara estas funciones teóricas con las respectivas funciones muestrales de autocorrelación y de autocorrelación parcial con el fin de identificar y ajustar el modelo apropiado.</li>
 </ul>
 </section></section>
 <section>
-<section id="ar1" class="title-slide slide level1 agenda-slide center">
-<h1>AR(1)</h1>
+<section id="ar1-y-ar2" class="title-slide slide level1 agenda-slide center">
+<h1>AR(1) y AR(2)</h1>
 <div class="agenda-heading">
 <p>Contenido</p>
 </div>
 <div class="agenda">
 <ol>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
+<p>Modelos ARIMA</p>
 </div></li>
 <li><div class="agenda-active">
-<p>AR(1)</p>
+<p>AR(1) y AR(2)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>AR(2)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>MA(1)</p>
+<p>MA(1) y MA(2)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>ARMA(1,1)</p>
@@ -284,41 +277,73 @@
 </ol>
 </div>
 </section>
-<section id="modelo-no-estacional-autorregresivo-de-orden-1" class="slide level2">
-<h2>Modelo no estacional autorregresivo de orden 1</h2>
-<p>El AR(1) está definido por el siguiente proceso estocástico lineal:</p>
+<section id="ar1" class="slide level2">
+<h2>AR(1)</h2>
+<p>El AR(1), modelo no estacional autorregresivo de orden 1, está definido por el siguiente proceso estocástico lineal:</p>
 <p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+a_t\]</span> donde:<br> <span class="math inline">\(C\)</span> y <span class="math inline">\(\phi_1\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span> (independiente de <span class="math inline">\(Z_t\)</span>), i.e.&nbsp;una sucesión de v.a. mutuamente no correlacionadas e idénticamente distribuidas con media <span class="math inline">\(0\)</span> y variancia <span class="math inline">\(\sigma_a^2\)</span>.</p>
-<p><strong>Nota:</strong> - Generalmente se supone que <span class="math inline">\(a_t\)</span> es ruido blanco gaussiano.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>Generalmente se supone que <span class="math inline">\(a_t\)</span> es ruido blanco gaussiano.</li>
+</ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
-<p>Recursivamente se puede obtener: <span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+a_t\]</span> <span class="math display">\[=C+\phi_1 (C+\phi_1 Z_{t-2}+a_{t-1})+a_t\]</span> <span class="math display">\[=C(1+\phi_1+\phi_1^2+...+\phi_1^{J-1})+a_{t}+\phi_1 a_{t-1}+\phi_1^2 a_{t-2}+...+\]</span> <span class="math display">\[\phi_1^{J-1} a_{t-(J-1)}+\phi_1^J Z_{t-J}\]</span> <span class="math display">\[=C \left( \frac{1-\phi_1^J}{1-\phi_1} \right)+\sum_{j=0}^{J-1} \phi_1^j a_{t-j}+\phi_1^J Z_{t-J}\]</span></p>
-</section>
-<section class="slide level2">
-
+<p>Recursivamente se puede obtener:</p>
+<p><span class="math display">\[\begin{align*}
+Z_t &amp;= C + \phi_1 Z_{t-1} + a_t \\
+    &amp;= C + \phi_1(C + \phi_1 Z_{t-2} + a_{t-1}) + a_t \\
+    &amp;= C(1 + \phi_1 + \phi_1^2 + \cdots + \phi_1^{J-1}) + a_t + \phi_1 a_{t-1} + \phi_1^2 a_{t-2} + \cdots + \phi_1^{J-1} a_{t-(J-1)} + \phi_1^J Z_{t-J} \\
+    &amp;= C \left( \frac{1 - \phi_1^J}{1 - \phi_1} \right) + \sum_{j=0}^{J-1} \phi_1^j a_{t-j} + \phi_1^J Z_{t-J}
+\end{align*}\]</span></p>
 <p>Recursivamente se puede obtener una serie infinita: <span class="math display">\[Z_t=C \left( \frac{1-\phi_1^J}{1-\phi_1} \right)+\sum_{j=0}^{J-1} \phi_1^j a_{t-j}+\phi_1^J Z_{t-J}\]</span> En el caso de <span class="math inline">\(|\phi_1|&lt;1\)</span>, cuando <span class="math inline">\(J \rightarrow \infty\)</span>,</p>
 <p><span class="math display">\[Z_t=C \left( \frac{1}{1-\phi_1} \right)+\sum_{j=0}^{\infty} \phi_1^j a_{t-j}\]</span></p>
 </section>
 <section class="slide level2">
 
-<ul>
-<li><p>Como <span class="math inline">\(E(a_t)=0\)</span> para todo <span class="math inline">\(t\)</span>, <span class="math display">\[E(Z_t)=C \left( \frac{1}{1-\phi_1}\right)=\mu\]</span> es independiente de <span class="math inline">\(t\)</span>.</p></li>
-<li><p>Como <span class="math inline">\(Var(a_t)=\sigma_a^2\)</span> para todo <span class="math inline">\(t\)</span>, <span class="math display">\[Var(Z_t)=\sum_{j=0}^{\infty} \phi_1^{2j} Var(a_{t-j})=\left( \frac{1}{1-\phi_1^2} \right) \sigma_a^2\]</span> es finito e independiente de t.</p></li>
-</ul>
+<ol type="1">
+<li><p>Como <span class="math inline">\(\mathbb{E}(a_t)=0\)</span> para todo <span class="math inline">\(t\)</span>, <span class="math display">\[E(Z_t)=C \left( \frac{1}{1-\phi_1}\right)=\mu, ~~\text{es independiente de}~ t.\]</span></p></li>
+<li><p>Además, <span class="math inline">\(\mathrm{Var}(a_t)=\sigma_a^2\)</span> para todo <span class="math inline">\(t\)</span>, <span class="math display">\[\mathrm{Var}(Z_t)=\sum_{j=0}^{\infty} \phi_1^{2j} \mathrm{Var}(a_{t-j})=\left( \frac{1}{1-\phi_1^2} \right) \sigma_a^2\]</span> es finito e independiente de <span class="math inline">\(t\)</span>.</p></li>
+</ol>
 </section>
 <section class="slide level2">
 
-<p>Puesto que <span class="math inline">\(Z_t-\mu=\sum\limits_{j=0}^{\infty} \phi_1^j a_{t-j}\)</span>, la función de autocovariancia es <span class="math display">\[\gamma_Z(t,t-k)=Cov(Z_t,Z_{t-k})=E \left[ (Z_t-\mu)(Z_{t-k}-\mu) \right]\]</span></p>
-<p><span class="math display">\[=E\left[ \left(\sum\limits_{i=0}^{\infty} \phi_1^i a_{t-i}\right) \left( \sum\limits_{j=0}^{\infty} \phi_1^j a_{t-k-j}\right) \right].\]</span> Tome <span class="math inline">\(m=k+j (o~ j=m-k)\)</span>,</p>
-<p><span class="math display">\[\gamma_Z(t,t-k)=E\left[ \left(\sum\limits_{i=0}^{\infty} \phi_1^i a_{t-i}\right) \left( \sum\limits_{m=k}^{\infty} \phi_1^{m-k} a_{t-m}\right) \right]\]</span></p>
-<p><span class="math display">\[=E\left[ \left(\sum\limits_{i=0}^{k-1} \phi_1^i a_{t-i}+\sum\limits_{i=k}^{\infty} \phi_1^i a_{t-i}\right) \left( \sum\limits_{m=k}^{\infty} \phi_1^{m-k} a_{t-m}\right) \right].\]</span></p>
+<ol start="3" type="1">
+<li>Puesto que <span class="math inline">\(Z_t-\mu=\sum\limits_{j=0}^{\infty} \phi_1^j a_{t-j}\)</span>, la función de autocovariancia es</li>
+</ol>
+<span class="math display">\[\begin{aligned}
+\gamma_Z(t, t-k) &amp;= \mathrm{Cov}(Z_t, Z_{t-k}) = \mathbb{E}\left[(Z_t - \mu)(Z_{t-k} - \mu)\right] \\
+&amp;= \mathbb{E} \left[ \left( \sum_{i=0}^{\infty} \phi_1^i a_{t-i} \right) \left( \sum_{j=0}^{\infty} \phi_1^j a_{t-k-j} \right) \right]
+\end{aligned}\]</span>
+<p>Tome <span class="math inline">\(m=k+j (o~ j=m-k)\)</span>,</p>
+<span class="math display">\[\begin{aligned}
+\gamma_Z(t, t-k)
+&amp;= \mathbb{E}\left[ \left(\sum_{i=0}^{\infty} \phi_1^i a_{t-i}\right) \left( \sum_{m=k}^{\infty} \phi_1^{m-k} a_{t-m} \right) \right] \\
+&amp;= \mathbb{E}\left[ \left( \sum_{i=0}^{k-1} \phi_1^i a_{t-i} + \sum_{i=k}^{\infty} \phi_1^i a_{t-i} \right) \left( \sum_{m=k}^{\infty} \phi_1^{m-k} a_{t-m} \right) \right].
+\end{aligned}\]</span>
 </section>
 <section class="slide level2">
 
-<p><span class="math display">\[\gamma_Z(t,t-k)=E\left[ \left(\sum\limits_{i=0}^{k-1} \phi_1^i a_{t-i}+\sum\limits_{i=k}^{\infty} \phi_1^i a_{t-i}\right) \left( \sum\limits_{m=k}^{\infty} \phi_1^{m-k} a_{t-m}\right) \right]\]</span> <span class="math display">\[=E\left[ \left(\sum\limits_{i=k}^{\infty} \phi_1^i a_{t-i}\right) \left( \sum\limits_{m=k}^{\infty} \phi_1^{m-k} a_{t-m}\right) \right]=\sum\limits_{i=k}^{\infty}\phi_1^i \phi_1^{i-k} E(a_{t-i}^2)\]</span></p>
-<p><span class="math display">\[=\sigma_a^2 \sum\limits_{j=0}^{\infty} \phi_1^{k+j} \phi_1^j=\phi_1^k \sigma_a^2 \sum\limits_{j=0}^\infty \phi_1^{2j}=\phi_1^k \sigma_a^2 \frac{1}{1-\phi_1^2}\]</span> <span class="math display">\[=\phi_1^k Var(Z_t),~k=1,2,...\]</span> depende únicamente del regazo <span class="math inline">\(k\)</span>, y es independiente de <span class="math inline">\(t\)</span>.</p>
+<span class="math display">\[\begin{aligned}
+\gamma_Z(t, t-k)
+&amp;= \mathbb{E}\left[ \left( \sum_{i=0}^{k-1} \phi_1^i a_{t-i} + \sum_{i=k}^{\infty} \phi_1^i a_{t-i} \right) \left( \sum_{m=k}^{\infty} \phi_1^{m-k} a_{t-m} \right) \right] \\
+&amp;= \mathbb{E}\left[ \left( \sum_{i=k}^{\infty} \phi_1^i a_{t-i} \right) \left( \sum_{m=k}^{\infty} \phi_1^{m-k} a_{t-m} \right) \right] = \sum_{i=k}^{\infty} \phi_1^i \phi_1^{i-k} \mathbb{E}[a_{t-i}^2] \\
+&amp;= \sigma_a^2 \sum_{j=0}^{\infty} \phi_1^{k+j} \phi_1^j \quad \text{(tomando } j = i - k\text{)} \\ &amp;= \phi_1^k \sigma_a^2 \sum_{j=0}^{\infty} \phi_1^{2j} = \phi_1^k \sigma_a^2 \cdot \frac{1}{1 - \phi_1^2} \\
+&amp;= \phi_1^k \, \mathrm{Var}(Z_t), \quad \text{para } k = 1, 2, \ldots
+\end{aligned}\]</span>
+<p>depende únicamente del regazo <span class="math inline">\(k\)</span>, y es independiente de <span class="math inline">\(t\)</span>.</p>
 <ul>
-<li>Por lo tanto, El proceso AR(1) es estacionario si <span class="math inline">\(|\phi_1|&lt;1\)</span>.</li>
+<li>Por lo tanto, el proceso AR(1) es estacionario si <span class="math inline">\(|\phi_1|&lt;1\)</span>.</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -326,7 +351,15 @@
 <ul>
 <li>La función de autocorrelación teórica es:</li>
 </ul>
-<p><span class="math display">\[\rho_k=\frac{Cov(Z_t,Z_{t-k})}{\sqrt{Var(Z_t)Var(Z_{t-k})}}=\frac{Cov(Z_t,Z_{t-k})}{Var(Z_t)}\]</span> <span class="math display">\[=\frac{\phi_1^k Var(Z_t)}{Var(Z_t)}=\phi_1^k,~k=1,2,...\]</span> - Note que la función de autocorrelación teórica decae exponencialmente a cero.</p>
+<span class="math display">\[\begin{aligned}
+\rho_k &amp;= \frac{\mathrm{Cov}(Z_t, Z_{t-k})}{\sqrt{\mathrm{Var}(Z_t)\mathrm{Var}(Z_{t-k})}}
+= \frac{\mathrm{Cov}(Z_t, Z_{t-k})}{\mathrm{Var}(Z_t)} \\
+&amp;= \frac{\phi_1^k \, \mathrm{Var}(Z_t)}{\mathrm{Var}(Z_t)}
+= \phi_1^k, \quad k = 1, 2, \ldots
+\end{aligned}\]</span>
+<ul>
+<li>Note que la función de autocorrelación teórica decae exponencialmente a cero.</li>
+</ul>
 </section>
 <section class="slide level2">
 
@@ -340,7 +373,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-2-1.png" style="width:80.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-3-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -350,7 +383,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-3-1.png" style="width:80.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-4-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -368,7 +401,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-4-1.png" style="width:100.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-5-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-5-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -378,43 +418,24 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-5-1.png" style="width:100.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-6-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-6-2.png" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
 </div></div>
-</section></section>
-<section>
-<section id="ar2" class="title-slide slide level1 agenda-slide center">
-<h1>AR(2)</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>AR(1)</p>
-</div></li>
-<li><div class="agenda-active">
-<p>AR(2)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>MA(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>ARMA(1,1)</p>
-</div></li>
-</ol>
-</div>
 </section>
-<section id="modelo-no-estacional-autorregresivo-de-orden-2" class="slide level2">
-<h2>Modelo no estacional autorregresivo de orden 2</h2>
+<section id="ar2" class="slide level2">
+<h2>AR(2)</h2>
 <ul>
-<li>El AR(2) está definido por el siguiente proceso estocástico lineal:</li>
+<li>El AR(2), modelo no estacional autorregresivo de orden 2, está definido por el siguiente proceso estocástico lineal:</li>
 </ul>
 <p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+a_t\]</span> donde:<br> <span class="math inline">\(C\)</span>, <span class="math inline">\(\phi_1\)</span> y <span class="math inline">\(\phi_2\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span> (independiente de <span class="math inline">\(Y_t\)</span>).</p>
 <ul>
@@ -430,9 +451,17 @@
 
 <p>Se puede mostrar que:</p>
 <ul>
-<li><span class="math inline">\(E(Z_t)= \frac{C}{1-\phi_1-\phi_2}=\mu\)</span> es independiente de <span class="math inline">\(t\)</span>.</li>
-<li><span class="math inline">\(Var(Z_t)=\frac{(1-\phi_2) \sigma_a^2}{(1+\phi_2)(1-\phi_1-\phi_2)(1+\phi_1-\phi_2)}\)</span> es independiente de <span class="math inline">\(t\)</span> y finito.</li>
-<li>La función de autocorrelación teórica, <span class="math inline">\(\rho_k\)</span>, es dada por: <span class="math display">\[\rho_1=\frac{\phi_1}{1-\phi_2},\]</span> <span class="math display">\[\rho_2=\frac{\phi_1^2}{1-\phi_2}+\phi_2,\]</span> <span class="math display">\[\rho_k=\phi_1 \rho_{k-1}+\phi_2 \rho_{k-2},~ k \geq3.\]</span> Bajo las condiciones de estacionariedad, <span class="math inline">\(\rho_k\)</span> depende únicamente de <span class="math inline">\(k\)</span> y no depende del <span class="math inline">\(t\)</span> y decae hacia cero según una combinación de exponenciales y/o ondas sinusoidales amortiguadas.</li>
+<li><span class="math inline">\(\mathbb{E}(Z_t)= \frac{C}{1-\phi_1-\phi_2}=\mu\)</span> es independiente de <span class="math inline">\(t\)</span>.</li>
+<li><span class="math inline">\(\mathrm{Var}(Z_t)=\frac{(1-\phi_2) \sigma_a^2}{(1+\phi_2)(1-\phi_1-\phi_2)(1+\phi_1-\phi_2)}\)</span> es independiente de <span class="math inline">\(t\)</span> y finito.</li>
+<li>La función de autocorrelación teórica, <span class="math inline">\(\rho_k\)</span>, es dada por:</li>
+</ul>
+<span class="math display">\[\begin{aligned}
+\rho_1 &amp;= \frac{\phi_1}{1 - \phi_2} \\[1ex]
+\rho_2 &amp;= \frac{\phi_1^2}{1 - \phi_2} + \phi_2 \\[1ex]
+\rho_k &amp;= \phi_1 \rho_{k-1} + \phi_2 \rho_{k-2}, \quad \text{para } k \geq 3
+\end{aligned}\]</span>
+<ul>
+<li>Bajo las condiciones de estacionariedad, <span class="math inline">\(\rho_k\)</span> depende únicamente de <span class="math inline">\(k\)</span> y no depende del <span class="math inline">\(t\)</span> y decae hacia cero según una combinación de exponenciales y/o ondas sinusoidales amortiguadas.</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -446,7 +475,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:80.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-7-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -456,7 +485,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-7-1.png" style="width:80.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-8-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -474,7 +503,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-8-1.png" style="width:100.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-9-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-9-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -484,7 +520,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:100.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-10-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-10-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -493,12 +536,27 @@
 </section>
 <section class="slide level2">
 
-
-<img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-11-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-11-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="la-función-de-autocorrelación-parcial" class="slide level2">
 <h2>La función de autocorrelación parcial</h2>
 <ul>
-<li><p>La autocorrelación parcial (f.a.c.p.) en el rezago <span class="math inline">\(k\)</span> mide el grado de asociación lineal entre <span class="math inline">\(Z_t\)</span> y <span class="math inline">\(Z_{t-k}\)</span> cuando los efectos de los otros rezagos <span class="math inline">\(1,2,...,k-1\)</span> han sido eliminados.</p></li>
+<li><p>La autocorrelación parcial (PACF) en el rezago <span class="math inline">\(k\)</span> mide el grado de asociación lineal entre <span class="math inline">\(Z_t\)</span> y <span class="math inline">\(Z_{t-k}\)</span> cuando los efectos de los otros rezagos <span class="math inline">\(1,2,...,k-1\)</span> han sido eliminados.</p></li>
 <li><p>Denotemos la función de autocorrelación parcial teórica de orden <span class="math inline">\(k\)</span> por <span class="math inline">\(\rho_{kk}\)</span> para <span class="math inline">\(k=1,2,...\)</span> y la función de autocorrelación parcial muestral de orden <span class="math inline">\(k\)</span> con <span class="math inline">\(r_{kk}\)</span>, para <span class="math inline">\(k=1,2,...\)</span>.</p></li>
 <li><p>Teóricamente la función de autocorrelación parcial de un proceso estacionario <span class="math inline">\(Z_t\)</span>, denotado por <span class="math inline">\(\rho_{kk}\)</span>, para <span class="math inline">\(k=1,2,...\)</span> es <span class="math display">\[\rho_{11}=corr(Z_{t+1},Z_t)=\rho_1, ~~~~\text{y}\]</span></p></li>
 </ul>
@@ -509,55 +567,135 @@
 <section class="slide level2">
 
 <ul>
-<li>Si <span class="math inline">\(Z_t\)</span> es un proceso gaussiano,</li>
-</ul>
-<p><span class="math display">\[\rho_{kk}=corr(Z_{t+k},Z_t|Z_{t+1},...,Z_{t+k-1}).\]</span></p>
-<p>i.e.&nbsp;es la correlación de una distribución normal bivariada <span class="math inline">\((Z_{t+k},Z_t)\)</span> condicional a <span class="math inline">\({Z_{t+1},...,Z_{t+k-1}}\)</span>.</p>
-<ul>
+<li>Si <span class="math inline">\(Z_t\)</span> es un proceso gaussiano, <span class="math display">\[\rho_{kk}=corr(Z_{t+k},Z_t|Z_{t+1},...,Z_{t+k-1}).\]</span> i.e.&nbsp;es la correlación de una distribución normal bivariada <span class="math inline">\((Z_{t+k},Z_t)\)</span> condicional a <span class="math inline">\({Z_{t+1},...,Z_{t+k-1}}\)</span>.</li>
 <li>Se puede comprobar que:</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Para AR(1): - <span class="math inline">\(\rho_{11}=\phi_1\)</span> - <span class="math inline">\(\rho_{kk}=0\)</span> para <span class="math inline">\(k \geq 2\)</span>. - La función de autocorrelación parcial cae bruscamente a cero después del rezago 1.</p>
+<p>Para <strong>AR(1)</strong>:</p>
+<ul>
+<li><span class="math inline">\(\rho_{11}=\phi_1\)</span></li>
+<li><span class="math inline">\(\rho_{kk}=0\)</span> para <span class="math inline">\(k \geq 2\)</span>.</li>
+<li>La función de autocorrelación parcial cae bruscamente a cero después del rezago 1.</li>
+</ul>
 </div><div class="column" style="width:50%;">
-<p>Para AR(2): - <span class="math inline">\(\rho_{11}=\rho_1=\frac{\phi_1}{1-\phi_2}\)</span> - <span class="math inline">\(\rho_{22}=\phi_2\)</span> - <span class="math inline">\(\rho_{kk}=0\)</span> para <span class="math inline">\(k \geq 3\)</span>. - La función de autocorrelación parcial cae bruscamente a cero después del rezago 2.</p>
+<p>Para <strong>AR(2)</strong>:</p>
+<ul>
+<li><span class="math inline">\(\rho_{11}=\rho_1=\frac{\phi_1}{1-\phi_2}\)</span></li>
+<li><span class="math inline">\(\rho_{22}=\phi_2\)</span></li>
+<li><span class="math inline">\(\rho_{kk}=0\)</span> para <span class="math inline">\(k \geq 3\)</span>.</li>
+<li>La función de autocorrelación parcial cae bruscamente a cero después del rezago 2.</li>
+</ul>
 </div></div>
 </section>
-<section id="f.a.c.-y-f.a.c.p.-teórica-del-ar1" class="slide level2">
-<h2>f.a.c. y f.a.c.p. teórica del AR(1)</h2>
-
-<img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
-<section id="la-función-de-autocorrelación-parcial-de-un-ar1" class="slide level2">
-<h2>La función de autocorrelación parcial de un AR(1)</h2>
-
-<img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
-<section id="la-f.a.c.-y-f.a.c.p.-teórica-de-un-ar2" class="slide level2">
-<h2>La f.a.c. y f.a.c.p. teórica de un AR(2)</h2>
-
-<img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section>
-<section id="la-f.a.c.-y-f.a.c.p.-muestrales-de-un-ar2" class="slide level2">
-<h2>La f.a.c. y f.a.c.p. muestrales de un AR(2)</h2>
-
-<img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section></section>
+<section id="acf-y-pacf-teórica-y-empírica-de-un-ar1" class="slide level2">
+<h2>ACF y PACF teórica y empírica de un AR(1)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-12-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-12-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-13-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-13-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-13-3.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="la-acf-y-pacf-teórica-y-empírica-de-un-ar2" class="slide level2">
+<h2>La ACF y PACF teórica y empírica de un AR(2)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-14-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-14-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-15-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-15-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-15-3.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section></section>
 <section>
-<section id="ma1" class="title-slide slide level1 agenda-slide center">
-<h1>MA(1)</h1>
+<section id="ma1-y-ma2" class="title-slide slide level1 agenda-slide center">
+<h1>MA(1) y MA(2)</h1>
 <div class="agenda-heading">
 <p>Contenido</p>
 </div>
 <div class="agenda">
 <ol>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
+<p>Modelos ARIMA</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>AR(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>AR(2)</p>
+<p>AR(1) y AR(2)</p>
 </div></li>
 <li><div class="agenda-active">
-<p>MA(1)</p>
+<p>MA(1) y MA(2)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>ARMA(1,1)</p>
@@ -565,56 +703,73 @@
 </ol>
 </div>
 </section>
-<section id="modelo-no-estacional-de-medias-móviles-de-orden-1" class="slide level2">
-<h2>Modelo no estacional de medias móviles de orden 1</h2>
-<p>El MA(1) está definido por el siguiente proceso estocástico lineal:</p>
-<p><span class="math display">\[Z_t=C+a_t-\theta_1 a_{t-1}\]</span> donde:<br> <span class="math inline">\(C\)</span> y <span class="math inline">\(\theta_1\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
+<section id="ma1" class="slide level2 smaller">
+<h2>MA(1)</h2>
+<p>El MA(1), modelo no estacional de medias móviles de orden 1, está definido por el siguiente proceso estocástico lineal: <span class="math display">\[Z_t=C+a_t-\theta_1 a_{t-1}\]</span> donde <span class="math inline">\(C\)</span> y <span class="math inline">\(\theta_1\)</span> son constantes desconocidas, y <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
 <ul>
-<li><p>Como <span class="math inline">\(E(a_t)=0\)</span> para todo <span class="math inline">\(t\)</span>, <span class="math display">\[E(Z_t)=C\]</span> es independiente de <span class="math inline">\(t\)</span>.</p></li>
-<li><p><span class="math display">\[Var(Z_t)= Var(a_t)+\theta_1^2 Var(a_{t-1})=\sigma_a^2+\theta_1^2 \sigma_a^2=\sigma_a^2(1+\theta_1^2)\]</span> es finito e independiente de t.</p></li>
-<li><p><span class="math display">\[\gamma_Z(t,t-k)=Cov(Z_t,Z_{t-k})=E \left[ (Z_t-C)(Z_{t-k}-C) \right]\]</span> <span class="math display">\[=E \left[ (a_t-\theta_1 a_{t-1})(a_{t-k}-\theta_1 a_{t-k-1}) \right]\]</span> <span class="math display">\[
-=\left\lbrace
-\begin{aligned}
--\theta_1 \sigma_a^2, &amp; &amp; k = 1 \\
-0, &amp; &amp;  k &gt; 1 \\
-\end{aligned}
-\right.
-\]</span></p></li>
-<li><p>Note que MA(1) es siempre estacionario independiente del valor de <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>Como <span class="math inline">\(E(a_t)=0\)</span> para todo <span class="math inline">\(t\)</span>, <span class="math display">\[\mathbb{E}(Z_t)=C~~ \text{es independiente de}  ~t.\]</span></p></li>
+<li><p><span class="math display">\[\mathrm{Var}(Z_t)= \mathrm{Var}(a_t)+\theta_1^2 \mathrm{Var}(a_{t-1})=\sigma_a^2+\theta_1^2 \sigma_a^2=\sigma_a^2(1+\theta_1^2)~~ \text{es finito e independiente de}  ~t.\]</span></p></li>
+<li><p>La función de autocovariancia es:</p></li>
+</ul>
+<span class="math display">\[\begin{aligned}
+\gamma_Z(t, t-k) &amp;= \mathrm{Cov}(Z_t, Z_{t-k}) = \mathbb{E} \left[ (Z_t - C)(Z_{t-k} - C) \right] \\
+&amp;= \mathbb{E} \left[ (a_t - \theta_1 a_{t-1})(a_{t-k} - \theta_1 a_{t-k-1}) \right] \\
+&amp;=
+\begin{cases}
+-\theta_1 \sigma_a^2, &amp; \text{if } k = 1 \\
+0, &amp; \text{if } k &gt; 1
+\end{cases}
+\end{aligned}\]</span>
+<ul>
+<li>Note que MA(1) es siempre estacionario independiente del valor de <span class="math inline">\(\theta\)</span>.</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
-<li>Sin embargo, es necesario aplicar la restricción <span class="math inline">\(|\theta_1|&lt;1\)</span>.</li>
-<li>Note que a partir de <span class="math inline">\(Z_t=C+a_t-\theta_1 a_{t-1}\)</span>, se puede despejar <span class="math inline">\(a_t\)</span>, <span class="math display">\[-C+Z_t+\theta_1 a_{t-1}=a_t,\]</span> y sustituir recursivamente (como el caso de AR(1)): <span class="math display">\[-C+Z_{t-1}+\theta_1 a_{t-2}=a_{t-1},\]</span> en el modelo <span class="math display">\[Z_t=C+a_t-\theta_1 \left[ -C+Z_{t-1}+\theta_1 a_{t-2} \right]\]</span></li>
+<li><p>Sin embargo, es necesario aplicar la restricción <span class="math inline">\(|\theta_1|&lt;1\)</span>.</p></li>
+<li><p>Note que a partir de <span class="math inline">\(Z_t=C+a_t-\theta_1 a_{t-1}\)</span>, se puede despejar <span class="math inline">\(a_t\)</span>, <span class="math display">\[-C+Z_t+\theta_1 a_{t-1}=a_t.\]</span> Esta misma ecuación cumple para <span class="math inline">\(t-1\)</span>: <span class="math display">\[-C+Z_{t-1}+\theta_1 a_{t-2}=a_{t-1}.\]</span> Podemos sustituirla recursivamente: en el modelo <span class="math display">\[Z_t=C+a_t-\theta_1 \left[ -C+Z_{t-1}+\theta_1 a_{t-2} \right],\]</span> y obtener: <span class="math display">\[Z_t=C(1+\theta_1+\theta_1^2+...)-\theta_1 Z_{t-1}-\theta_1^2 Z_{t-2}-\theta_1^3 Z_{t-3}-...+a_t\]</span></p></li>
+<li><p>Si <span class="math inline">\(|\theta_1|\geq 1\)</span>, la ecuación anterior implica que <span class="math inline">\(Z_t\)</span> depende más a los valores pasados lejanos que los valores cercanos, lo cual no es realista en su interpretación. Esta condición es conocida como <span class="alert">condición de invertibilidad</span>.</p></li>
 </ul>
-<p>podemos obtener: <span class="math display">\[Z_t=C(1+\theta_1+\theta_1^2+...)-\theta_1 Z_{t-1}-\theta_1^2 Z_{t-2}-\theta_1^3 Z_{t-3}-...+a_t\]</span> - Si <span class="math inline">\(|\theta_1|\geq 1\)</span>, la ecuación anterior implica que <span class="math inline">\(Z_t\)</span> depende más a los valores pasados lejanos que los valores cercanos, lo cual no es realista en su interpretación. - Esta condición es conocida como <strong>condición de invertibilidad</strong>.</p>
 </section>
 <section class="slide level2">
 
 <ul>
-<li><p>La función de autocorrelación del proceso MA(1) es: <span class="math display">\[\rho_1=\frac{Cov(Z_t,Z_{t-1})}{\sqrt{Var(Z_t)Var(Z_{t-1})}}=\frac{Cov(Z_t,Z_{t-1})}{Var(Z_t)}\]</span> <span class="math display">\[=\frac{-\theta_1 \sigma_a^2}{\sigma_a^2(1+\theta_1^2)}=\frac{-\theta_1 }{1+\theta_1^2}\]</span> <span class="math display">\[\rho_k=0, ~~~\text{para}~~ k\geq 2\]</span></p></li>
-<li><p>La función de autocorrelación teórica de MA(1) cae bruscamente a cero después del rezago 1.</p></li>
+<li>La función de autocorrelación del proceso MA(1) es:</li>
+</ul>
+<span class="math display">\[\begin{aligned}
+\rho_1 &amp;= \frac{\mathrm{Cov}(Z_t, Z_{t-1})}{\sqrt{\mathrm{Var}(Z_t)\mathrm{Var}(Z_{t-1})}} = \frac{\mathrm{Cov}(Z_t, Z_{t-1})}{\mathrm{Var}(Z_t)} \\
+&amp;= \frac{-\theta_1 \sigma_a^2}{\sigma_a^2(1 + \theta_1^2)} = \frac{-\theta_1}{1 + \theta_1^2}, ~~\text{y} \\
+\rho_k &amp;= 0, \quad \text{para } k \geq 2
+\end{aligned}\]</span>
+<ul>
+<li>La función de autocorrelación teórica de MA(1) cae bruscamente a cero después del rezago 1.</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>Se puede demostrar que la función de autocorrelación parcial está dada por: <span class="math display">\[\rho_{kk}=\frac{-\theta_1^k (1-\theta_1^2)}{1-\theta_1^{2(k+1)}},~~\text{para}~k \geq 1.\]</span></li>
-<li>La f.a.c.p. decae a cero de forma exponencial amortiguada.</li>
+<li>La PACF decae a cero de forma exponencial amortiguada.</li>
 </ul>
 </section>
 <section class="slide level2">
 
-<p>La f.a.c. y f.a.c.p. teórica de un MA(1):</p>
+<p>La ACF y PACF teórica de un MA(1):</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:80.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-16-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-16-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -624,7 +779,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-16-1.png" style="width:80.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-17-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-17-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -634,7 +796,7 @@
 <section class="slide level2">
 
 <ul>
-<li>Considere <span class="math inline">\(a_t \sim N(0,1)\)</span>, y un modelo MA(1): <span class="math display">\[Z_t=C+a_t-\theta_1 a_{t-1}\]</span></li>
+<li>Considere dos simulaciones de un modelo MA(1)</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -642,7 +804,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-18-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-18-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-18-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -652,20 +828,35 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-18-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-19-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-19-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-19-3.png" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
 </div></div>
 </section>
-<section class="slide level2">
-
+<section id="ma2" class="slide level2">
+<h2>MA(2)</h2>
 <p>El modelo no estacional de medias móviles de orden 2, MA(2), está definido por el siguiente proceso estocástico lineal:</p>
-<p><span class="math display">\[Z_t=C+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}\]</span> donde:<br> <span class="math inline">\(C\)</span>, <span class="math inline">\(\theta_1\)</span> y <span class="math inline">\(\theta_2\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
-<p>Se puede demostrar que MA(2) es estacionario para todo <span class="math inline">\(\theta_1\)</span> y <span class="math inline">\(\theta_2\)</span>, con: - <span class="math inline">\(E(Z_t)=C\)</span>.</p>
+<p><span class="math display">\[Z_t=C+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}\]</span> donde <span class="math inline">\(C\)</span>, <span class="math inline">\(\theta_1\)</span> y <span class="math inline">\(\theta_2\)</span> son constantes desconocidas, y <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
+<p>Se puede demostrar que MA(2) es estacionario para todo <span class="math inline">\(\theta_1\)</span> y <span class="math inline">\(\theta_2\)</span>, con:</p>
 <ul>
-<li><span class="math inline">\(Var(Z_t)=\sigma_a^2(1+\theta_1^2+\theta_2^2)\)</span>.</li>
+<li><p><span class="math inline">\(E(Z_t)=C\)</span>.</p></li>
+<li><p><span class="math inline">\(Var(Z_t)=\sigma_a^2(1+\theta_1^2+\theta_2^2)\)</span>.</p></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -681,15 +872,16 @@
 0, &amp; &amp;  k \geq 3 \\
 \end{aligned}
 \right.
-\]</span> - La función de autocorrelación parcial decae a cero según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p>
+\]</span></p>
 <ul>
-<li>El proceso MA(2) es invertible si: <span class="math display">\[|\theta_2|&lt;1\]</span> <span class="math display">\[\theta_1+\theta_2&lt;1\]</span> <span class="math display">\[\theta_2-\theta_1&lt;1\]</span></li>
+<li><p>La función de autocorrelación parcial decae a cero según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
+<li><p>El proceso MA(2) es invertible si: <span class="math display">\[|\theta_2|&lt;1\]</span> <span class="math display">\[\theta_1+\theta_2&lt;1\]</span> <span class="math display">\[\theta_2-\theta_1&lt;1\]</span></p></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
-<li>La f.a.c. y f.a.c.p. teórica de un MA(2):</li>
+<li>La ACF y PACF teórica y empírica de un modelo MA(2)</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -697,7 +889,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-19-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-20-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-20-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -707,7 +906,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-20-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-21-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-21-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-21-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -717,7 +930,7 @@
 <section class="slide level2">
 
 <ul>
-<li>Considere <span class="math inline">\(a_t \sim N(0,1)\)</span>, y un modelo MA(2)</li>
+<li>La ACF y PACF teórica y empírica de un modelo MA(2)</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -725,7 +938,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-21-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-22-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-22-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -735,7 +955,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-22-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-23-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-23-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-23-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -744,8 +978,53 @@
 </section>
 <section class="slide level2">
 
-
-<img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:70.0%"></section></section>
+<ul>
+<li>La ACF y PACF teórica y empírica de un modelo MA(2)</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-24-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-24-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-25-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-25-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-25-3.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section></section>
 <section>
 <section id="arma11" class="title-slide slide level1 agenda-slide center">
 <h1>ARMA(1,1)</h1>
@@ -755,16 +1034,13 @@
 <div class="agenda">
 <ol>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
+<p>Modelos ARIMA</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>AR(1)</p>
+<p>AR(1) y AR(2)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>AR(2)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>MA(1)</p>
+<p>MA(1) y MA(2)</p>
 </div></li>
 <li><div class="agenda-active">
 <p>ARMA(1,1)</p>
@@ -772,22 +1048,27 @@
 </ol>
 </div>
 </section>
-<section id="modelo-no-estacional-mixto-arma11" class="slide level2">
-<h2>Modelo no estacional mixto: ARMA(1,1)</h2>
-<p>El ARMA(1,1) está definido por el siguiente proceso estocástico lineal: <span class="math display">\[Z_t=C+a_t+\phi_1 Z_{t-1}-\theta_1 a_{t-1}\]</span> o <span class="math display">\[Z_t-\phi_1 Z_{t-1}=C+a_t-\theta_1 a_{t-1}\]</span></p>
-<p>donde:<br> <span class="math inline">\(C\)</span>, <span class="math inline">\(\phi_1\)</span> y <span class="math inline">\(\theta_1\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
-<ul>
-<li><p>Condición de estacionariedad: <span class="math display">\[|\phi_1|&lt;1\]</span></p></li>
-<li><p>Condición de invertibilidad: <span class="math display">\[|\theta_1|&lt;1\]</span></p></li>
-</ul>
-</section>
 <section id="arma11-1" class="slide level2">
 <h2>ARMA(1,1)</h2>
-<p>Con las condiciones de estacionariedad e invertibilidad, se puede mostrar que:</p>
+<p>El ARMA(1,1) está definido por el siguiente proceso estocástico lineal: <span class="math display">\[Z_t=C+a_t+\phi_1 Z_{t-1}-\theta_1 a_{t-1}\]</span> o <span class="math display">\[Z_t-\phi_1 Z_{t-1}=C+a_t-\theta_1 a_{t-1}\]</span></p>
+<p>donde <span class="math inline">\(C\)</span>, <span class="math inline">\(\phi_1\)</span> y <span class="math inline">\(\theta_1\)</span> son constantes desconocidas, y <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <ul>
-<li><p><span class="math inline">\(E(Z_t)=\frac{C}{1-\phi_1}\)</span>.</p></li>
-<li><p><span class="math inline">\(Var(Z_t)=\frac{(1+ 2\theta_1 \phi_1+\theta_1^2)}{1-\phi_1^2} \sigma_a^2\)</span>.</p></li>
-<li><p>La función de autocorrelación teórica:</p></li>
+<li>Condición de estacionariedad: <span class="math display">\[|\phi_1|&lt;1\]</span></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Condición de invertibilidad: <span class="math display">\[|\theta_1|&lt;1\]</span></li>
+</ul>
+</div></div>
+</section>
+<section class="slide level2">
+
+<p>Con las condiciones de estacionariedad e invertibilidad, se puede mostrar que:</p>
+<p><span class="math display">\[\mathbb{E}(Z_t)=\frac{C}{1-\phi_1}, ~~ \text{y}~~\mathrm{Var}(Z_t)=\frac{(1+ 2\theta_1 \phi_1+\theta_1^2)}{1-\phi_1^2} \sigma_a^2.\]</span></p>
+<ul>
+<li>La función de autocorrelación teórica:</li>
 </ul>
 <p><span class="math display">\[\rho_1=\frac{(1-\phi_1 \theta_1) (\phi_1-\theta_1)}{1+\theta_1^2-2\theta_1 \phi_1}\]</span></p>
 <p><span class="math display">\[\rho_k=\phi_1 \rho_{k-1},~~~\text{para}~ k \geq 2,\]</span> la cual decae de forma exponencial amortiguado desde el rezago 1.</p>
@@ -798,7 +1079,7 @@
 <section class="slide level2">
 
 <ul>
-<li>La f.a.c. y f.a.c.p. teórica de un ARMA(1,1):</li>
+<li>La ACF y PACF teórica y empírica de un ARMA(1,1).</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -806,7 +1087,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-24-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-26-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-26-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -816,7 +1104,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-25-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-27-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-27-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-27-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -826,7 +1128,7 @@
 <section class="slide level2">
 
 <ul>
-<li>Considere <span class="math inline">\(a_t \sim N(0,1)\)</span>, y un modelo ARMA(1,1)</li>
+<li>La ACF y PACF teórica y empírica de un ARMA(1,1).</li>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -834,7 +1136,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-26-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-28-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-28-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -844,7 +1153,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-27-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-29-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-29-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion1_files/figure-revealjs/unnamed-chunk-29-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -856,12 +1179,72 @@
 <ul>
 <li>Note que el modelo ARMA(1,1) se puede reescribir como:</li>
 </ul>
-<p><span class="math display">\[Z_t-\phi_1 Z_{t-1}=C+a_t-\theta_1 a_{t-1}\]</span> <span class="math display">\[\Rightarrow Z_t-\phi_1 Z_{t-1}=E(Z_t) (1-\phi_1)+a_t-\theta_1 a_{t-1}\]</span> <span class="math display">\[\Rightarrow \left [Z_t - E(Z_t) \right] - \left [\phi_1 Z_{t-1} -\phi_1 E(Z_t) \right] =a_t-\theta_1 a_{t-1}\]</span> <span class="math display">\[\Rightarrow \tilde{Z_t}  -\phi_1 \tilde{Z}_{t-1} =a_t-\theta_1 a_{t-1}\]</span> donde <span class="math inline">\(\tilde{Z_t} = Z_t - E(Z_t)= Z_t - \mu_Z\)</span>.</p>
+<span class="math display">\[\begin{aligned}
+Z_t - \phi_1 Z_{t-1} &amp;= C + a_t - \theta_1 a_{t-1} \\
+&amp;= \mathbb{E}(Z_t)(1 - \phi_1) + a_t - \theta_1 a_{t-1} \\
+\Rightarrow \left[ Z_t - \mathbb{E}(Z_t) \right] - \phi_1 \left[ Z_{t-1} - \mathbb{E}(Z_t) \right] &amp;= a_t - \theta_1 a_{t-1} \\
+\Rightarrow \tilde{Z}_t - \phi_1 \tilde{Z}_{t-1} &amp;= a_t - \theta_1 a_{t-1}
+\end{aligned}\]</span>
+<p>donde <span class="math inline">\(\tilde{Z_t} = Z_t - E(Z_t)= Z_t - \mu_Z\)</span>.</p>
 </section>
 <section id="tabla-de-resumen-1" class="slide level2">
 <h2>Tabla de resumen 1</h2>
-
-<img data-src="summary_table1.png" class="r-stretch quarto-figure-center"><p class="caption">Tabla de resumen</p></section>
+<table class="caption-top">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 18%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Condición de estacionariedad</th>
+<th>Condición de invertibilidad</th>
+<th>ACF</th>
+<th>PACF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>AR(1)</strong></td>
+<td><span class="math inline">\(|\phi_1|&lt;1\)</span></td>
+<td></td>
+<td>Decae hacia cero según una combinación de exponenciales y/o ondas sinusoidales amortiguadas.</td>
+<td>1 rezago</td>
+</tr>
+<tr class="even">
+<td><strong>AR(2)</strong></td>
+<td><span class="math inline">\(|\phi_2|&lt;1\)</span>. <span class="math inline">\(\phi_1+\phi_2&lt;1\)</span>. <span class="math inline">\(-\phi_1+\phi_2&lt;1\)</span>.</td>
+<td></td>
+<td></td>
+<td>2 regagos</td>
+</tr>
+<tr class="odd">
+<td><strong>MA(1)</strong></td>
+<td></td>
+<td><span class="math inline">\(|\theta_1|&lt;1\)</span></td>
+<td>1 rezago</td>
+<td>Decae hacia cero según una combinación de exponenciales y/o ondas sinusoidales amortiguadas.</td>
+</tr>
+<tr class="even">
+<td><strong>MA(2)</strong></td>
+<td></td>
+<td><span class="math inline">\(|\theta_2|&lt;1\)</span> <span class="math inline">\(\theta_1+\theta_2&lt;1\)</span> <span class="math inline">\(-\theta_1+\theta_2&lt;1\)</span></td>
+<td>2 regagos</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>ARMA(1,1)</strong></td>
+<td><span class="math inline">\(|\phi_1|&lt;1\)</span></td>
+<td><span class="math inline">\(|\theta_1|&lt;1\)</span></td>
+<td>Decae de forma exponencial amortiguado desde el rezago 1</td>
+<td>Decae de forma exponencial amortiguado desde el rezago 1</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="próximo-tema" class="slide level2">
 <h2>Próximo tema</h2>
 <h3 id="modelos-arima-de-boxjenkins---parte-2">Modelos ARIMA de Box&amp;Jenkins - Parte 2</h3>

@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="presentacion2_files/libs/revealjs/dist/theme/quarto-0db3be03a49e940b09f8f33a2d93b3d8.css">
+  <link rel="stylesheet" href="presentacion2_files/libs/revealjs/dist/theme/quarto-5a91e8cc2f5341be4c1cec41f45758ab.css">
   <link href="presentacion2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="presentacion2_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="presentacion2_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -225,8 +225,62 @@
 </section>
 <section id="tabla-de-resumen-1" class="slide level2">
 <h2>Tabla de resumen 1</h2>
-
-<img data-src="summary_table1.png" class="r-stretch quarto-figure-center"><p class="caption">Tabla de resumen</p></section>
+<table class="caption-top">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 18%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Condición de estacionariedad</th>
+<th>Condición de invertibilidad</th>
+<th>ACF</th>
+<th>PACF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>AR(1)</strong></td>
+<td><span class="math inline">\(|\phi_1|&lt;1\)</span></td>
+<td></td>
+<td>Decae hacia cero según una combinación de exponenciales y/o ondas sinusoidales amortiguadas.</td>
+<td>1 rezago</td>
+</tr>
+<tr class="even">
+<td><strong>AR(2)</strong></td>
+<td><span class="math inline">\(|\phi_2|&lt;1\)</span>. <span class="math inline">\(\phi_1+\phi_2&lt;1\)</span>. <span class="math inline">\(-\phi_1+\phi_2&lt;1\)</span>.</td>
+<td></td>
+<td></td>
+<td>2 regagos</td>
+</tr>
+<tr class="odd">
+<td><strong>MA(1)</strong></td>
+<td></td>
+<td><span class="math inline">\(|\theta_1|&lt;1\)</span></td>
+<td>1 rezago</td>
+<td>Decae hacia cero según una combinación de exponenciales y/o ondas sinusoidales amortiguadas.</td>
+</tr>
+<tr class="even">
+<td><strong>MA(2)</strong></td>
+<td></td>
+<td><span class="math inline">\(|\theta_2|&lt;1\)</span> <span class="math inline">\(\theta_1+\theta_2&lt;1\)</span> <span class="math inline">\(-\theta_1+\theta_2&lt;1\)</span></td>
+<td>2 regagos</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>ARMA(1,1)</strong></td>
+<td><span class="math inline">\(|\phi_1|&lt;1\)</span></td>
+<td><span class="math inline">\(|\theta_1|&lt;1\)</span></td>
+<td>Decae de forma exponencial amortiguado desde el rezago 1</td>
+<td>Decae de forma exponencial amortiguado desde el rezago 1</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section>
 <section id="maq" class="title-slide slide level1 agenda-slide center">
 <h1>MA(q)</h1>
@@ -256,18 +310,22 @@
 </ol>
 </div>
 </section>
-<section id="maq-1" class="slide level2">
+<section id="maq-1" class="slide level2 smaller">
 <h2>MA(q)</h2>
 <p>El Modelo no estacional de medias móviles de orden q, MA(q), está definido por el siguiente proceso estocástico lineal:</p>
 <p><span class="math display">\[Z_t=C+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}-...-\theta_q a_{t-q}\]</span></p>
-<p>donde:<br> <span class="math inline">\(C\)</span> y <span class="math inline">\(\theta_i, i=1,...,q\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
-</section>
-<section class="slide level2">
-
-<p>Se puede demostrar que MA(q) es estacionario para todo <span class="math inline">\(\theta_i\)</span> para <span class="math inline">\(i=1,...,q\)</span>, con: - <span class="math inline">\(E(Z_t)=C=\mu\)</span>.</p>
+<p>donde <span class="math inline">\(C\)</span> y <span class="math inline">\(\theta_i, i=1,...,q\)</span> son constantes desconocidas, y <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
+<p>Se puede demostrar que MA(q) es estacionario para todo <span class="math inline">\(\theta_i\)</span> para <span class="math inline">\(i=1,...,q\)</span>, con:</p>
 <ul>
-<li><p>La f.a.c. teórica tiene correlaciones no nulas en los rezagos <span class="math inline">\(1,...,q\)</span> y ceros para rezagos mayores que <span class="math inline">\(q\)</span>, i.e. <span class="math display">\[\rho_k \neq 0 ~~\text{para}~~ k=1,...,q.\]</span> <span class="math display">\[\rho_k = 0 ~~\text{para}~~ k&gt;q.\]</span></p></li>
-<li><p>La función de autocorrelación parcial decae a cero según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
+<li><p><span class="math inline">\(\mathbb{E}(Z_t)=C=\mu\)</span>.</p></li>
+<li><p>La ACF teórica tiene correlaciones no nulas en los rezagos <span class="math inline">\(1,...,q\)</span> y ceros para rezagos mayores que <span class="math inline">\(q\)</span>, i.e.</p></li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+\rho_k &amp;\neq 0 \quad \text{para } k = 1, \dots, q, \\
+\rho_k &amp;= 0 \quad \text{para } k &gt; q.
+\end{align*}\]</span></p>
+<ul>
+<li><p>La PACF decae a cero según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
 <li><p>MA(q) siempre es estacionario pero no es invertible (veremos los supuestos).</p></li>
 </ul>
 </section>
@@ -282,7 +340,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-2-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-2-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-2-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -292,7 +357,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-3-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-3-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-3-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-3-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -310,7 +389,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-4-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-4-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-4-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -320,7 +406,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-5-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-5-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-5-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-5-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -356,19 +456,20 @@
 </ol>
 </div>
 </section>
-<section id="arp-1" class="slide level2">
+<section id="arp-1" class="slide level2 smaller">
 <h2>AR(p)</h2>
 <ul>
 <li>El modelo no estacional autoregresivo de orden p, AR(p), está definido por el siguiente proceso estocástico lineal:</li>
 </ul>
-<p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+...+\phi_p Z_{t-p}+a_t\]</span> donde:<br> <span class="math inline">\(C\)</span> y <span class="math inline">\(\phi_i, i=1,...,p\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
-</section>
-<section class="slide level2">
-
-<p>Se puede demostrar que: - <span class="math inline">\(E(Z_t)= \frac{C}{1-\phi_1-\phi_2-...-\phi_p}=\mu\)</span>.</p>
+<p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+...+\phi_p Z_{t-p}+a_t\]</span> donde: <span class="math inline">\(C\)</span> y <span class="math inline">\(\phi_i, i=1,...,p\)</span> son constantes desconocidas, y <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span>.</p>
+<p>Se puede demostrar que:</p>
 <ul>
-<li><p>La función de autocorrelación decae a cero según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
-<li><p>La f.a.c.p. teórica tiene autocorrelaciones parciales no nulas en los rezagos <span class="math inline">\(1,...,p\)</span> y ceros para rezagos mayores que <span class="math inline">\(p\)</span>, i.e. <span class="math display">\[\rho_{kk} \neq 0 ~~\text{para}~~ k=1,...,p.\]</span> <span class="math display">\[\rho_{kk} = 0 ~~\text{para}~~ k&gt;p.\]</span></p></li>
+<li><p><span class="math inline">\(\mathbb{E}(Z_t)= \frac{C}{1-\phi_1-\phi_2-...-\phi_p}=\mu\)</span>.</p></li>
+<li><p>La ACF decae a cero según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
+<li><p>La PACF teórica tiene autocorrelaciones parciales no nulas en los rezagos <span class="math inline">\(1,...,p\)</span> y ceros para rezagos mayores que <span class="math inline">\(p\)</span>, i.e. <span class="math display">\[\begin{align*}
+\rho_{kk} &amp;\neq 0 \quad \text{para } k = 1, \dots, p, \\
+\rho_{kk} &amp;= 0 \quad \text{para } k &gt; p.
+\end{align*}\]</span></p></li>
 <li><p>El AR(p) es invertible pero no es siempre estacionario (veremos las condiciones).</p></li>
 </ul>
 </section>
@@ -383,7 +484,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-6-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-6-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -393,7 +501,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-7-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-7-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-7-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-7-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -411,7 +533,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-8-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-8-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-8-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -421,7 +550,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-9-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-9-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-9-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -457,19 +600,17 @@
 </ol>
 </div>
 </section>
-<section id="el-modelo-mixto-no-estacional-autoregresivo-de-medias-móviles-de-orden-pq" class="slide level2">
-<h2>El modelo mixto no estacional autoregresivo de medias móviles de orden (p,q)</h2>
+<section id="armapq-1" class="slide level2 smaller">
+<h2>ARMA(p,q)</h2>
 <ul>
-<li>El ARMA(p,q) está definido por el siguiente proceso estocástico lineal:</li>
+<li>El modelo mixto no estacional autoregresivo de medias móviles de orden <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span>, ARMA(p,q), está definido por el siguiente proceso estocástico lineal:</li>
 </ul>
-<p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+...+\phi_p Z_{t-p}\]</span> <span class="math display">\[+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}-...-\theta_q a_{t-q}\]</span> donde:<br> <span class="math inline">\(C\)</span>, <span class="math inline">\(\phi_i, i=1,...,p\)</span> y <span class="math inline">\(\theta_j, j=1,...,q\)</span> son constantes desconocidas,<br> <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span> (independiente de <span class="math inline">\(Y_t\)</span>).</p>
-</section>
-<section class="slide level2">
-
-<p>Se puede demostrar que: - <span class="math inline">\(E(Z_t)= \frac{C}{1-\phi_1-\phi_2-...-\phi_p}=\mu\)</span>.</p>
+<p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+...+\phi_p Z_{t-p}+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}-...-\theta_q a_{t-q}\]</span> donde <span class="math inline">\(C\)</span>, <span class="math inline">\(\phi_i, i=1,...,p\)</span> y <span class="math inline">\(\theta_j, j=1,...,q\)</span> son constantes desconocidas, y <span class="math inline">\(a_t \sim wn(0,\sigma_a^2)\)</span> (independiente de <span class="math inline">\(Y_t\)</span>).</p>
+<p>Se puede demostrar que:</p>
 <ul>
-<li><p>La función de autocorrelación decae a cero después de los primeros <span class="math inline">\(q-p\)</span> según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
-<li><p>La f.a.c.p. teórica decae a cero después de los primeros <span class="math inline">\(p-q\)</span> según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
+<li><p><span class="math inline">\(\mathbb{E}(Z_t)= \frac{C}{1-\phi_1-\phi_2-...-\phi_p}=\mu\)</span>.</p></li>
+<li><p>La ACF decae a cero después de los primeros <span class="math inline">\(q-p\)</span> según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
+<li><p>La PACF teórica decae a cero después de los primeros <span class="math inline">\(p-q\)</span> según una combinación de exponenciales amortiguadas y/o ondas sinusoidales amortiguadas.</p></li>
 <li><p>¿Condición de estacionariedad y invertibilidad? (veremos más adelante)</p></li>
 </ul>
 </section>
@@ -484,7 +625,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-10-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-10-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-10-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -494,7 +642,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-11-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-11-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-11-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-11-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -512,7 +674,14 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-12-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-12-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-12-2.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -522,7 +691,21 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-13-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-13-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-13-2.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion2_files/figure-revealjs/unnamed-chunk-13-3.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -564,51 +747,62 @@
 <li><p>El operador de rezago <span class="math inline">\(B\)</span> es definido como <span class="math display">\[B Z_t= Z_{t-1}\]</span></p></li>
 <li><p>El operador de rezago <span class="math inline">\(B\)</span> se puede volver a aplicar: <span class="math display">\[B Z_{t-1} = Z_{t-2}=BBZ_{t}=B^2 Z_t\]</span></p></li>
 <li><p>De esta forma, se puede extender el operador de rezago a: <span class="math display">\[B^k Z_t = Z_{t-k}\]</span></p></li>
-<li><p>También existe la idea del operador inverso <span class="math inline">\(B^{-1}\)</span> de tal forma que <span class="math inline">\(B^{-1}B=1\)</span>, entonces <span class="math display">\[B^{-1} Z_{t-1} = Z_{t}\]</span></p></li>
-<li><p>Operador <span class="math inline">\(B\)</span> es llamado retroceso (<em>backshift</em>).</p></li>
-<li><p>Operador <span class="math inline">\(B^{-1}\)</span> es llamado progreso (<em>forward-shift</em>).</p></li>
+<li><p>También se puede definir el operador inverso <span class="math inline">\(B^{-1}\)</span> de tal forma que <span class="math inline">\(B^{-1}B=1\)</span>, entonces <span class="math display">\[B^{-1} Z_{t-1} = Z_{t}\]</span></p></li>
+<li><p><span class="math inline">\(B\)</span> es llamado como <span class="alert">operador de retroceso</span> (<em>backshift</em>).</p></li>
+<li><p><span class="math inline">\(B^{-1}\)</span> es llamado como <span class="alert">operador de progreso</span> (<em>forward-shift</em>).</p></li>
 </ul>
 </section>
-<section id="ejemplo-con-ar2" class="slide level2">
+<section id="ejemplo-con-ar2" class="slide level2 smaller">
 <h2>Ejemplo con AR(2)</h2>
-<p>Note que: <span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+a_t\]</span> <span class="math display">\[\Rightarrow Z_t-\phi_1 Z_{t-1}-\phi_2 Z_{t-2}=C+a_t\]</span> <span class="math display">\[\Rightarrow Z_t-\phi_1 Z_{t-1}-\phi_2 Z_{t-2}=\mu (1-\phi_1-\phi_2)+a_t\]</span> ya que <span class="math inline">\(E(Z_t)= \frac{C}{1-\phi_1-\phi_2}=\mu\)</span>.</p>
-<p>Reordenando los términos, <span class="math display">\[(Z_t-\mu)-\phi_1 (Z_{t-1}-\mu)-\phi_2 (Z_{t-2}-\mu)=a_t.\]</span> Tome <span class="math inline">\(\tilde{Z}_t=Z_t-\mu\)</span>, <span class="math display">\[\tilde{Z}_t-\phi_1 \tilde{Z}_{t-1}-\phi_2 \tilde{Z}_{t-2}=a_t.\]</span></p>
-</section>
-<section class="slide level2">
-
-<p><span class="math display">\[\tilde{Z}_t-\phi_1 \tilde{Z}_{t-1}-\phi_2 \tilde{Z}_{t-2}=a_t.\]</span> <span class="math display">\[\tilde{Z}_t-\phi_1 B \tilde{Z}_{t}-\phi_2  B^2 \tilde{Z}_{t}=a_t.\]</span> <span class="math display">\[(1-\phi_1 B -\phi_2  B^2) \tilde{Z}_t=a_t.\]</span></p>
+<p>Note que:</p>
+<p><span class="math display">\[\begin{align*}
+Z_t &amp;= C + \phi_1 Z_{t-1} + \phi_2 Z_{t-2} + a_t \\
+\Rightarrow\quad Z_t - \phi_1 Z_{t-1} - \phi_2 Z_{t-2} &amp;= C + a_t \\
+\Rightarrow\quad Z_t - \phi_1 Z_{t-1} - \phi_2 Z_{t-2} &amp;= \mu (1 - \phi_1 - \phi_2) + a_t
+\end{align*}\]</span></p>
+<p>ya que <span class="math inline">\(\mathbb{E}(Z_t)= \frac{C}{1-\phi_1-\phi_2}=\mu\)</span>.</p>
+<p>Reordenando los términos, <span class="math display">\[(Z_t-\mu)-\phi_1 (Z_{t-1}-\mu)-\phi_2 (Z_{t-2}-\mu)=a_t.\]</span> Tome <span class="math inline">\(\tilde{Z}_t=Z_t-\mu\)</span>, <span class="math display">\[\begin{align*}
+\tilde{Z}_t - \phi_1 \tilde{Z}_{t-1} - \phi_2 \tilde{Z}_{t-2} &amp;= a_t \\
+\tilde{Z}_t - \phi_1 B \tilde{Z}_t - \phi_2 B^2 \tilde{Z}_t &amp;= a_t \\
+(1 - \phi_1 B - \phi_2 B^2)\, \tilde{Z}_t &amp;= a_t
+\end{align*}\]</span></p>
 </section>
 <section id="ejemplo-con-ma2" class="slide level2">
 <h2>Ejemplo con MA(2)</h2>
 <p>De la misma forma, el MA(2): <span class="math display">\[Z_t=C+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}\]</span> se puede escribir como<br>
 <span class="math display">\[\tilde{Z}_t=(Z_t-\mu)=(1-\theta_1 B-\theta_2 B^2)a_t\]</span></p>
 </section>
-<section id="armapq-1" class="slide level2">
+<section id="armapq-2" class="slide level2">
 <h2>ARMA(p,q)</h2>
 <ul>
 <li>El ARMA(p,q):</li>
 </ul>
-<p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+...+\phi_p Z_{t-p}\]</span> <span class="math display">\[+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}-...-\theta_q a_{t-q}\]</span></p>
+<p><span class="math display">\[Z_t=C+\phi_1 Z_{t-1}+\phi_2 Z_{t-2}+...+\phi_p Z_{t-p}+a_t-\theta_1 a_{t-1}-\theta_2 a_{t-2}-...-\theta_q a_{t-q}\]</span></p>
 <p>se puede escribir como:</p>
 <p><span class="math display">\[(1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p)\tilde{Z}_t=(1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q)a_t.\]</span></p>
 <p>o</p>
-<p><span class="math display">\[\phi(B)\tilde{Z}_t=\theta(B)a_t.\]</span> donde:<br> <span class="math inline">\(\phi(B)=1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p\)</span> es <strong>el operador autoregresivo</strong>.<br> <span class="math inline">\(\theta(B)=1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q\)</span> es <strong>el operador de medias móviles</strong>.</p>
+<p><span class="math display">\[\phi(B)\tilde{Z}_t=\theta(B)a_t.\]</span> donde:<br> <span class="math inline">\(\phi(B)=1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p\)</span> es <span class="alert">el operador autoregresivo</span>.<br> <span class="math inline">\(\theta(B)=1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q\)</span> es <span class="alert">el operador de medias móviles</span>.</p>
 </section>
-<section id="arp-2" class="slide level2">
+<section id="arp-2" class="slide level2 smaller">
 <h2>AR(p)</h2>
 <ul>
-<li><p>El modelo AR(p) se puede escribir como: <span class="math display">\[(1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p)Z_t=C+a_t,\]</span></p></li>
-<li><p><strong>Resultado teórico:</strong> Considere el polinomio autoregresivo: <span class="math display">\[\phi(z)=1-\phi_1 z -\phi_2  z^2-...-\phi_p z^p.\]</span> se puede demostrar que el proceso AR(p) es estacionario si todas las raíces <span class="math inline">\(z\)</span> del polinomio autoregresivo tienen módulo mayores a 1.</p></li>
-<li><p><strong>Nota:</strong> requiere conocimiento de Ecuaciones en diferencia lineal (Sección 3.2. de Shumway &amp; Stoffer, 2017 y sección 3.6 de Brockwell &amp; Devis, 1991)</p></li>
-<li><p><strong>Ejemplo:</strong> Para un AR(1), la raíz del polinomio autoregresivo es dada por la solución <span class="math inline">\(z\)</span> que satisface la ecuación <span class="math inline">\(\phi(z)=1-\phi_1 z=0\)</span> <span class="math inline">\(\Rightarrow 1 = \phi_1 z\)</span><br>
-<span class="math inline">\(\Rightarrow \frac{1}{\phi_1} =  z\)</span><br>
-<span class="math inline">\(\Rightarrow |z| = |\frac{1}{\phi_1}|&gt;1 \Rightarrow 1&gt;|\phi_1|\)</span></p></li>
+<li>El modelo AR(p) se puede escribir como: <span class="math display">\[(1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p)Z_t=C+a_t,\]</span></li>
 </ul>
-</section>
-<section id="ejemplo-de-ar2" class="slide level2">
-<h2>Ejemplo de AR(2)</h2>
+<div id="thm-first" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 1</strong></span> Considere el polinomio autoregresivo: <span class="math display">\[\phi(z)=1-\phi_1 z -\phi_2  z^2-...-\phi_p z^p.\]</span> se puede demostrar que el proceso AR(p) es estacionario si todas las raíces <span class="math inline">\(z\)</span> del polinomio autoregresivo tienen módulo mayores a 1.<sup>1</sup></p>
+</div>
 <ul>
-<li>Considere <span class="math display">\[Z_t=2+1.5 Z_{t-1}-0.9 Z_{t-2}+a_t\]</span></li>
+<li><strong>Ejemplo:</strong> Para un AR(1), la raíz del polinomio autoregresivo es dada por la solución <span class="math inline">\(z\)</span> que satisface la ecuación <span class="math display">\[\begin{align*}
+\phi(z) &amp;= 1 - \phi_1 z = 0 \Rightarrow\quad 1 = \phi_1 z \\
+\Rightarrow\quad z &amp;= \frac{1}{\phi_1} \Rightarrow\quad |z| = \left|\frac{1}{\phi_1}\right| &gt; 1 \\
+\Rightarrow\quad 1 &amp;&gt; |\phi_1|
+\end{align*}\]</span></li>
+</ul>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Requiere conocimiento de Ecuaciones en Diferencia Lineal (Sección 3.2. de Shumway &amp; Stoffer, 2017 y sección 3.6 de Brockwell &amp; Devis, 1991)</p></li></ol></aside></section>
+<section id="section" class="slide level2 smaller">
+<h2></h2>
+<ul>
+<li><strong>Ejemplo:</strong> Considere <span class="math display">\[Z_t=2+1.5 Z_{t-1}-0.9 Z_{t-2}+a_t\]</span></li>
 <li>La ecuación característica es: <span class="math inline">\(\phi(B)=1-1.5 B +0.9  B^2\)</span> con raíces imaginarias:</li>
 </ul>
 <p><span class="math display">\[B=\frac{1.5\pm \sqrt{2.25-3.6}}{1.8}=\frac{1.5\pm \sqrt{-1.35}}{1.8}=0.83\pm 0.65 i\]</span> donde <span class="math inline">\(i=\sqrt{-1}\)</span>.</p>
@@ -616,15 +810,19 @@
 <li>Las raíces de la ecuación quedan fuera del círculo unitario ya que <span class="math inline">\(|B|=\sqrt{0.83^2+0.65^2}=1.05\)</span>.</li>
 </ul>
 </section>
-<section id="ejemplo-de-ar2-en-general" class="slide level2">
-<h2>Ejemplo de AR(2) en general</h2>
+<section id="section-1" class="slide level2 smaller">
+<h2></h2>
 <ul>
 <li>La ecuación característica de un AR(2) es: <span class="math inline">\(\phi(B)=1-\phi_1 B - \phi_2  B^2\)</span> con raíces imaginarias:</li>
 </ul>
-<p><span class="math display">\[z=\frac{\phi_1 \pm \sqrt{\phi_1^2 - 4  \phi_2 (-1)}}{2 (-\phi_2)}.\]</span> - Para que AR(2) sea estacionario, necesitamos que: <span class="math display">\[\left|\frac{\phi_1 \pm \sqrt{\phi_1^2 + 4  \phi_2 }}{-2 \phi_2}\right|&gt; 1.\]</span> - Esta condición se puede deducir a las siguientes 3 condiciones: <span class="math inline">\(|\phi_2|&lt;1\)</span>; <span class="math inline">\(\phi_1+\phi_2&lt;1\)</span>; <span class="math inline">\(-\phi_1+\phi_2&lt;1\)</span>.</p>
+<p><span class="math display">\[z=\frac{\phi_1 \pm \sqrt{\phi_1^2 - 4  \phi_2 (-1)}}{2 (-\phi_2)}.\]</span></p>
+<ul>
+<li>Para que AR(2) sea estacionario, necesitamos que: <span class="math display">\[\left|\frac{\phi_1 \pm \sqrt{\phi_1^2 + 4  \phi_2 }}{-2 \phi_2}\right|&gt; 1.\]</span></li>
+<li>Esta condición se puede deducir a las siguientes 3 condiciones: <span class="math display">\[|\phi_2|&lt;1\]</span> <span class="math display">\[\phi_1+\phi_2&lt;1\]</span> <span class="math display">\[-\phi_1+\phi_2&lt;1\]</span>.</li>
+</ul>
 </section>
-<section id="ejemplo-de-ar2-en-general-1" class="slide level2">
-<h2>Ejemplo de AR(2) en general</h2>
+<section class="slide level2">
+
 <ul>
 <li>Estas 3 condiciones: <span class="math inline">\(|\phi_2|&lt;1\)</span>; <span class="math inline">\(\phi_1+\phi_2&lt;1\)</span>; <span class="math inline">\(-\phi_1+\phi_2&lt;1\)</span>, abarcan la siguiente región.</li>
 </ul>
@@ -636,11 +834,10 @@
 <li>El modelo MA(q) se puede reescribir como:</li>
 </ul>
 <p><span class="math display">\[Z_t-\mu=(1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q)a_t,\]</span></p>
-<ul>
-<li><p><strong>Resultado teórico:</strong> Considere el polinomio de medias móviles: <span class="math inline">\(\theta(z)=1-\theta_1 z-\theta_2 z^2-...-\theta_q z^q\)</span> se puede demostrar que el proceso MA(q) es invertible si todas las raíces <span class="math inline">\(z\)</span> del polinomio de medias móviles tienen módulo mayores a 1.</p></li>
-<li><p><strong>Nota:</strong> requiere conocimiento de Ecuaciones en diferencia lineal (Sección 3.2. de Shumway &amp; Stoffer, 2017 y sección 3.6 de Brockwell &amp; Devis, 1991)</p></li>
-</ul>
-</section></section>
+<div id="thm-first" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 2</strong></span> Considere el polinomio de medias móviles: <span class="math display">\[\theta(z)=1-\theta_1 z-\theta_2 z^2-...-\theta_q z^q\]</span> Se puede demostrar que el proceso MA(q) es invertible si todas las raíces <span class="math inline">\(z\)</span> del polinomio de medias móviles tienen módulo mayores a 1.<sup>1</sup></p>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>Requiere conocimiento de Ecuaciones en Diferencia Lineal (Sección 3.2. de Shumway &amp; Stoffer, 2017 y sección 3.6 de Brockwell &amp; Devis, 1991)</p></li></ol></aside></section></section>
 <section>
 <section id="operador-de-diferencia" class="title-slide slide level1 agenda-slide center">
 <h1>Operador de diferencia</h1>
@@ -682,12 +879,24 @@
 </section>
 <section class="slide level2">
 
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
 <ul>
-<li><strong>Nota:</strong> Son diferentes estas dos expresiones
+<li>Son diferentes estas dos expresiones</li>
+</ul>
+<p><span class="math display">\[(1-B^2)Z_t = Z_t-Z_{t-2},~~\text{y}\]</span> y</p>
+<p><span class="math display">\[\nabla^2 Z_t=(1-B)^2 Z_t=(1-2B+B^2)Z_t=Z_t-2Z_{t-1}+Z_{t-2}\]</span></p>
+</div>
+</div>
+</div>
 <ul>
-<li><span class="math display">\[(1-B^2)Z_t = Z_t-Z_{t-2},~~\text{y}\]</span></li>
-<li><span class="math display">\[\nabla^2 Z_t=(1-B)^2 Z_t=(1-2B+B^2)Z_t=Z_t-2Z_{t-1}+Z_{t-2}\]</span></li>
-</ul></li>
 <li>Compruebe la igualdad anterior con <span class="math inline">\(\nabla^2 Z_t=\nabla (\nabla Z_t)\)</span> <span class="math display">\[\nabla (Z_t-Z_{t-1})=\nabla Z_t- \nabla Z_{t-1}=Z_t-Z_{t-1}-(Z_{t-1}-Z_{t-2})\]</span> <span class="math display">\[=Z_t-2 Z_{t-1}+Z_{t-2}\]</span></li>
 </ul>
 </section></section>
@@ -728,14 +937,14 @@
 <li><p>Suponga que después de realizar estas <span class="math inline">\(d\)</span> diferencias <span class="math inline">\(\tilde{W}_t\)</span> puede ser representado por un proceso ARMA(p,q), i.e.</p></li>
 </ul>
 <p><span class="math display">\[(1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p)\tilde{W}_t=(1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q)a_t,\]</span> O equivalentemente,</p>
-<p><span class="math display">\[(1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p)(1-B)^d \tilde{Z}_t=\]</span> <span class="math display">\[(1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q)a_t.\]</span></p>
+<p><span class="math display">\[(1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p)(1-B)^d \tilde{Z}_t=(1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q)a_t.\]</span></p>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>Usando las notaciones del operador de diferencia, autoregresivo <span class="math inline">\(\phi(B)\)</span> y de medias móviles <span class="math inline">\(\theta(B)\)</span>,</li>
 </ul>
-<p><span class="math display">\[\phi(B)\nabla^d \tilde{Z}_t=\theta(B)a_t.\]</span> donde:<br> <span class="math inline">\(\phi(B)=1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p\)</span> es el operador autorregresivo.<br> <span class="math inline">\(\theta(B)=1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q\)</span> es el operador de medias móviles. <span class="math inline">\(\nabla^d=(1-B)^d\)</span> es el operador de <span class="math inline">\(d\)</span> diferencias.</p>
+<p><span class="math display">\[\phi(B)\nabla^d \tilde{Z}_t=\theta(B)a_t.\]</span> donde:<br> <span class="math inline">\(\phi(B)=1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p\)</span> es el operador autorregresivo.<br> <span class="math inline">\(\theta(B)=1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q\)</span> es el operador de medias móviles.<br> <span class="math inline">\(\nabla^d=(1-B)^d\)</span> es el operador de <span class="math inline">\(d\)</span> diferencias.</p>
 <ul>
 <li><p>Este modelo es denominado modelo autoregresivo integrado de promedios móviles (en inglés: AutoRegressive Integrated Moving Average model).</p></li>
 <li><p>Se denota con ARIMA(p,d,q).</p></li>
@@ -752,11 +961,14 @@
 
 <h3 id="condiciones-de-arimapdq">Condiciones de ARIMA(p,d,q)</h3>
 <ul>
-<li><p>La condición de .red[<strong>estacionariedad</strong>] se verifica con <strong>la ecuación característica del proceso autoregresivo</strong> <span class="math display">\[\phi(B)=1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p=0.\]</span></p></li>
+<li><p>La condición de <span class="alert">estacionariedad</span> se verifica con <strong>la ecuación característica del proceso autoregresivo</strong> <span class="math display">\[\phi(B)=1-\phi_1 B -\phi_2  B^2-...-\phi_p B^p=0.\]</span></p></li>
 <li><p>Si las raíces características de la ecuación característica están fuera del círculo unitario, el proceso AR(p) es estacionario.</p></li>
-<li><p>De forma similar, la condición de .red[<strong>invertibilidad</strong>] se verifica con la ecuación característica del proceso de medias móviles</p></li>
+<li><p>De forma similar, la condición de <span class="alert">invertibilidad</span> se verifica con la ecuación característica del proceso de medias móviles</p></li>
 </ul>
-<p><span class="math display">\[\theta(B)=1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q=0.\]</span> - Si las raíces características de la ecuación característica están fuera del círculo unitario, el proceso MA(q) es invertible.</p>
+<p><span class="math display">\[\theta(B)=1-\theta_1 B-\theta_2 B^2-...-\theta_q B^q=0.\]</span></p>
+<ul>
+<li>Si las raíces características de la ecuación característica están fuera del círculo unitario, el proceso MA(q) es invertible.</li>
+</ul>
 </section>
 <section id="próximo-tema" class="slide level2">
 <h2>Próximo tema</h2>
@@ -764,6 +976,7 @@
 <h3 id="identificación-estimación-y-diagnóstico-de-modelos-arima.">Identificación, estimación y diagnóstico de modelos ARIMA.</h3>
 
 </section></section>
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
