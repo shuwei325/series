@@ -300,14 +300,14 @@
 <li>Verifique que la variable <span class="math inline">\(Y_t\)</span> y las <span class="math inline">\(X_{t1},X_{t2},...,X_{tp}\)</span> sean estacionarias, porque si se estiman los coeficientes con variables no estacionarias, los estimadores no son consistentes.</li>
 <li>Además, podría presentar problema de la regresión espuria.</li>
 <li>Realice diferencias a las variables no estacionarias.</li>
-<li>El modelo después de aplicar la diferencia es llamado <strong>modelo de regresión en diferencias</strong>.</li>
+<li>El modelo después de aplicar la diferencia es llamado <span class="alert">modelo de regresión en diferencias</span>.</li>
 <li>Se puede demostrar que el modelo de regresión con error de tipo ARIMA es equivalente a un modelo de regresión en diferencias con error tipo ARMA.</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
-<li>Considere <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t,1}+\beta_2 X_{t,2}+...+\beta_p X_{t,p}+\eta_t, ~~t=1,...,T,\]</span> <span class="math display">\[(1-\phi_1B) (1-B) \eta_t=(1-\theta_1 B) \epsilon_t,\]</span></li>
+<li>Por ejemplo, considere <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t,1}+\beta_2 X_{t,2}+...+\beta_p X_{t,p}+\eta_t, ~~t=1,...,T,\]</span> <span class="math display">\[(1-\phi_1B) (1-B) \eta_t=(1-\theta_1 B) \epsilon_t,\]</span></li>
 <li>Después de aplicar las diferencias <span class="math display">\[Y'_t=Y_{t}-Y_{t-1}, ~~~~ X'_{t,k}=X_{t,k}-X_{t-1,k},~k=1,...,p,~~\text{y}~~ \eta'_t=\eta_t-\eta_{t-1}\]</span></li>
 </ul>
 <p>obtenemos</p>
@@ -316,8 +316,11 @@
 <section class="slide level2">
 
 <ul>
-<li>En R, si queremos ajustar un modelo de regresión con error tipo ARIMA(1,1,0), i.e.&nbsp; <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t,1}+\eta_t\]</span> <span class="math display">\[(1-\phi_1B) (1-B) \eta_t=\epsilon_t,\]</span> con el siguiente comando:</li>
+<li>En <code>R</code>, si queremos ajustar un modelo de regresión con error tipo ARIMA(1,1,0), i.e.&nbsp; <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t,1}+\eta_t\]</span> <span class="math display">\[(1-\phi_1B) (1-B) \eta_t=\epsilon_t,\]</span> con el siguiente comando:</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">Arima</span>(y, <span class="at">xreg=</span>x, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <ul>
 <li>El programa considera el modelo en diferencias con error tipo AR(1):</li>
 </ul>
@@ -328,11 +331,19 @@
 <ul>
 <li>Ejemplo tomado de Hyndman (2018): pronóstico del cambio de gasto basado en el ingreso personal (serie trimestral) de 01-1970 a 03-2016.</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">autoplot</span>(uschange[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">facets=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Quarterly changes in US consumption</span></span>
+<span id="cb3-4"><a href=""></a><span class="st">    and personal income"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
+</div>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-3-1.png" width="384" class="r-stretch"></section>
 <section class="slide level2">
 
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>(mod <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(uschange[,<span class="st">"Consumption"</span>],</span>
+<span id="cb4-2"><a href=""></a>                   <span class="at">xreg=</span>uschange[,<span class="st">"Income"</span>]))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: uschange[, "Consumption"] 
 Regression with ARIMA(1,0,2) errors 
@@ -351,8 +362,35 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 </section>
 <section class="slide level2">
 
-
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>errores <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="st">"Regression Errors"</span> <span class="ot">=</span> </span>
+<span id="cb6-2"><a href=""></a>                   <span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"regression"</span>),</span>
+<span id="cb6-3"><a href=""></a>                 <span class="st">"ARIMA errors"</span> <span class="ot">=</span> </span>
+<span id="cb6-4"><a href=""></a>                   <span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"innovation"</span>)) </span>
+<span id="cb6-5"><a href=""></a></span>
+<span id="cb6-6"><a href=""></a><span class="fu">head</span>(errores)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output cell-output-stdout">
+<pre><code>        Regression Errors ARIMA errors
+1970 Q1       -0.18024704  -0.16714211
+1970 Q2       -0.37577719  -0.31981056
+1970 Q3       -0.03728173   0.07199692
+1970 Q4       -0.82151101  -0.69355381
+1971 Q1        0.89529777   1.05009349
+1971 Q2        0.01940569   0.14169806</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>errores<span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href=""></a>  <span class="fu">autoplot</span>(<span class="at">facets=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-5-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div></div>
+</section>
 <section class="slide level2">
 
 <div class="columns">
@@ -360,11 +398,12 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 <ul>
 <li>Residuales del modelo de regresión con errores independientes.</li>
 </ul>
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">acf2</span>(<span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"regression"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-6-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -373,11 +412,12 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 <ul>
 <li>Residuales del modelo dinámico con error de estructura ARMA.</li>
 </ul>
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">acf2</span>(<span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"innovation"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-7-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -386,8 +426,17 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-layout-align="center">
-
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">checkresiduals</span>(mod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-8-1.png" width="384"></p>
+</figure>
+</div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Ljung-Box test
@@ -398,12 +447,51 @@ Q* = 5.8916, df = 5, p-value = 0.3169
 Model df: 3.   Total lags used: 8</code></pre>
 </div>
 </div>
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section>
-<section class="slide level2">
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">checkresiduals</span>(mod, <span class="at">lag =</span> <span class="dv">16</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-9-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
 
-<h3 id="pronóstico">Pronóstico:</h3>
+data:  Residuals from Regression with ARIMA(1,0,2) errors
+Q* = 14.068, df = 13, p-value = 0.3691
 
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section></section>
+Model df: 3.   Total lags used: 16</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section id="pronóstico" class="slide level2">
+<h2>Pronóstico</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li><p>Se necesitan valores futuros de la covariable.</p></li>
+<li><p>Una posibilidad es suponer que toma el promedio histórico.</p></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(mod, <span class="at">xreg=</span><span class="fu">rep</span>(<span class="fu">mean</span>(uschange[,<span class="dv">2</span>]),<span class="dv">8</span>))</span>
+<span id="cb15-2"><a href=""></a><span class="fu">autoplot</span>(fcast) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb15-3"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"Percentage change"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-10-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section></section>
 <section>
 <section id="serie-estacionaria-por-tendencia-y-por-diferencia." class="title-slide slide level1 agenda-slide center">
 <h1>Serie estacionaria por tendencia y por diferencia.</h1>
@@ -464,11 +552,11 @@ Y_t=TD_t+ \eta_t,
 
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-11-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -480,7 +568,7 @@ Y_t=TD_t+ \eta_t,
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
@@ -491,24 +579,28 @@ Y_t=TD_t+ \eta_t,
 <section id="tendencia-determinística-y-estocástica" class="slide level2">
 <h2>Tendencia determinística y estocástica</h2>
 <ul>
-<li>Devolviendo al modelo regresión, en la práctica se puede modelar una tendencia lineal usando:</li>
-</ul>
-<p><span class="math display">\[Y_t=\beta_0+\beta_1 t + \eta_t\]</span> 1. <span class="math inline">\(\eta_t \sim ARMA(p,q)\)</span>, o</p>
-<ol start="2" type="1">
+<li>Devolviendo al modelo regresión, en la práctica se puede modelar una tendencia lineal usando: <span class="math display">\[Y_t=\beta_0+\beta_1 t + \eta_t\]</span>
+<ol type="1">
+<li><span class="math inline">\(\eta_t \sim ARMA(p,q)\)</span>, o</li>
 <li><span class="math inline">\(\eta_t \sim ARIMA(p,1,q)\)</span>.</li>
-</ol>
-<ul>
-<li>En el caso 2, se puede simplificar el modelo en:</li>
+</ol></li>
+<li>En el caso 2, se puede simplificar el modelo en: <span class="math display">\[Y_t=Y_{t-1}+\beta_1+ \eta'_t.\]</span> Este modelo es similar a un modelo de caminata aleatoria pero con un desvío <span class="math inline">\(\beta_1\)</span> y el error es ARMA.</li>
 </ul>
-<p><span class="math display">\[Y_t=Y_{t-1}+\beta_1+ \eta'_t.\]</span> Este modelo es similar a un modelo de caminata aleatoria pero con un desvío <span class="math inline">\(\beta_1\)</span> y el error es ARMA.</p>
 </section>
 <section class="slide level2">
 
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">autoplot</span>(austa) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb16-2"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"millions of people"</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Total annual international visitors to Australia"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
-<section class="slide level2">
-
-<div class="cell" data-layout-align="center">
+</div>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-13-1.png" width="384" class="r-stretch"></section>
+<section id="ajuste-con-tendencia-determinística" class="slide level2">
+<h2>Ajuste con tendencia determinística</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>trend <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(austa)</span>
+<span id="cb17-2"><a href=""></a>(fit1 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(austa, <span class="at">d=</span><span class="dv">0</span>, <span class="at">xreg=</span>trend))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: austa 
 Regression with ARIMA(2,0,0) errors 
@@ -524,9 +616,10 @@ AIC=-17.2   AICc=-15.2   BIC=-9.28</code></pre>
 </div>
 <p><span class="math display">\[Y_t=0.416+0.171t+\eta_t\]</span> <span class="math display">\[\eta_t=1.113\eta_{t-1}-0.380 \eta_{t-2}+\epsilon_t\]</span> <span class="math display">\[\epsilon_t \overset{iid}{\sim} N(0,0.03)\]</span></p>
 </section>
-<section class="slide level2">
-
-<div class="cell" data-layout-align="center">
+<section id="ajuste-con-tendencia-estocástica" class="slide level2">
+<h2>Ajuste con tendencia estocástica</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>(fit2 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(austa, <span class="at">d=</span><span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: austa 
 ARIMA(0,1,1) with drift 
@@ -541,19 +634,30 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 </div>
 </div>
 <p><span class="math display">\[Y_t-Y_{t-1}=0.173+\eta'_t,\]</span> o de otra forma,</p>
-<p><span class="math display">\[Y_t=Y_0+0.173t+\eta'_t\]</span> <span class="math display">\[\eta_t=\eta_{t-1}+0.301\epsilon_{t-1}+\epsilon_t\]</span> <span class="math display">\[\epsilon_t \overset{iid}{\sim} N(0,0.034)\]</span></p>
+<p><span class="math display">\[Y_t=Y_0+0.173t+\eta_t\]</span> <span class="math display">\[\eta_t=\eta_{t-1}+0.301\epsilon_{t-1}+\epsilon_t\]</span> <span class="math display">\[\epsilon_t \overset{iid}{\sim} N(0,0.034)\]</span></p>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-layout-align="center">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>fc1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit1,</span>
+<span id="cb21-2"><a href=""></a>  <span class="at">xreg =</span> <span class="fu">length</span>(austa) <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb21-3"><a href=""></a>fc2 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit2, <span class="at">h=</span><span class="dv">10</span>)</span>
+<span id="cb21-4"><a href=""></a><span class="fu">autoplot</span>(austa) <span class="sc">+</span></span>
+<span id="cb21-5"><a href=""></a>  <span class="fu">autolayer</span>(fc2, <span class="at">series=</span><span class="st">"Stochastic trend"</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href=""></a>  <span class="fu">autolayer</span>(fc1, <span class="at">series=</span><span class="st">"Deterministic trend"</span>) <span class="sc">+</span></span>
+<span id="cb21-7"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Forecasts from trend models"</span>) <span class="sc">+</span></span>
+<span id="cb21-8"><a href=""></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Visitors to Australia (millions)"</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a href=""></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Forecast"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="500" height="300"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
 </figure>
 </div>
 </div>
-</div>
+</div></div>
 </section></section>
 <section>
 <section id="análisis-de-intervención" class="title-slide slide level1 agenda-slide center">
@@ -589,35 +693,56 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 </section>
 <section class="slide level2">
 
+<div class="columns">
+<div class="column" style="width:50%;">
 <ul>
 <li>Series semanales de cuotas de mercado dentífrico de las marcas Colgate y Crest en los Estados Unidos de 1 de enero de 1958 al abril de 1963.</li>
 <li>Al inicio, Colgate aventajaba a la marca Crest en el mercado.</li>
 <li>El 1 de agosto de 1960 ocurrió el cambio de comportamiento: la Asociación Dental Americana dio un respaldo enorme a la marca Crest al hacer público que era una pasta dental eficaz para prevenir las caries dentales.</li>
 <li>Procter y Gamble, la compañía que producía la marca Crest, aprovechó y divulgó intensamente durante dos semanas el enuncio.</li>
 </ul>
-<div class="cell" data-layout-align="center">
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>table<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">"crestcolgate.dat"</span>)</span>
+<span id="cb22-2"><a href=""></a><span class="fu">colnames</span>(table)<span class="ot">&lt;-</span><span class="fu">c</span>( <span class="st">" CRESTMS"</span>, <span class="st">"COLGTEMS"</span> ,<span class="st">"CRESTPR"</span>, <span class="st">"COLGTEPR"</span>)</span>
+<span id="cb22-3"><a href=""></a></span>
+<span id="cb22-4"><a href=""></a>crest.colgate<span class="ot">&lt;-</span><span class="fu">ts</span>(table[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb22-5"><a href=""></a><span class="fu">autoplot</span>(crest.colgate)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="400" height="300"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-17-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+</div></div>
 </section>
 <section class="slide level2">
 
-<p><strong>Pasos a seguir:</strong> 1. Elaborar un modelo ARIMA antes de la intervención, i.e.&nbsp;durante las primeras 134 semanas. 2. Ampliar el modelo agregando variables indicadoras para registrar la intervención. 3. Re-estimar el modelo con la serie completa con las variables indicadoras.</p>
+<p><strong>Pasos a seguir:</strong></p>
+<ol type="1">
+<li><p>Elaborar un modelo ARIMA antes de la intervención, i.e.&nbsp;durante las primeras 134 semanas.</p></li>
+<li><p>Ampliar el modelo agregando variables indicadoras para registrar la intervención.</p></li>
+<li><p>Re-estimar el modelo con la serie completa con las variables indicadoras.</p></li>
+</ol>
 </section>
 <section class="slide level2">
 
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>crest<span class="ot">&lt;-</span><span class="fu">ts</span>(table[,<span class="dv">1</span>])</span>
+<span id="cb23-2"><a href=""></a>crest1<span class="ot">&lt;-</span>crest.colgate[<span class="dv">1</span><span class="sc">:</span><span class="dv">134</span>]</span>
+<span id="cb23-3"><a href=""></a>crest2<span class="ot">&lt;-</span>crest.colgate[<span class="dv">135</span><span class="sc">:</span><span class="dv">276</span>]</span>
+<span id="cb23-4"><a href=""></a></span>
+<span id="cb23-5"><a href=""></a><span class="fu">ts.plot</span>(crest)</span>
+<span id="cb23-6"><a href=""></a><span class="fu">points</span>(<span class="dv">135</span><span class="sc">:</span><span class="dv">276</span>,crest2,<span class="at">col=</span><span class="dv">2</span>,<span class="at">type=</span><span class="st">"l"</span>)</span>
+<span id="cb23-7"><a href=""></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,<span class="fu">c</span>(<span class="st">"antes"</span>,<span class="st">"después"</span>),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-18-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -627,10 +752,11 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 <li>Crest1: antes de la intervención</li>
 </ul>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">acf2</span>(crest1,<span class="at">main=</span><span class="st">"antes"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-18-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-19-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -644,21 +770,24 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 </ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>dif.crest1<span class="ot">&lt;-</span><span class="fu">diff</span>(crest1)</span>
+<span id="cb25-2"><a href=""></a><span class="fu">ts.plot</span>(dif.crest1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-20-1.png" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">acf2</span>(dif.crest1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-20-1.png" style="width:90.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-21-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -670,7 +799,9 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 <ul>
 <li>Vamos a ajustar un ARIMA(0,1,1): <span class="math display">\[(1-B)Z_t=(1-\theta_1B)a_t\]</span></li>
 </ul>
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>moda <span class="ot">&lt;-</span> <span class="fu">Arima</span>(crest1, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb27-2"><a href=""></a><span class="fu">summary</span>(moda)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: crest1 
 ARIMA(0,1,1) 
@@ -695,34 +826,70 @@ Training set -0.0009184472</code></pre>
 
 <ul>
 <li><p>El modelo se puede despejar <span class="math inline">\(Z_t\)</span>: <span class="math display">\[Z_t=\frac{(1-\theta_1B)}{(1-B)}a_t\]</span></p></li>
-<li><p>Creación de variables indicadoras para indicar la intervención: <span class="math display">\[
-I_{1t}=\left\lbrace
+<li><p>Creación de variables indicadoras para indicar la intervención: <span class="math display">\[I_{1t}=\left\lbrace
 \begin{aligned}
 0, &amp; &amp; \text{si}~~ t&lt;135 \\
 1, &amp; &amp;  \text{si}~~ t \geq135,
 \end{aligned}
-\right.
-\]</span></p></li>
-</ul>
-<p><span class="math display">\[
-I_{2t}=\left\lbrace
+\right., ~~ \text{y}~~~I_{2t}=\left\lbrace
 \begin{aligned}
 0, &amp; &amp; \text{si}~~ t&lt;136 \\
 1, &amp; &amp;  \text{si}~~ t \geq136,
 \end{aligned}
-\right.
-\]</span></p>
+\right.\]</span></p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>I1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">134</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">142</span>)) <span class="co">#intervención durante la semana 135</span></span>
+<span id="cb29-2"><a href=""></a>I2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">135</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">141</span>)) <span class="co">#intervención durante la semana 136</span></span>
+<span id="cb29-3"><a href=""></a>X<span class="ot">&lt;-</span><span class="fu">cbind</span>(I1,I2)</span>
+<span id="cb29-4"><a href=""></a></span>
+<span id="cb29-5"><a href=""></a>X[<span class="dv">130</span><span class="sc">:</span><span class="dv">140</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      I1 I2
+ [1,]  0  0
+ [2,]  0  0
+ [3,]  0  0
+ [4,]  0  0
+ [5,]  0  0
+ [6,]  1  0
+ [7,]  1  1
+ [8,]  1  1
+ [9,]  1  1
+[10,]  1  1
+[11,]  1  1</code></pre>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
 <ul>
 <li><p>El modelo ARIMA con intervención: <span class="math display">\[Z_t=c_1 I_{1t} +c_2 I_{2t}+ \frac{(1-\theta_1B)}{(1-B)}a_t\]</span></p></li>
-<li><p>Multiplicando por ambos lados <span class="math inline">\((1-B)\)</span>: <span class="math display">\[(1-B) Z_t=c_1 (1-B) I_{1t} +c_2 (1-B) I_{2t}+ (1-\theta_1B)a_t\]</span></p></li>
+<li><p>Multiplicando por ambos lados <span class="math inline">\((1-B)\)</span>: <span class="math display">\[(1-B) Z_t=c_1 (1-B) I_{1t} +c_2 (1-B) I_{2t}+ (1-\theta_1B)a_t\]</span> Note que en realidad…</p></li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>X_diff <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">diff</span>(I1),<span class="fu">diff</span>(I2))</span>
+<span id="cb31-2"><a href=""></a>X_diff[<span class="dv">130</span><span class="sc">:</span><span class="dv">140</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1] [,2]
+ [1,]    0    0
+ [2,]    0    0
+ [3,]    0    0
+ [4,]    0    0
+ [5,]    1    0
+ [6,]    0    1
+ [7,]    0    0
+ [8,]    0    0
+ [9,]    0    0
+[10,]    0    0
+[11,]    0    0</code></pre>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>modb <span class="ot">&lt;-</span> <span class="fu">Arima</span>(crest, <span class="at">xreg=</span>X, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb33-2"><a href=""></a><span class="fu">summary</span>(modb)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: crest 
 Regression with ARIMA(0,1,1) errors 
@@ -745,7 +912,8 @@ Training set -0.01155037</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="cell" data-layout-align="center">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">checkresiduals</span>(modb,<span class="at">lag=</span><span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -757,8 +925,43 @@ Q* = 15.279, df = 19, p-value = 0.7047
 Model df: 1.   Total lags used: 20</code></pre>
 </div>
 </div>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-26-1.png" width="384" class="r-stretch"></section>
+<section id="otros-tipos-de-intervención" class="slide level2">
+<h2>Otros tipos de intervención</h2>
+<div>
 
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section></section>
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./cryer_intervention1.png"></p>
+<figcaption>Intervención de respuesta escalonada.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="./cryer_intervention2.png"></p>
+<figcaption>Intervención de respuesta a impulso.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<p>Capítulo 11 del Cryer &amp; Chan (2008) Time Series Analysis with Applications in R.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="próximo-tema" class="slide level2">
+<h2>Próximo tema</h2>
+<h3 id="tema-8-archgarch">Tema 8: ARCH/GARCH</h3>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
