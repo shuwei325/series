@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="Shu Wei Chou Chen">
-  <title>Tema 8: Modelos no lineales: ARCH, GARCH y extensiones</title>
+  <title>Tema 9: Modelos lineales multivariados de series temporales</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -193,7 +193,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Tema 8: Modelos no lineales: ARCH, GARCH y extensiones</h1>
+  <h1 class="title">Tema 9: Modelos lineales multivariados de series temporales</h1>
   <p class="subtitle"><a href="https://shuwei325.github.io/series">Curso: Análisis de series temporales</a></p>
 
 <div class="quarto-title-authors">
@@ -225,7 +225,7 @@
 <span id="cb1-6"><a href=""></a><span class="fu">library</span>(car)</span>
 <span id="cb1-7"><a href=""></a><span class="fu">library</span>(fGarch)</span>
 <span id="cb1-8"><a href=""></a><span class="fu">library</span>(xts)</span>
-<span id="cb1-9"><a href=""></a><span class="fu">library</span>(quantmod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href=""></a><span class="fu">library</span>(vars)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section>
@@ -240,22 +240,16 @@
 <p>Introducción</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>Modelos no lineales</p>
+<p>Medidas de dependencia</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>ARCH</p>
+<p>VAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
+<p>Diagnósticos</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>GARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
+<p>ARMAX(p,q) vectorial</p>
 </div></li>
 </ol>
 </div>
@@ -263,19 +257,31 @@
 <section id="introducción-1" class="slide level2">
 <h2>Introducción</h2>
 <ul>
-<li><p>En la práctica, se observan fenómenos con variancia condicional que evoluciona con el tiempo y los modelos ARIMA no son adecuados para estos fenómenos.</p></li>
-<li><p>La aplicación más utilizada y conocida es en las series financieras.</p></li>
-<li><p>Existe una variedad de modelos no lineales en la literatura.</p></li>
-<li><p>Vamos a enfocarnos en la clase de modelos ARCH y GARCH.</p>
-<ul>
-<li><p><strong>ARCH</strong> (<em>AutoRegressive Conditional Heteroscedastic</em>): Modelos autoregresivos con heteroscedasticidad condicional.</p></li>
-<li><p><strong>GARCH</strong> (<em>Generalized AutoRegressive Conditional Heteroscedastic</em>): Modelos autoregresivos con heteroscedasticidad condicional generalizada.</p></li>
-</ul></li>
+<li><p>En la práctica, es común enfrentar situaciones en donde se presentan varias series temporales.</p></li>
+<li><p>Vamos a centrar el caso del análisis multivariada de series temporales estacionarias, con la posibilidad de presentar algún tipo de tendencia determinística.</p></li>
 </ul>
-</section></section>
+</section>
+<section class="slide level2">
+
+<p><strong>Ejemplo 1: El Niño y la población de peces</strong></p>
+<ul>
+<li>Se tiene la serie ambiental de índice de oscilación del sur (SOI, Southern Oscillation Index), y la serie de número de peces nuevos (Reclutamiento) de 453 meses de 1950 a 1987.</li>
+<li>SOI mide cambios en presión relacionada a la temperatura del superficie del mar en el oceano pacífico central, el cual se calienta cada 3-7 años por el efecto El Niño.</li>
+</ul>
+
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section>
+<section class="slide level2">
+
+<p><strong>Ejemplo 2: Imagen por resonancia magnética</strong></p>
+<ul>
+<li>Un estímulo fue aplicado a cinco personas en la mano por 32 segundos y luego paró el estímulo por otros 32 segundos, sucesivamente.</li>
+<li>Durante 256 segundos, cada 2 segundos se registró la intensidad del dependiente del nivel en la sangre (BOLD, blood oxygenation-level dependent signal intensity), la cual mide áreas de activación en el celebro <span class="math inline">\((T=128)\)</span>.</li>
+</ul>
+
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section></section>
 <section>
-<section id="modelos-no-lineales" class="title-slide slide level1 agenda-slide center">
-<h1>Modelos no lineales</h1>
+<section id="medidas-de-dependencia" class="title-slide slide level1 agenda-slide center">
+<h1>Medidas de dependencia</h1>
 <div class="agenda-heading">
 <p>Contenido</p>
 </div>
@@ -285,404 +291,133 @@
 <p>Introducción</p>
 </div></li>
 <li><div class="agenda-active">
-<p>Modelos no lineales</p>
+<p>Medidas de dependencia</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>ARCH</p>
+<p>VAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
+<p>Diagnósticos</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>GARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
+<p>ARMAX(p,q) vectorial</p>
 </div></li>
 </ol>
 </div>
 </section>
-<section id="modelos-no-lineales-1" class="slide level2">
-<h2>Modelos no lineales</h2>
+<section id="medidas-de-dependencia-caso-bivariada" class="slide level2">
+<h2>Medidas de dependencia (caso bivariada)</h2>
 <ul>
-<li>De manera general, el análisis de modelos no lineales suponen que los errores o innovaciones <span class="math inline">\(a_t\)</span> son i.i.d. y el modelo tiene la siguiente forma:</li>
+<li>Recuerde que <strong>la función de autocorrelación</strong> es definida por</li>
 </ul>
-<p><span class="math display">\[X_t= g(a_{t-1},a_{t-2},...)+a_{t}h(a_{t-1},a_{t-2},...),\]</span> en donde <br> <span class="math inline">\(g(\cdot)\)</span> es la media condicional, y <br> <span class="math inline">\(h^2(\cdot)\)</span> es la variancia condicional.</p>
-<p><strong>Nota:</strong> - Los modelos ARMA (bajo el supuesto de estacionariedad) pueden ser representados por: <span class="math display">\[X_t= \sum\limits_{i=0}^\infty \xi_i  a_{t-i}\]</span> que es un modelo lineal.</p>
+<p><span class="math display">\[\rho_X(t,s)=\frac{\gamma(t,s)}{\sqrt{\gamma(t,t)\gamma(s,s)}}\]</span></p>
+<ul>
+<li><p>Se puede generalizar estas medidas a dos series <span class="math inline">\(X_t\)</span> y <span class="math inline">\(Y_t\)</span>. Defina:</p></li>
+<li><p><strong>la función de autocovariancia cruzada</strong>:</p></li>
+</ul>
+<p><span class="math display">\[\gamma_{XY}(t,s)= Cov(X_t,Y_s) =E\left[ (X_t-\mu_{Xt})(Y_s-\mu_{Ys}) \right]\]</span></p>
+<ul>
+<li><strong>la función de autocorrelación cruzada</strong>:</li>
+</ul>
+<p><span class="math display">\[\rho_{XY}(t,s)= \frac{\gamma_{XY}(t,s)}{\sqrt{\gamma_{X}(t,t)\gamma_{Y}(s,s)}}\]</span></p>
+</section>
+<section class="slide level2">
+
+<p><strong>Definición:</strong> Dos series temporales, <span class="math inline">\(X_t\)</span> y <span class="math inline">\(Y_t\)</span> se dicen que son <strong>conjuntamente estacionarias</strong> si cada serie es estacionaria, y la función de covariancia cruzada</p>
+<p><span class="math display">\[\gamma_{XY}(h)= Cov(X_{t+h},Y_t) =E\left[ (X_{t+h}-\mu_{X})(Y_t-\mu_{Y}) \right]\]</span> es una función que solamente depende de <span class="math inline">\(h\)</span>.</p>
+<p>De esta forma, podemos definir la función de correlación cruzada de dos series temporales conjuntamente estacionarias por <span class="math display">\[\rho_{XY}(h)=\frac{\gamma_{XY}(h)}{\sqrt{\gamma_X(0)\gamma_Y(0)}}\]</span></p>
+<p><strong>Propiedades:</strong> - <span class="math inline">\(-1 \leq \rho_{XY}(h) \leq 1\)</span> - <span class="math inline">\(\rho_{XY}(h) \neq \rho_{XY}(-h)\)</span> pues <span class="math inline">\(Cov(X_2,Y_1)\)</span> y <span class="math inline">\(Cov(X_1,Y_2)\)</span> no siempre son iguales. - <span class="math inline">\(\rho_{XY}(h) = \rho_{YX}(-h)\)</span></p>
 </section>
 <section class="slide level2">
 
 <ul>
-<li>El modelos no lineales:</li>
+<li><strong>la función de autocovariancia cruzada muestral</strong> es definida por <span class="math display">\[\hat{\gamma}_{XY}(h)=\frac{1}{T}\sum_{t=1}^{T-h} (X_{t+h}-\bar{X})(Y_{t}-\bar{Y}),\]</span></li>
 </ul>
-<p><span class="math display">\[X_t= g(a_{t-1},a_{t-2},...)+a_{t}h(a_{t-1},a_{t-2},...),\]</span> en donde <span class="math inline">\(g(\cdot)\)</span> es la media condicional, y <span class="math inline">\(h^2(\cdot)\)</span> es la variancia condicional.</p>
+<p>Note que <span class="math inline">\(\hat{\gamma}_{XY}(-h)=\hat{\gamma}_{YX}(h)\)</span> para <span class="math inline">\(h=0,1,...,T-1\)</span>.</p>
 <ul>
-<li>Se dice que el modelo es
-<ul>
-<li>no lineal en media si <span class="math inline">\(g(\cdot)\)</span> es no lineal.</li>
-<li>no lineal en variancia si <span class="math inline">\(h^2(\cdot)\)</span> es no lineal.</li>
-</ul></li>
+<li><strong>La función de autocorrelación cruzada muestral</strong> es definida por <span class="math display">\[\hat{\rho}_{XY}(h)=\frac{\hat{\gamma}_{XY}(h)}{\sqrt{\hat{\gamma}_X(0)\hat{\gamma}_Y(0)}}\]</span> <strong>Propiedad:</strong> La distribución de <span class="math inline">\(\hat{\rho}_{XY}(h)\)</span> para <span class="math inline">\(T\)</span> grande es aproximadamente normal con media cero y <span class="math display">\[\sigma_{\hat{\rho}_{XY}}=\frac{1}{\sqrt{T}}.\]</span></li>
 </ul>
-<p><strong>Ejemplo 1</strong>:</p>
-<p>El modelo: <span class="math display">\[X_t=a_t+\alpha a_{t-1}^2\]</span> es no lineal en media porque <span class="math inline">\(g(\cdot)=\alpha a_{t-1}^2\)</span> y <span class="math inline">\(h(\cdot)=1\)</span></p>
 </section>
+<section id="ejemplo-el-niño-y-la-población-de-peces" class="slide level2">
+<h2>Ejemplo: El Niño y la población de peces</h2>
+<ul>
+<li>Se tiene la serie ambiental de índice de oscilación del sur (SOI, Southern Oscillation Index), y la serie de número de peces nuevos (Reclutamiento) de 453 meses de 1950 a 1987.</li>
+<li>SOI mide cambios en presión relacionada a la temperatura del superficie del mar en el oceano pacífico central, el cual se calienta cada 3-7 años por el efecto El Niño.</li>
+</ul>
+
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section>
 <section class="slide level2">
 
-<p><strong>Ejemplo 2</strong>: El modelo <strong>ARCH(1)</strong></p>
-<p><span class="math display">\[X_t= a_t \sqrt{\alpha X_{t-1}^2}\]</span> es no lineal en variancia porque <span class="math inline">\(g(\cdot)=0\)</span> y <span class="math inline">\(h(\cdot)=\sqrt{\alpha X_{t-1}^2}\)</span> y <span class="math inline">\(X_{t-1}\)</span> depende de <span class="math inline">\(a_{t-1}\)</span>.</p>
-<p><strong>Ejemplo 3</strong>: Modelos polinomiales</p>
-<p>Este modelo tiene la función <span class="math inline">\(g(\cdot)\)</span> como</p>
-<p><span class="math display">\[g(a_{t-1},a_{t-2},...)=\sum\limits_{i=1}^\infty c_i  a_{t-i}+\sum\limits_{i=1}^\infty \sum\limits_{j=1}^\infty b_{ij} a_{t-i} a_{t-j}+...,\]</span> Es una expansión de Volterra, involucrando términos lineales, bilineales,… de las innovaciones.</p>
-</section>
+<p><strong>Gráfico de dispersión de series rezagadas</strong></p>
+
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
 <section class="slide level2">
 
-<p><strong>Ejemplo 4</strong>: El modelo bilineal:</p>
-<p>Este modelo tiene la función <span class="math inline">\(g(\cdot)\)</span> como</p>
-<p><span class="math display">\[g(a_{t-1},a_{t-2},...)=\sum\limits_{i=1}^\infty \alpha_i  a_{t-i}+\sum\limits_{i=1}^\infty \beta_i  X_{t-i}+\sum\limits_{i=1}^\infty \sum\limits_{j=1}^\infty \gamma_{ij} X_{t-i} a_{t-j}.\]</span></p>
-</section></section>
-<section>
-<section id="arch" class="title-slide slide level1 agenda-slide center">
-<h1>ARCH</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Modelos no lineales</p>
-</div></li>
-<li><div class="agenda-active">
-<p>ARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>GARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-</ol>
-</div>
-</section>
-<section id="los-modelos-arch" class="slide level2">
-<h2>Los modelos ARCH</h2>
-<ul>
-<li><p>Los modelos <strong>ARCH</strong> (<em>AutoRegressive Conditional Heteroscedastic</em>), o modelos autorregresivos con heteroscedasticidad condicional, fueron propuestos por Engle (1982).</p></li>
-<li><p>Robert F. Engle recibió Premio Nobel de Economía por los análisis de ARCH para datos de series temporales económicos.</p></li>
-<li><p>La idea básica del modelo es un proceso estacionario que tienen la variancia marginal constante, pero la variancia condicionada a sus valores pasados no lo es.</p></li>
-<li><p>Estos procesos fueron propuestos para explicar ciertas propiedades que no pueden ser explicados por los modelos ARIMA y que son muy frecuentes en datos financieros y ambiantales de alta frecuencia (datos diarios, horarios, etc.).</p></li>
-</ul>
-</section>
-<section id="retornos" class="slide level2">
-<h2>Retornos</h2>
-<ul>
-<li>Suponga que <span class="math inline">\(X_t\)</span> es el valor de un activo en el tiempo <span class="math inline">\(t\)</span>, el retorno <span class="math inline">\(r_t\)</span> en el tiempo <span class="math inline">\(t\)</span> es:</li>
-</ul>
-<p><span class="math display">\[r_t=\frac{X_t-X_{t-1}}{X_{t-1}}\]</span> - Despejando la expresión anterior: <span class="math display">\[X_t=(1+r_t)X_{t-1}\]</span> <span class="math display">\[\Rightarrow \ln X_t=\ln (1+r_t)+ \ln X_{t-1}\]</span> <span class="math display">\[\Rightarrow \nabla \ln X_t = \ln X_t - \ln X_{t-1}=\ln (1+r_t) \approx r_t,\]</span> si <span class="math inline">\(r_t\)</span> son cambios porcentuales pequeños.</p>
-</section>
+<p><strong>Gráfico de dispersión de REC contra SOI rezagadas</strong></p>
+
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
 <section class="slide level2">
 
-<p><strong>Nota:</strong> Recuerde que para una función <span class="math inline">\(f(x)\)</span>, el polinomio de Taylor es una aproximación polinómica de una función n veces derivable en un punto <span class="math inline">\(a\)</span>. Concretamente:</p>
-<p><span class="math display">\[f(x) \approx f(a) + f'(a) (x-a) + \frac{f''(a)}{2!}(x-a)^2 + ...+ \frac{f^{(n)}(a)}{n!}(x-a)^n\]</span></p>
-<ul>
-<li><p>De esta forma, <span class="math display">\[\nabla \ln X_t = \ln X_t - \ln X_{t-1}=\ln (1+r_t) \approx r_t,\]</span></p></li>
-<li><p>A partir de aquí, llamamos <span class="math inline">\(r_t\)</span> o <span class="math inline">\(\nabla \ln X_t\)</span> retornos.</p></li>
-</ul>
-</section>
+
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
 <section class="slide level2">
 
-<ul>
-<li><p>En finanzas, la variancia condicional del retorno financiero de una cartera es una medida de riesgo de una cartera (Value at Risk - VAR).</p></li>
-<li><p>En un mercado eficiente, el retorno esperado debería ser cero, y así debería comportarse como un proceso de ruido blanco.</p></li>
-</ul>
-</section></section>
-<section>
-<section id="ejemplo" class="title-slide slide level1 agenda-slide center">
-<h1>Ejemplo</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Modelos no lineales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>ARCH</p>
-</div></li>
-<li><div class="agenda-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>GARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-</ol>
-</div>
-</section>
-<section id="promedio-diario-industrial-dow-jone" class="slide level2">
-<h2>Promedio diario industrial Dow Jone</h2>
 
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"></section>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
 <section class="slide level2">
 
-<div class="columns">
-<div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-4-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
-<section class="slide level2">
-
-<div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Series: r 
-ARIMA(1,0,1) with non-zero mean 
+<pre><code>
+Autocorrelations of series 'X', by lag
 
-Coefficients:
-         ar1      ma1   mean
-      0.2819  -0.3925  2e-04
-s.e.  0.1595   0.1532  2e-04
-
-sigma^2 = 0.0001446:  log likelihood = 7556.85
-AIC=-15105.69   AICc=-15105.68   BIC=-15082.37
-
-Training set error measures:
-                       ME       RMSE         MAE  MPE MAPE      MASE
-Training set 1.888577e-07 0.01201903 0.007879226 -Inf  Inf 0.6620624
-                    ACF1
-Training set 0.002990262</code></pre>
+-0.4167 -0.3333 -0.2500 -0.1667 -0.0833  0.0000  0.0833  0.1667  0.2500  0.3333 
+ -0.259  -0.228  -0.154  -0.086  -0.013   0.025   0.011  -0.042  -0.146  -0.297 
+ 0.4167 
+ -0.527 </code></pre>
 </div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-layout-align="center">
-
 <div class="cell-output cell-output-stdout">
 <pre><code>
-    Ljung-Box test
+Autocorrelations of series 'X', by lag
 
-data:  Residuals from ARIMA(1,0,1) with non-zero mean
-Q* = 23.844, df = 8, p-value = 0.002434
-
-Model df: 2.   Total lags used: 10</code></pre>
+-0.4167 -0.3333 -0.2500 -0.1667 -0.0833  0.0000  0.0833  0.1667  0.2500  0.3333 
+ -0.527  -0.297  -0.146  -0.042   0.011   0.025  -0.013  -0.086  -0.154  -0.228 
+ 0.4167 
+ -0.259 </code></pre>
 </div>
 </div>
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:40.0%"></section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section id="los-modelos-arch-1" class="slide level2">
-<h2>Los modelos ARCH</h2>
 <ul>
-<li>Modelo <strong>ARCH(1)</strong>:</li>
-</ul>
-<p><span class="math display">\[X_t=\sqrt{h_t} \epsilon_t\]</span> <span class="math display">\[h_t= \alpha_0 +\alpha_1 X_{t-1}^2\]</span> en donde <span class="math inline">\(\epsilon_t\)</span> es ruido blanco gaussiano estándar, i.e.&nbsp;<span class="math inline">\(\epsilon_t \overset{iid}{\sim} N(0,1)\)</span>, y <span class="math inline">\(\alpha_0&gt;0,\alpha_1 \geq 0\)</span>.</p>
-<ul>
-<li>La distribución condicional de <span class="math inline">\(X_t\)</span> dado <span class="math inline">\(X_{t-1}\)</span> es <span class="math display">\[X_t|X_{t-1} \sim N(0,\alpha_0 +\alpha_1 X_{t-1}^2)\]</span></li>
+<li>Note que <span class="math inline">\(\hat{\rho}_{XY}(h) = \hat{\rho}_{YX}(-h)\)</span>.</li>
 </ul>
 </section>
-<section class="slide level2">
-
-<p>Recordatorio: las propiedades de la esperanza y variancia condicional.</p>
-<p><span class="math display">\[E[Y]=E[E(Y|X)]~~y~~Var[Y]=E[Var(Y|X)]+Var[E(Y|X)]\]</span></p>
-<p>Defina <span class="math inline">\(\mathcal{F}_s= \left\lbrace X_{s},X_{s-1},... \right\rbrace\)</span> como la información disponible hasta el período <span class="math inline">\(s\)</span>. Podemos calcular la media, variancia y autocorrelación incondicional de la serie:</p>
-<p><strong>Propiedades:</strong></p>
+<section id="medidas-de-dependencia-k-variada" class="slide level2">
+<h2>Medidas de dependencia (K-variada)</h2>
+<p>La generalización a series temporales multivariadas con <span class="math inline">\(K\)</span> componentes, <span class="math inline">\(X_{t1},...X_{tK}, t=1,...,T\)</span>, es intuitivo:</p>
 <ul>
-<li><span class="math inline">\(E(X_t)=E \left\lbrace E \left[ X_t| \mathcal{F}_{t-1} \right] \right\rbrace=0\)</span></li>
-<li><span class="math inline">\(Var(X_t)= E(X_t^2)=E \left\lbrace E \left[ X_t^2| \mathcal{F}_{t-1} \right] \right\rbrace=E(\alpha_0+\alpha_1 X_{t-1}^2)\)</span> <span class="math inline">\(=\alpha_0+\alpha_1 E(X_{t-1}^2)\)</span></li>
+<li><strong>la función de autocovariancia cruzada</strong>:</li>
 </ul>
-<p>Si el proceso es estacionario, entonces para todo <span class="math inline">\(t\)</span>, <span class="math inline">\(E(X_{t}^2)=E(X_{t-1}^2)=Var(X_t)\)</span> <span class="math display">\[\Rightarrow Var(X_t)=\frac{\alpha_0}{1-\alpha_1}\]</span> con <span class="math inline">\(0 \leq \alpha_1&lt;1\)</span>.</p>
+<p><span class="math display">\[\gamma_{jk}(t,s)= Cov(X_{tj},X_{sk}) =E\left[ (X_{tj}-\mu_{jt})(X_{sk}-\mu_{ks}) \right]\]</span> para <span class="math inline">\(j,k=1,...,K.\)</span></p>
 </section>
 <section class="slide level2">
 
 <ul>
-<li><span class="math inline">\(Cov(X_{t+k},X_t)=E(X_{t+k} X_t), k \geq 1,\)</span></li>
+<li><p>Sea <span class="math inline">\(X_t=(X_{t1},...,X_{tK})'\)</span> un vector <span class="math inline">\(K \times 1\)</span> de series temporales. Se dice que <span class="math inline">\(X_t\)</span> es (débilmente) estacionario si el vector de medias es constante en el tiempo <span class="math display">\[\mu=E(X_t)=\left(\begin{array}{c} \mu_1\\ \vdots \\ \mu_K \end{array}\right)\]</span></p></li>
+<li><p>Y la matriz de autocovariancia depende únicamente del rezago <span class="math inline">\(h\)</span>, i.e. <span class="math display">\[\Gamma(h)= E[(X_{t+h}-\mu)(X_{t}-\mu)' ]\]</span> donde los elementos de la matriz son funciones de covariancia cruzada, <span class="math inline">\(\gamma_{jk}(h)= Cov(X_{t+h,j},X_{t,k}) =E\left[ (X_{t+h,j}-\mu_{j})(X_{tk}-\mu_{k}) \right]\)</span> para <span class="math inline">\(j,k=1,...,K\)</span>.</p></li>
+<li><p>Note que como <span class="math inline">\(\gamma_{jk}(h)=\gamma_{kj}(-h)\)</span>, entonces</p></li>
 </ul>
-<p><span class="math inline">\(=E\left\lbrace E \left[ X_{t+k}X_t| \mathcal{F}_{t+k-1} \right] \right\rbrace=E\left\lbrace X_t~ E \left[ X_{t+k}| \mathcal{F}_{t+k-1} \right] \right\rbrace\)</span></p>
-<p><span class="math inline">\(= E\left\lbrace X_t~ E \left[ \sqrt{h_{t+k}}\epsilon_{t+k}| \mathcal{F}_{t+k-1} \right] \right\rbrace=0\)</span></p>
-<p>Por lo tanto, <span class="math inline">\(\gamma_X(k)=0, k \geq 1\)</span>. En otras palabras, <span class="math inline">\(X_t\)</span> es una secuencia de variables aleatorias no correlacionadas (ruido blanco) con variancia <span class="math inline">\(\frac{\alpha_0}{1-\alpha_1}\)</span>.</p>
+<p><span class="math display">\[\Gamma(-h)=\Gamma'(h)\]</span></p>
+</section>
+<section id="estimación" class="slide level2">
+<h2>Estimación</h2>
 <ul>
-<li>Se puede demostrar que la kurtosis es <span class="math display">\[K=3\frac{1-\alpha_1^2}{1-3 \alpha_1^2}&gt;3.\]</span> El modelo ARCH(1) es leptocúrtico ya que las colas son más pesadas que una distribución normal.</li>
+<li><p><strong>la matriz de autocovariancia muestral</strong> es definida por <span class="math display">\[\hat{\Gamma}(h)=\frac{1}{T}\sum_{t=1}^{T-h} (X_{t+h}-\bar{X})(X_{t}-\bar{X})',\]</span> donde <span class="math inline">\(\bar{X}=\frac{1}{T}\sum_{t=1}^{T} X_{t}\)</span> es el vector de media muestral.</p></li>
+<li><p>Se puede comprobar que:</p></li>
 </ul>
-</section>
-<section class="slide level2">
-
-<p>Simulación de ARCH(1) con <span class="math inline">\(\alpha_0=0.01\)</span>, <span class="math inline">\(\alpha_1=0.8\)</span></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-11-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<p>Si elevamos al cuadrado la serie simulada <span class="math inline">\(X_t\)</span>.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-13-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<ul>
-<li>Modelo <strong>ARCH(r)</strong>:</li>
-</ul>
-<p><span class="math display">\[X_t=\sqrt{h_t} \epsilon_t\]</span> <span class="math display">\[h_t= \alpha_0 +\alpha_1 X_{t-1}^2+\alpha_2 X_{t-2}^2+...+\alpha_r X_{t-r}^2\]</span> en donde <span class="math inline">\(\epsilon_t\)</span> es ruido blanco gaussiano estándar, i.e.&nbsp;<span class="math inline">\(\epsilon_t \sim i.i.d. N(0,1)\)</span>, y <span class="math inline">\(\alpha_0 &gt;0\)</span> y <span class="math inline">\(\alpha_i \geq 0,i=1,...,r\)</span>.</p>
-</section>
-<section class="slide level2">
-
-<p>Simulación de ARCH(2) con <span class="math inline">\(\alpha_0=0.01\)</span>, <span class="math inline">\(\alpha_1=0.2\)</span>, <span class="math inline">\(\alpha_2=0.4\)</span></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<p>Si elevamos al cuadrado la serie simulada <span class="math inline">\(X_t\)</span>.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
+<p><span class="math display">\[\hat{\Gamma}(-h)=\hat{\Gamma}(h)'.\]</span></p>
 </section></section>
 <section>
-<section id="garch" class="title-slide slide level1 agenda-slide center">
-<h1>GARCH</h1>
+<section id="var1" class="title-slide slide level1 agenda-slide center">
+<h1>VAR(1)</h1>
 <div class="agenda-heading">
 <p>Contenido</p>
 </div>
@@ -692,493 +427,248 @@ Model df: 2.   Total lags used: 10</code></pre>
 <p>Introducción</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
-<p>Modelos no lineales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>ARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Ejemplo</p>
+<p>Medidas de dependencia</p>
 </div></li>
 <li><div class="agenda-active">
-<p>GARCH</p>
+<p>VAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
+<p>Diagnósticos</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
+<p>ARMAX(p,q) vectorial</p>
 </div></li>
 </ol>
 </div>
 </section>
-<section id="los-modelos-garch" class="slide level2">
-<h2>Los modelos GARCH</h2>
-<p>El Modelo <strong>GARCH(1,1)</strong> es definido por:</p>
-<p><span class="math display">\[X_t=\sqrt{h_t} \epsilon_t\]</span> <span class="math display">\[h_t= \alpha_0 + \alpha_1 X_{t-1}^2 + \beta_1 h_{t-1}\]</span></p>
-<p>con <span class="math inline">\(\epsilon_t \sim i.i.d. N(0,1)\)</span>, <span class="math inline">\(\alpha_0 &gt;0\)</span>, <span class="math inline">\(\alpha_1 \geq 0\)</span>, <span class="math inline">\(\beta_1 \geq 0\)</span> y <span class="math inline">\(\alpha_1+\beta_1 &lt; 1\)</span>.</p>
-</section>
-<section class="slide level2">
-
-<p>Simulación de GARCH(1,1) con <span class="math inline">\(\alpha_0=0.01\)</span>, <span class="math inline">\(\alpha_1=0.2\)</span>, <span class="math inline">\(\beta_2=0.4\)</span></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-19-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<p>Si elevamos al cuadrado la serie simulada <span class="math inline">\(X_t\)</span>.</p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-21-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section></section>
-<section>
-<section id="ejemplo-1" class="title-slide slide level1 agenda-slide center">
-<h1>Ejemplo</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Modelos no lineales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>ARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>GARCH</p>
-</div></li>
-<li><div class="agenda-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Ejemplo</p>
-</div></li>
-</ol>
-</div>
-</section>
-<section id="promedio-diario-industrial-dow-jone-1" class="slide level2">
-<h2>Promedio diario industrial Dow Jone</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-23-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>Series: djia.retorno 
-ARIMA(1,0,1) with non-zero mean 
-
-Coefficients:
-         ar1      ma1   mean
-      0.2907  -0.4011  2e-04
-s.e.  0.1596   0.1530  2e-04
-
-sigma^2 = 0.0001446:  log likelihood = 7556.85
-AIC=-15105.7   AICc=-15105.68   BIC=-15082.37
-
-Training set error measures:
-                      ME       RMSE         MAE  MPE MAPE      MASE        ACF1
-Training set 4.28313e-07 0.01201902 0.007879946 -Inf  Inf 0.6621228 0.002800533</code></pre>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-26-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-28-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<p>modelo GARCH</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>           Estimate   Std. Error   t value     Pr(&gt;|t|)
-mu     6.529185e-04 1.556582e-04  4.194565 2.733961e-05
-omega  2.203263e-06 4.021494e-07  5.478718 4.284195e-08
-alpha1 1.209236e-01 1.323726e-02  9.135090 0.000000e+00
-beta1  8.615078e-01 1.326084e-02 64.966292 0.000000e+00</code></pre>
-</div>
-</div>
-<p>El Modelo GARCH(1,1):</p>
-<p><span class="math display">\[r_t= 0.000653 + \sqrt{h_t} \epsilon_t\]</span> <span class="math display">\[h_t= 0.0000022 + 0.121 \varepsilon_{t-1}^2 + 0.86 h_{t-1}\]</span></p>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-32-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-34-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-36-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-37-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-38-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<p>Modelo ARMA-GARCH</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>            Estimate   Std. Error   t value     Pr(&gt;|t|)
-mu      2.342926e-04 1.718323e-04  1.363496 1.727263e-01
-ar1     6.501490e-01 2.505108e-01  2.595293 9.451028e-03
-ma1    -6.948000e-01 2.369594e-01 -2.932148 3.366265e-03
-omega   2.210515e-06 4.029936e-07  5.485235 4.129200e-08
-alpha1  1.208763e-01 1.332254e-02  9.073067 0.000000e+00
-beta1   8.614443e-01 1.334439e-02 64.554783 0.000000e+00</code></pre>
-</div>
-</div>
-<p>El Modelo ARMA(1,1)+GARCH(1,1):</p>
-<p><span class="math display">\[r_t= 0.00023 + 0.65 r_{t-1} + \varepsilon_t - 0.695 \varepsilon_{t-1}\]</span> <span class="math display">\[\varepsilon_t=\sqrt{h_t} \epsilon_t\]</span> <span class="math display">\[h_t= 0.0000022 + 0.121 \varepsilon_{t-1}^2 + 0.86 h_{t-1}\]</span></p>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-41-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-42-1.png" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section></section>
-<section>
-<section id="ejemplo-2" class="title-slide slide level1 agenda-slide center">
-<h1>Ejemplo</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Modelos no lineales</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>ARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>GARCH</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Ejemplo</p>
-</div></li>
-<li><div class="agenda-active">
-<p>Ejemplo</p>
-</div></li>
-</ol>
-</div>
-</section>
-<section id="promedio-diario-industrial-dow-jone-2" class="slide level2">
-<h2>Promedio diario industrial Dow Jone</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-43-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-44-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-45-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-46-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-47-1.png" class="quarto-figure quarto-figure-center" style="width:90.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-48-1.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-</div>
-</div></div>
-</section>
-<section class="slide level2">
-
-<p>El Modelo <strong>GARCH(r,s)</strong> es definido por:</p>
-<p><span class="math display">\[X_t=\sqrt{h_t} \epsilon_t\]</span> <span class="math display">\[h_t= \alpha_0 + \sum_{i=1}^r \alpha_i X_{t-i}^2 + \sum_{j=1}^s \beta_j h_{t-j}\]</span> <span class="math display">\[= \alpha_0 +\alpha_1 X_{t-1}^2+\alpha_2 X_{t-2}^2+...+\alpha_r X_{t-r}^2\]</span> <span class="math display">\[+\beta_1 h_{t-1}+...+\beta_s h_{t-s}\]</span> en donde <span class="math inline">\(\epsilon_t \sim i.i.d. N(0,1)\)</span>, <span class="math inline">\(\alpha_0 &gt;0\)</span>, <span class="math inline">\(\alpha_i \geq 0\)</span>, <span class="math inline">\(\beta_j \geq 0\)</span> y <span class="math inline">\(\sum\limits_{i=1}^q (\alpha_i+\beta_i) &lt; 1, q=max(r,s)\)</span>.</p>
-</section>
-<section id="extensiones-del-modelo-garch" class="slide level2">
-<h2>Extensiones del modelo GARCH</h2>
+<section id="modelos-autorregresivos-multivariados" class="slide level2">
+<h2>Modelos autorregresivos multivariados</h2>
 <ul>
-<li>Exponential GAGRCH (EGARCH).</li>
-<li>Threshold GARCH (TGARCH).</li>
-<li>Integrated GARCH (IGARCH).</li>
-<li>…</li>
+<li><p>Es un caso particular de los modelos de series temporales multivariados que supone que la observación de cada variable depende linealmente de los rezagos pasados de ella misma y también de otras variables.</p></li>
+<li><p>Para introducir el modelo, vamos a empezar VAR(1) con 3 series: <span class="math inline">\(X_{t,1},X_{t,2},X_{t,3}\)</span>.</p></li>
+<li><p>El VAR(1) se define de la siguiente forma:</p></li>
+</ul>
+<p><span class="math display">\[X_{t,1}=\alpha_1+\Phi_{11}X_{t-1,1}+\Phi_{12}X_{t-1,2}+\Phi_{13}X_{t-1,3}+w_{t,1}\]</span></p>
+<p><span class="math display">\[X_{t,2}=\alpha_2+\Phi_{21}X_{t-1,1}+\Phi_{22}X_{t-1,2}+\Phi_{23}X_{t-1,3}+w_{t,2}\]</span></p>
+<p><span class="math display">\[X_{t,3}=\alpha_3+\Phi_{31}X_{t-1,1}+\Phi_{32}X_{t-1,2}+\Phi_{33}X_{t-1,3}+w_{t,3}\]</span> - Note que cada ecuación establece un modelo autorregresivo de orden 1 más otras variables de un rezago.</p>
+</section>
+<section id="var1-1" class="slide level2">
+<h2>VAR(1)</h2>
+<ul>
+<li>En concreto, el modelo anterior se puede resumir en</li>
+</ul>
+<p><span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\alpha}+\boldsymbol{\Phi}\boldsymbol{X}_{t-1}+\boldsymbol{w}_{t}\]</span> en donde</p>
+<p><span class="math display">\[\boldsymbol{X}_{t}=
+\begin{bmatrix}x_{t,1}\\
+x_{t,2}\\
+x_{t,3}
+\end{bmatrix}~~~~~
+\boldsymbol{\alpha}=
+\begin{bmatrix}\alpha_{1}\\
+\alpha_{2}\\
+\alpha_{3}
+\end{bmatrix}~~~~~
+\boldsymbol{\Phi}=\begin{bmatrix}\Phi_{11} &amp; \Phi_{12} &amp; \Phi_{13} \\
+\Phi_{21} &amp; \Phi_{22} &amp; \Phi_{23}\\
+\Phi_{31} &amp; \Phi_{32} &amp; \Phi_{33}
+\end{bmatrix}~~~~~
+\boldsymbol{w}_{t}=
+\begin{bmatrix}w_{t,1}\\
+w_{t,2}\\
+w_{t,3}
+\end{bmatrix}\]</span></p>
+</section>
+<section id="arx1-multivariado" class="slide level2">
+<h2>ARX(1) multivariado</h2>
+<ul>
+<li>También es posible extender el modelo anterior con intercepto y tendencia:</li>
+</ul>
+<p><span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{\Phi}\boldsymbol{X}_{t-1}+\boldsymbol{w}_{t},\]</span></p>
+<p><span class="math display">\[\text{donde}~~ \boldsymbol{\Gamma}=\begin{bmatrix}\alpha_{1} &amp; \beta_{1}  \\
+\alpha_{2} &amp; \beta_{2} \\
+\alpha_{3} &amp; \beta_{3}
+\end{bmatrix} ~~\text{y}~~ \boldsymbol{u}_t= \begin{bmatrix}1  \\
+t \end{bmatrix}\]</span></p>
+<ul>
+<li>Es decir,</li>
+</ul>
+<p><span class="math display">\[X_{t,1}=\alpha_1 + \beta_1 t+\Phi_{11}X_{t-1,1}+\Phi_{12}X_{t-1,2}+\Phi_{13}X_{t-1,3}+w_{t,1}\]</span></p>
+<p><span class="math display">\[X_{t,2}=\alpha_2+ \beta_2 t+\Phi_{21}X_{t-1,1}+\Phi_{22}X_{t-1,2}+\Phi_{23}X_{t-1,3}+w_{t,2}\]</span></p>
+<p><span class="math display">\[X_{t,3}=\alpha_3+ \beta_3 t+\Phi_{31}X_{t-1,1}+\Phi_{32}X_{t-1,2}+\Phi_{33}X_{t-1,3}+w_{t,3}\]</span></p>
+<ul>
+<li>Note que X en ARX se refiere al vector exógeno denotado por <span class="math inline">\(u_t\)</span> y se puede extender fácilmente incluyendo variable exógenas.</li>
 </ul>
 </section>
-<section id="próximos-temas" class="slide level2">
-<h2>Próximos temas</h2>
-<h3 id="tema-8b-modelos-lineales-multivariados-de-series-temporales">Tema 8b: Modelos lineales multivariados de series temporales</h3>
+<section id="arxp-multivariado" class="slide level2">
+<h2>ARX(p) multivariado</h2>
+<ul>
+<li>De esta forma, se puede generalizar a series temporales <span class="math inline">\(K\)</span>-dimensionales y <span class="math inline">\(p\)</span> rezagos:</li>
+</ul>
+<p><span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{\Phi_1}\boldsymbol{X}_{t-1}+...+\boldsymbol{\Phi_p}\boldsymbol{X}_{t-p}+\boldsymbol{w}_{t}\]</span> en donde <span class="math display">\[\boldsymbol{X}_{t}=
+\begin{bmatrix}X_{t,1}\\
+\vdots \\
+X_{t,K}
+\end{bmatrix},~~~\boldsymbol{\Phi}_i=\begin{bmatrix}\Phi_{i,1,1} &amp; \dots &amp; \Phi_{i,1,K} \\
+\vdots &amp; \ddots &amp; \vdots\\
+\Phi_{i,K,1} &amp; \dots &amp; \Phi_{i,K,v}
+\end{bmatrix}~~~~~,i=1,...,p, ~~\text{y}~~~~~\]</span> <span class="math display">\[\boldsymbol{w}_{t}=
+\begin{bmatrix}w_{t,1}\\
+\vdots\\
+w_{t,K}
+\end{bmatrix}\]</span></p>
+<p><span class="math inline">\(u_t\)</span> es un vector <span class="math inline">\(k \times 1\)</span> de <span class="math inline">\(k\)</span> variables exógenas y <span class="math inline">\(\boldsymbol{\Gamma}\)</span> es una matriz <span class="math inline">\(r \times k\)</span> de coeficientes asociados a las variables exógenas.</p>
+</section>
+<section id="arxp-multivariado-o-varxp" class="slide level2">
+<h2>ARX(p) multivariado o VARX(p)</h2>
+<ul>
+<li>Considere el modelo en término del polinomio de rezagos:</li>
+</ul>
+<p><span class="math display">\[A(B) \boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{w}_{t}\]</span> donde <span class="math inline">\(A(B)=I-\boldsymbol{\Phi_1}B-...-\boldsymbol{\Phi_p}B^{p}\)</span> es el polinomio autoregresivo</p>
+<ul>
+<li>El modelo VARX(p) es estacionario (estable) si</li>
+</ul>
+<p><span class="math display">\[\det(I-\boldsymbol{\Phi_1}z-...-\boldsymbol{\Phi_p}z^{p}) \neq 0 ~~\text{para }|z|\leq 1.\]</span></p>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>En la práctica, se utiliza el hecho de que cualquier VAR(p) se puede representar como un VAR(1) por medio de la matriz compañera A:</li>
+</ul>
+<p><span class="math display">\[\boldsymbol{\xi}_{t}=A\boldsymbol{\xi}_{t-1}+\boldsymbol{v}_{t}\]</span> donde <span class="math display">\[\boldsymbol{\xi}_{t (Kp)}=
+\begin{bmatrix}X_{t}\\
+\vdots \\
+X_{t-p+1}
+\end{bmatrix},~~~A=\begin{bmatrix}\Phi_{1} &amp; \Phi_2 &amp; ... &amp; \Phi_{p-1} &amp; \Phi_{p} \\
+I &amp; 0 &amp; ... &amp; 0 &amp; 0 \\
+0 &amp; I &amp; ... &amp; 0 &amp; 0\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; ... &amp; I &amp; 0
+\end{bmatrix}~,~ \boldsymbol{v}_{t}=
+\begin{bmatrix}w_{t}\\
+0 \\
+\vdots\\
+0
+\end{bmatrix}\]</span> y <span class="math inline">\(\boldsymbol{\xi}_{t}\)</span> y <span class="math inline">\(\boldsymbol{v}_{t}\)</span> son vectores <span class="math inline">\(Kp \times 1\)</span>, y <span class="math inline">\(A\)</span> es una matriz <span class="math inline">\(Kp \times Kp\)</span>. - Luego, la condición anterior de estacionariedad es equivalente a que todos los eigenvalues de la matriz <span class="math inline">\(A\)</span> tienen módulo menor a 1.</p>
+</section>
+<section id="criterio-de-información" class="slide level2">
+<h2>Criterio de información</h2>
+<ul>
+<li>Debido a la complejidad de selección del orden <span class="math inline">\(p\)</span>, en la práctica se usan los criterios de información:</li>
+</ul>
+<p><strong>AIC:</strong> <span class="math display">\[AIC(p)= \log \det(\tilde{Z}_u(p))+\frac{2}{T}pK^2\]</span> <strong>HQ (Hannan-Quinn):</strong></p>
+<p><span class="math display">\[HQ(p)= \log \det(\tilde{Z}_u(p))+\frac{2\log(\log(T))}{T}pK^2\]</span></p>
+<p>donde <span class="math inline">\(\tilde{Z}_u(p)=T^{-1}\sum_{t=1}^T \hat{w}_t \hat{w}'_t\)</span>,<br>
+<span class="math inline">\(p^*\)</span> es el total de parámetros en cada ecuación y<br>
+<span class="math inline">\(p\)</span> es el orden de rezago.</p>
+</section>
+<section class="slide level2">
+
+<p><strong>BIC o criterio de información de Schwarz (SC):</strong> <span class="math display">\[SC(p)= \log \det(\tilde{Z}_u(p))+\frac{\log(T)}{T}pK^2\]</span> <strong>FPE (Final Predictor Error):</strong> <span class="math display">\[FPE(p)=\left( \frac{T+p^*}{T-p^*}\right)^K \det(\tilde{Z}_u(p))\]</span></p>
+</section></section>
+<section>
+<section id="diagnósticos" class="title-slide slide level1 agenda-slide center">
+<h1>Diagnósticos</h1>
+<div class="agenda-heading">
+<p>Contenido</p>
+</div>
+<div class="agenda">
+<ol>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introducción</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Medidas de dependencia</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>VAR(1)</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Diagnósticos</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>ARMAX(p,q) vectorial</p>
+</div></li>
+</ol>
+</div>
+</section>
+<section id="diagnósticos-1" class="slide level2">
+<h2>Diagnósticos</h2>
+<ul>
+<li>Pruebas de hipótesis para la correlación serial:</li>
+</ul>
+<p><strong>El estadístico de Portmanteau:</strong> <span class="math display">\[Q_h=T \sum_{j=1}^h tr(\hat{C}'_j\hat{C}^{-1}_0\hat{C}_j\hat{C}^{-1}_0)\]</span> donde <span class="math inline">\(\hat{C}_i=\frac{1}{T}\sum_{j=i+1}^T \hat{w}_t\hat{w}'_{t-i}\)</span>. Para <span class="math inline">\(T\)</span> y <span class="math inline">\(h\)</span> suficientemente grandes, el estadístico se aproxima a la distribución <span class="math inline">\(\chi^2(K^2(h-n^*))\)</span>, donde <span class="math inline">\(n^*\)</span> es la cantidad de parámetros excluyendo los de términos determinísticos.</p>
+<p><strong>El estadístico de Portmanteau ajustado (muestras pequeñas):</strong> <span class="math display">\[Q^*_h=T^2 \sum_{j=1}^h \frac{1}{T-j} tr(\hat{C}'_j\hat{C}^{-1}_0\hat{C}_j\hat{C}^{-1}_0)\]</span></p>
+</section>
+<section id="ejemplo" class="slide level2">
+<h2>Ejemplo</h2>
+<ul>
+<li>3 series semanales en la zona rural de Los Angeles, EU de 1970 a 1980 <span class="math inline">\((T=508)\)</span>.
+<ul>
+<li>promedio semanal de mortalidad cardiovascular.</li>
+<li>temperatura (F)</li>
+<li>nivel de partícula (contaminación)</li>
+</ul></li>
+</ul>
+
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section></section>
+<section>
+<section id="armaxpq-vectorial" class="title-slide slide level1 agenda-slide center">
+<h1>ARMAX(p,q) vectorial</h1>
+<div class="agenda-heading">
+<p>Contenido</p>
+</div>
+<div class="agenda">
+<ol>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introducción</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Medidas de dependencia</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>VAR(1)</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Diagnósticos</p>
+</div></li>
+<li><div class="agenda-active">
+<p>ARMAX(p,q) vectorial</p>
+</div></li>
+</ol>
+</div>
+</section>
+<section id="armaxpq-vectorial-1" class="slide level2">
+<h2>ARMAX(p,q) vectorial</h2>
+<ul>
+<li>El modelo ARMAX(p,q) <span class="math inline">\(r\)</span>-dimensionales:</li>
+</ul>
+<p><span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+ \sum_{i=1}^p \boldsymbol{\Phi_i}\boldsymbol{X}_{t-i}  - \sum_{j=1}^q \boldsymbol{\Theta_j}\boldsymbol{w}_{t-j} +\boldsymbol{w}_{t}\]</span> con <span class="math inline">\(\boldsymbol{\Phi_p}, \boldsymbol{\Theta_q} \neq \boldsymbol{0}\)</span> y <span class="math inline">\(\Sigma_\boldsymbol{w}\)</span> definida positiva. - Los coeficientes <span class="math inline">\(\boldsymbol{\Phi_i}:i=1,...,p\)</span>, <span class="math inline">\(\boldsymbol{\Theta_j}:j=1,...,q\)</span> son matrices <span class="math inline">\(r \times r\)</span></p>
+</section>
+<section id="varmapq" class="slide level2">
+<h2>VARMA(p,q)</h2>
+<p>Para el caso del VARMA(p,q), i.e.&nbsp;tiene media cero, el modelo se especifica de la forma</p>
+<p><span class="math display">\[\boldsymbol{\Phi}(B) \boldsymbol{X}_{t}= \boldsymbol{\Theta}(B) \boldsymbol{w}_{t}\]</span> en donde</p>
+<p><span class="math inline">\(\boldsymbol{\Phi}(B)=I- \boldsymbol{\Phi}_1 B-...- \boldsymbol{\Phi}_p B^p\)</span> es el operador autorregresivo y</p>
+<p><span class="math inline">\(\boldsymbol{\Theta}(B)=I- \boldsymbol{\Theta}_1 B-...- \boldsymbol{\Theta}_q B^q\)</span> es el operador de medias móviles.</p>
+<ul>
+<li>El modelo se dice que es causal (estacionario) si las raíces de <span class="math inline">\(|\boldsymbol{\Phi}(B)|\)</span>, están fuera del círculo unitario.</li>
+<li>El modelo se dice que es invertible si las raíces de <span class="math inline">\(|\boldsymbol{\Theta}(B)|\)</span>, están fuera del círculo unitario.</li>
+</ul>
+</section>
+<section id="temas-adicionales" class="slide level2">
+<h2>Temas adicionales</h2>
+<ul>
+<li>ARFIMA o FARIMA o ARIMA fraccional.
+<ul>
+<li>Series temporales con memoria larga.</li>
+</ul></li>
+<li>Otras extensiones de ARCH-GARCH.</li>
+<li>Procesos localmente estacionarios.</li>
+<li>Procesos cointegrados.</li>
+<li>Modelos de espacio de estados.</li>
+<li>Análisis espectral (dominio de frecuencia).</li>
+<li>y otros.</li>
+</ul>
 
 </section></section>
     </div>
