@@ -1,3 +1,5 @@
 *.Rmd
 Tema_1/.Rhistory
 *.qmd
+.Rproj.user
+*.Rproj
