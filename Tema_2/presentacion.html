@@ -448,10 +448,8 @@ MA_{t} = \frac{1}{m} \sum_{j=-k}^k Z_{t+j},
 
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>ejemploMA <span class="ot">&lt;-</span> <span class="fu">cbind</span>(AirPassengers,</span>
-<span id="cb6-2"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">3</span>),</span>
-<span id="cb6-3"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">5</span>),</span>
-<span id="cb6-4"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">6</span>))</span>
-<span id="cb6-5"><a href=""></a><span class="fu">head</span>(ejemploMA,<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href=""></a>      <span class="fu">ma</span>(AirPassengers, <span class="dv">3</span>), <span class="fu">ma</span>(AirPassengers, <span class="dv">5</span>))</span>
+<span id="cb6-3"><a href=""></a><span class="fu">head</span>(ejemploMA, <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         AirPassengers ma(AirPassengers, 3) ma(AirPassengers, 5)
 Jan 1949           112                   NA                   NA
@@ -463,20 +461,9 @@ Jun 1949           135             134.6667                136.2
 Jul 1949           148             143.6667                137.6
 Aug 1949           148             144.0000                137.2
 Sep 1949           136             134.3333                131.0
-Oct 1949           119             119.6667                125.0
-         ma(AirPassengers, 6)
-Jan 1949                   NA
-Feb 1949                   NA
-Mar 1949                   NA
-Apr 1949             127.5000
-May 1949             133.0000
-Jun 1949             135.8333
-Jul 1949             135.3333
-Aug 1949             133.0833
-Sep 1949             130.2500
-Oct 1949             126.0833</code></pre>
+Oct 1949           119             119.6667                125.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">tail</span>(ejemploMA,<span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">tail</span>(ejemploMA, <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         AirPassengers ma(AirPassengers, 3) ma(AirPassengers, 5)
 Mar 1960           419             423.6667                432.0
@@ -488,18 +475,7 @@ Aug 1960           606             578.6667                546.4
 Sep 1960           508             525.0000                517.4
 Oct 1960           461             453.0000                479.4
 Nov 1960           390             427.6667                   NA
-Dec 1960           432                   NA                   NA
-         ma(AirPassengers, 6)
-Mar 1960             438.3333
-Apr 1960             466.2500
-May 1960             501.2500
-Jun 1960             526.5833
-Jul 1960             534.0000
-Aug 1960             527.1667
-Sep 1960             511.7500
-Oct 1960                   NA
-Nov 1960                   NA
-Dec 1960                   NA</code></pre>
+Dec 1960           432                   NA                   NA</code></pre>
 </div>
 </div>
 </section>
