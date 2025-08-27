@@ -310,7 +310,7 @@
 <li><span class="math inline">\(P_t\)</span>: el pronóstico del tiempo <span class="math inline">\(t\)</span>.</li>
 <li><span class="math inline">\(Z_t-P_t\)</span>: el error de pronóstico.</li>
 </ul></li>
-<li><p>El método de SES consiste en: <span class="math display">\[P_{t+1}=P_t+\alpha (Z_t-P_t)\]</span> donde <span class="math inline">\(0&lt;\alpha&lt;1\)</span> es el parámetro de suavizamiento.<br></p>
+<li><p>El método de SES consiste en: <span class="math display">\[P_{t+1}=P_t+\alpha (Z_t-P_t)\]</span> donde <span class="math inline">\(0\leq \alpha\leq1\)</span> es el parámetro de suavizamiento.<br></p>
 <ul>
 <li>El pronóstico en el tiempo <span class="math inline">\(t+1\)</span> es una combinación del pronóstico en el tiempo <span class="math inline">\(t\)</span> y una proporción <span class="math inline">\(\alpha\)</span> el error de pronóstico del tiempo <span class="math inline">\(t\)</span>.</li>
 </ul></li>
@@ -383,7 +383,7 @@ P_{t+1}
 <h2>El método lineal de Holt</h2>
 <ul>
 <li>El método de Holt sirve para series con tendencia.</li>
-<li>El suavizamiento exponencial de Holt utiliza 3 ecuaciones y dos parámetros ( <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>):</li>
+<li>El suavizamiento exponencial de Holt utiliza 3 ecuaciones y dos parámetros ( <span class="math inline">\(0 \leq \alpha \leq 1\)</span> y <span class="math inline">\(0 \leq \beta \leq 1\)</span>):</li>
 </ul>
 <p><span class="alert">Ecuación del nivel:</span> <span class="math inline">\(~~~~~~~~~~~~~l_{t}=\alpha Z_{t} + (1-\alpha)~ (l_{t-1}+b_{t-1})\)</span></p>
 <p><span class="alert">Ecuación de la pendiente:</span> <span class="math inline">\(~~~~b_{t}=\beta (l_t-l_{t-1}) + (1-\beta)~ b_{t-1}\)</span></p>
