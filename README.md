@@ -24,6 +24,6 @@ básicos del análisis de series cronológicas.
 
 # Temas adicionales
 
-A. [Estadística Multivariada](./Aendice/presentacionA.html)
+A. [Estadística Multivariada](./Apendice/presentacionA.html)
 
 ## [Lista de Ejercicios](https://shuwei325.github.io/series_ej/)
