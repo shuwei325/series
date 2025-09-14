@@ -22,4 +22,8 @@ básicos del análisis de series cronológicas.
 | 8\. ARCH/GARCH | [Tema 8](./Tema_8/presentacion.html) | [Lab8](./Tema_8/lab.html) |
 | 9\. Multivariado | [Tema 9](./Tema_9/presentacion.html) | [Lab9](./Tema_9/lab.html) / [archivos](./Tema_8/archivos.zip) |
 
+# Temas adicionales
+
+A. [Estadística Multivariada](./Aendice/presentacionA.html)
+
 ## [Lista de Ejercicios](https://shuwei325.github.io/series_ej/)
