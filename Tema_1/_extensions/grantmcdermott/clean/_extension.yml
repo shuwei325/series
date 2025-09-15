@@ -6,14 +6,16 @@ contributes:
   formats:
     revealjs:
       theme: [default, clean.scss]
+      include-in-header: chalkboard-setup.html
       menu:
         side: right
         width: wide
         numbers: true
       slide-number: true
       date-format: long
-      fig-width: 5
-      fig-height: 5
+      fig-width: 4
+      fig-height: 4
+      
 
     
 
