@@ -224,7 +224,8 @@
 <span id="cb1-2"><a href=""></a><span class="fu">library</span>(forecast)</span>
 <span id="cb1-3"><a href=""></a><span class="fu">library</span>(fpp2)</span>
 <span id="cb1-4"><a href=""></a><span class="fu">library</span>(astsa)</span>
-<span id="cb1-5"><a href=""></a><span class="fu">library</span>(sarima)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href=""></a><span class="fu">library</span>(sarima)</span>
+<span id="cb1-6"><a href=""></a><span class="fu">library</span>(TSA)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section>
@@ -245,6 +246,9 @@
 <p>Serie estacionaria por tendencia y por diferencia.</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Regresión con covariables rezagadas</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>Análisis de intervención</p>
 </div></li>
 </ol>
@@ -253,13 +257,13 @@
 <section id="introducción-1" class="slide level2">
 <h2>Introducción</h2>
 <ul>
-<li>En el Tema 4, hemos visto regresión con series de tiempo:</li>
+<li>En el <a href="./Tema_4/presentacion.html">Tema 4</a>, hemos visto regresión con series de tiempo:</li>
 </ul>
 <p><span class="math display">\[Y_t=\beta_0+\beta_1 X_{t,1}+\beta_2 X_{t,2}+...+\beta_p X_{t,p}+\epsilon_t, ~~t=1,...,T,\]</span> en donde <span class="math inline">\(\left\lbrace  \epsilon_t \right\rbrace\)</span> es ruido blanco Gaussiano.</p>
 <ul>
-<li>Los modelos de regresión dinámicos son modelos de regresión en los que el término de error sigue un modelo ARIMA, y la variable independiente <span class="math inline">\(X_t\)</span> influye a <span class="math inline">\(Y_t\)</span> no solo instantáneamente en el tiempo <span class="math inline">\(t\)</span> sino a través de varios periodos.</li>
-<li>El caso univariado, <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t}+\beta_2 X_{t-1}+...+\beta_p X_{t-p}+\eta_t\]</span> <span class="math display">\[\left\lbrace  \eta_t \right\rbrace \sim ARIMA(p,d,q)\]</span></li>
-<li>Veremos algunas extensiones del modelo de regresión con error tipo ARIMA antes de considerar la variable independiente rezagada como predictora.</li>
+<li><p>Los modelos de regresión dinámicos son modelos de regresión en los que el término de error sigue un modelo ARIMA.</p></li>
+<li><p>Veremos que una forma es considerar la variable independiente <span class="math inline">\(X_t\)</span> influye a <span class="math inline">\(Y_t\)</span> no solo instantáneamente en el tiempo <span class="math inline">\(t\)</span> sino a través de varios periodos.</p></li>
+<li><p>El caso con únicamente una covariable es dado por: <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t}+\beta_2 X_{t-1}+...+\beta_p X_{t-p}+\eta_t\]</span> <span class="math display">\[\left\lbrace  \eta_t \right\rbrace \sim ARIMA(p,d,q)\]</span></p></li>
 </ul>
 </section></section>
 <section>
@@ -280,6 +284,9 @@
 <p>Serie estacionaria por tendencia y por diferencia.</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Regresión con covariables rezagadas</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>Análisis de intervención</p>
 </div></li>
 </ol>
@@ -288,7 +295,7 @@
 <section id="regresión-lineal-con-error-de-tipo-arima-1" class="slide level2">
 <h2>Regresión lineal con error de tipo ARIMA</h2>
 <ul>
-<li>Primeramente, vamos a considerar el siguiente modelo: <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t,1}+\beta_2 X_{t,2}+...+\beta_p X_{t,p}+\eta_t, ~~t=1,...,T,\]</span> en donde <span class="math inline">\(\left\lbrace  \eta_t \right\rbrace \sim ARIMA(p,d,q)\)</span>, i.e.&nbsp;</li>
+<li>Primeramente, considere el siguiente modelo: <span class="math display">\[Y_t=\beta_0+\beta_1 X_{t,1}+\beta_2 X_{t,2}+...+\beta_p X_{t,p}+\eta_t, ~~t=1,...,T,\]</span> en donde <span class="math inline">\(\left\lbrace  \eta_t \right\rbrace \sim ARIMA(p,d,q)\)</span>, i.e.&nbsp;</li>
 </ul>
 <p><span class="math display">\[\phi(B) (1-B)^d \eta_t=\theta(B) \epsilon_t,\]</span> con ruido blanco <span class="math inline">\(\left\lbrace  \epsilon_t \right\rbrace\)</span>.</p>
 </section>
@@ -296,9 +303,17 @@
 
 <ul>
 <li>La estimación de los parámetros del modelo minimizando la suma de cuadrados <span class="math inline">\(\eta_t\)</span> en vez de <span class="math inline">\(\eta_t\)</span> ignorando su estructura dependiente del tiempo es incorrecta.</li>
-<li>La estimación de los coeficientes <span class="math inline">\(\beta_i, i=1,...,p\)</span> no satisfacen las propiedades óptimas (insesgamiento, variancia mínima, etc.). Por lo tanto, toda la teoría de pruebas de hipótesis de regresión no funciona.</li>
+<li>La estimación de los coeficientes <span class="math inline">\(\beta_i, i=1,...,p\)</span> no satisfacen las propiedades óptimas (insesgamiento, variancia mínima, etc.). Por lo tanto, toda la teoría de inferencia, pruebas de hipótesis de regresión no funciona.</li>
 </ul>
-<p><strong>Notas:</strong></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Nota</strong></p>
+</div>
+<div class="callout-content">
 <ul>
 <li>Verifique que la variable <span class="math inline">\(Y_t\)</span> y las <span class="math inline">\(X_{t1},X_{t2},...,X_{tp}\)</span> sean estacionarias, porque si se estiman los coeficientes con variables no estacionarias, los estimadores no son consistentes.</li>
 <li>Además, podría presentar problema de la regresión espuria.</li>
@@ -306,6 +321,9 @@
 <li>El modelo después de aplicar la diferencia es llamado <span class="alert">modelo de regresión en diferencias</span>.</li>
 <li>Se puede demostrar que el modelo de regresión con error de tipo ARIMA es equivalente a un modelo de regresión en diferencias con error tipo ARMA.</li>
 </ul>
+</div>
+</div>
+</div>
 </section>
 <section class="slide level2">
 
@@ -344,11 +362,64 @@
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-3-1.png" width="384" class="r-stretch"></section>
 <section class="slide level2">
 
+<p>Como ilustración, note que son equivalentes:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>(mod <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(uschange[,<span class="st">"Consumption"</span>],</span>
-<span id="cb4-2"><a href=""></a>                   <span class="at">xreg=</span>uschange[,<span class="st">"Income"</span>]))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>y <span class="ot">&lt;-</span> uschange[,<span class="st">"Consumption"</span>]</span>
+<span id="cb4-2"><a href=""></a>x <span class="ot">&lt;-</span> uschange[,<span class="st">"Income"</span>]</span>
+<span id="cb4-3"><a href=""></a>mod0 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(y, <span class="at">xreg=</span>x, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb4-4"><a href=""></a><span class="fu">summary</span>(mod0)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Series: uschange[, "Consumption"] 
+<pre><code>Series: y 
+Regression with ARIMA(1,1,0) errors 
+
+Coefficients:
+          ar1    xreg
+      -0.5412  0.1835
+s.e.   0.0638  0.0429
+
+sigma^2 = 0.3982:  log likelihood = -177.46
+AIC=360.93   AICc=361.06   BIC=370.61
+
+Training set error measures:
+                      ME      RMSE       MAE      MPE     MAPE      MASE
+Training set 0.002476011 0.6259787 0.4671324 21.24398 182.2579 0.7319011
+                   ACF1
+Training set -0.1727835</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>mod1 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(<span class="fu">diff</span>(y), <span class="at">xreg=</span><span class="fu">diff</span>(x), <span class="at">order=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>)) <span class="co">#asume que tiene intercepto</span></span>
+<span id="cb6-2"><a href=""></a><span class="fu">summary</span>(mod1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: diff(y) 
+Regression with ARIMA(1,0,0) errors 
+
+Coefficients:
+          ar1  intercept    xreg
+      -0.5413     0.0019  0.1835
+s.e.   0.0638     0.0299  0.0429
+
+sigma^2 = 0.4004:  log likelihood = -177.46
+AIC=362.93   AICc=363.15   BIC=375.83
+
+Training set error measures:
+                        ME      RMSE       MAE       MPE     MAPE      MASE
+Training set -0.0003963677 0.6276524 0.4697909 -181.0816 364.3807 0.5583989
+                   ACF1
+Training set -0.1727715</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>(mod <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(y, <span class="at">xreg=</span>x))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: y 
 Regression with ARIMA(1,0,2) errors 
 
 Coefficients:
@@ -367,12 +438,12 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>errores <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="st">"Regression Errors"</span> <span class="ot">=</span> </span>
-<span id="cb6-2"><a href=""></a>                   <span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"regression"</span>),</span>
-<span id="cb6-3"><a href=""></a>                 <span class="st">"ARIMA errors"</span> <span class="ot">=</span> </span>
-<span id="cb6-4"><a href=""></a>                   <span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"innovation"</span>)) </span>
-<span id="cb6-5"><a href=""></a></span>
-<span id="cb6-6"><a href=""></a><span class="fu">head</span>(errores)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>errores <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="st">"Regression Errors"</span> <span class="ot">=</span> </span>
+<span id="cb10-2"><a href=""></a>                   <span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"regression"</span>),</span>
+<span id="cb10-3"><a href=""></a>                 <span class="st">"ARIMA errors"</span> <span class="ot">=</span> </span>
+<span id="cb10-4"><a href=""></a>                   <span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"innovation"</span>)) </span>
+<span id="cb10-5"><a href=""></a></span>
+<span id="cb10-6"><a href=""></a><span class="fu">head</span>(errores)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output cell-output-stdout">
 <pre><code>        Regression Errors ARIMA errors
@@ -383,12 +454,12 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 1971 Q1        0.89529777   1.05009349
 1971 Q2        0.01940569   0.14169806</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>errores<span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href=""></a>  <span class="fu">autoplot</span>(<span class="at">facets=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>errores<span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href=""></a>  <span class="fu">autoplot</span>(<span class="at">facets=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-5-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-7-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -402,11 +473,11 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 <li>Residuales del modelo de regresión con errores independientes.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">acf2</span>(<span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"regression"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">acf2</span>(<span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"regression"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-6-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-8-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -416,11 +487,11 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 <li>Residuales del modelo dinámico con error de estructura ARMA.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">acf2</span>(<span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"innovation"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">acf2</span>(<span class="fu">residuals</span>(mod, <span class="at">type=</span><span class="st">"innovation"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-7-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-9-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -432,11 +503,11 @@ AIC=325.91   AICc=326.37   BIC=345.29</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">checkresiduals</span>(mod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">checkresiduals</span>(mod)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-8-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-10-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -452,11 +523,11 @@ Model df: 3.   Total lags used: 8</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">checkresiduals</span>(mod, <span class="at">lag =</span> <span class="dv">16</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">checkresiduals</span>(mod, <span class="at">lag =</span> <span class="dv">16</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-9-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-11-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -477,18 +548,18 @@ Model df: 3.   Total lags used: 16</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li><p>Se necesitan valores futuros de la covariable.</p></li>
-<li><p>Una posibilidad es suponer que toma el promedio histórico.</p></li>
+<li><p>Se necesitan valores futuros de las covariables.</p></li>
+<li><p>Una posibilidad es suponer que toma el promedio histórico, pero involucra incertidumbre desconocida.</p></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(mod, <span class="at">xreg=</span><span class="fu">rep</span>(<span class="fu">mean</span>(uschange[,<span class="dv">2</span>]),<span class="dv">8</span>))</span>
-<span id="cb15-2"><a href=""></a><span class="fu">autoplot</span>(fcast) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
-<span id="cb15-3"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"Percentage change"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(mod, <span class="at">xreg=</span><span class="fu">rep</span>(<span class="fu">mean</span>(uschange[,<span class="dv">2</span>]),<span class="dv">8</span>))</span>
+<span id="cb19-2"><a href=""></a><span class="fu">autoplot</span>(fcast) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"Percentage change"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-10-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-12-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -513,6 +584,9 @@ Model df: 3.   Total lags used: 16</code></pre>
 <p>Serie estacionaria por tendencia y por diferencia.</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
+<p>Regresión con covariables rezagadas</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
 <p>Análisis de intervención</p>
 </div></li>
 </ol>
@@ -524,59 +598,75 @@ Model df: 3.   Total lags used: 16</code></pre>
 <p><span class="math display">\[
 Y_t=TD_t+ \eta_t,
 \]</span> donde <span class="math inline">\(TD_t=\beta_0+\beta_1 t\)</span> y <span class="math inline">\(\eta_t \sim ARIMA(p,d,q)\)</span>.</p>
-<p><strong>Caso 1:</strong> si <span class="math inline">\(d=0\)</span>, <span class="math inline">\(\left\lbrace Y_t \right\rbrace\)</span> es estacionaria alrededor de una tendencia determinística. Por lo tanto, se puede eliminar la tendencia de la serie original y ajustar un modelo ARMA a los residuales.</p>
-<p><strong>Caso 2:</strong> si <span class="math inline">\(d&gt;0\)</span>, <span class="math inline">\(\left\lbrace Y_t \right\rbrace\)</span> es estacionaria por diferencia. Por lo tanto, se puede realizar una diferencia para obtener una serie estacionaria. Caso más común es cuando <span class="math inline">\(d=1\)</span>.</p>
+<p><span class="alert">Caso 1:</span> si <span class="math inline">\(d=0\)</span>, <span class="math inline">\(\left\lbrace Y_t \right\rbrace\)</span> es estacionaria alrededor de una tendencia determinística. Por lo tanto, se puede eliminar la tendencia de la serie original y ajustar un modelo ARMA a los residuales.</p>
+<p><span class="alert">Caso 2:</span> si <span class="math inline">\(d&gt;0\)</span>, <span class="math inline">\(\left\lbrace Y_t \right\rbrace\)</span> es estacionaria por diferencia. Por lo tanto, se puede realizar una diferencia para obtener una serie estacionaria. Caso más común es cuando <span class="math inline">\(d=1\)</span>.</p>
 </section>
 <section class="slide level2">
 
+<p>Ejemplo de estos dos tipos de estacionariedad:</p>
 <ul>
-<li>Ejemplo de estos dos tipos de estacionariedad:</li>
+<li><span class="alert">Tendencia determinística:</span> <span class="math display">\[Y_t=Y_{t-1}+\mu=Y_0+\mu t\]</span></li>
+<li><span class="alert">Tendencia estocástica (acumulación de choques aleatorias):</span> <span class="math display">\[Y_t=Y_{t-1}+\epsilon_t=Y_0+\sum_{s=1}^t \epsilon_s\]</span> donde <span class="math inline">\(\mu\)</span> es una constante y <span class="math inline">\(\epsilon_t\)</span> es ruido blanco.</li>
 </ul>
-<p><strong>Tendencia determinística:</strong> <span class="math display">\[Y_t=Y_{t-1}+\mu=Y_0+\mu t\]</span> <strong>Tendencia estocástica (acumulación de choques aleatorias):</strong> <span class="math display">\[Y_t=Y_{t-1}+\epsilon_t=Y_0+\sum_{s=1}^t \epsilon_s\]</span> donde <span class="math inline">\(\mu\)</span> es una constante y <span class="math inline">\(\epsilon_t\)</span> es ruido blanco.</p>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>En síntesis, una serie temporal <span class="math inline">\(\left\lbrace Y_t \right\rbrace\)</span> está compuesto por una tendencia determinística y un componente estocástico que es modelado por <span class="math inline">\(ARIMA(p,d,q)\)</span>.</li>
 <li>Se puede descomponer <span class="math inline">\(\eta_t\)</span> en dos componentes: tendencia estocástica (choques aleatorios) y el componente aleatorio “estacionario”.</li>
-<li>Entonces, <span class="math inline">\(\left\lbrace Y_t \right\rbrace\)</span> se puede descomponer en tres componentes:</li>
-</ul>
+<li>Entonces, <span class="math inline">\(\left\lbrace Y_t \right\rbrace\)</span> se puede descomponer en tres componentes:
 <ol type="1">
 <li>tendencia determinística,</li>
 <li>tendencia estocástica, y</li>
 <li>el componente “aleatorio”.</li>
-</ol>
-<ul>
+</ol></li>
 <li>Un modelo estacionario por tendencia, no tiene la tendencia estocástica, y el componente aleatorio es <span class="math inline">\(ARMA(p,q)\)</span>.</li>
 <li>En el caso de un modelo estacionario por diferencia, el polinomio autoregresivo del componente <span class="math inline">\(\eta_t\)</span> tiene al menos una raíz unitaria.</li>
 </ul>
 </section>
-<section class="slide level2">
-
+<section id="ejemplo-simulado" class="slide level2 smaller">
+<h2>Ejemplo simulado</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
+<ul>
+<li><p>Tendencia determinística: <span class="math inline">\(Y_t= 0 + 0.5 t + \epsilon_t\)</span></p></li>
+<li><p>Tendencia estocástica: <span class="math inline">\(Y_t = \sum_{s=1}^t \epsilon_s\)</span></p></li>
+</ul>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123456</span>)</span>
+<span id="cb20-2"><a href=""></a>e <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">250</span>)</span>
+<span id="cb20-3"><a href=""></a>rw.nd <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(e) <span class="do">## caminata aleatoria</span></span>
+<span id="cb20-4"><a href=""></a><span class="fu">plot.ts</span>(rw.nd)</span>
+<span id="cb20-5"><a href=""></a><span class="fu">legend</span>(<span class="dv">10</span>, <span class="fl">18.7</span>, <span class="at">legend=</span><span class="fu">c</span>( <span class="st">'tend. estocast.'</span>)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-11-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-13-1.png" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Tendencia determinística: <span class="math inline">\(Y_t= 0 + 0.5 t + \epsilon_t\)</span></p>
-<p>Tendencia determinística con tendencia estocástica: <span class="math inline">\(Y_t= 0 + 0.5 t + \sum_{s=1}^t \epsilon_s\)</span></p>
 </div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
+<ul>
+<li>Tendencia determinística con tendencia estocástica: <span class="math inline">\(Y_t= 0 + 0.5 t + \sum_{s=1}^t \epsilon_s\)</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>tend <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">250</span> <span class="do">## tendencia</span></span>
+<span id="cb21-2"><a href=""></a>dt <span class="ot">&lt;-</span> e <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>tend <span class="do">## tendencia determinística con ruido</span></span>
+<span id="cb21-3"><a href=""></a>rw.wd <span class="ot">&lt;-</span> <span class="fl">0.5</span><span class="sc">*</span>tend <span class="sc">+</span> <span class="fu">cumsum</span>(e) <span class="do">## caminata aleatoria con desvío</span></span>
+<span id="cb21-4"><a href=""></a><span class="fu">plot.ts</span>(dt, <span class="at">lty=</span><span class="dv">1</span>, <span class="at">col=</span><span class="dv">1</span>)</span>
+<span id="cb21-5"><a href=""></a><span class="fu">lines</span>(rw.wd, <span class="at">lty=</span><span class="dv">2</span>, <span class="at">col=</span> <span class="dv">2</span>)</span>
+<span id="cb21-6"><a href=""></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">'tend. det. + ruido'</span>,</span>
+<span id="cb21-7"><a href=""></a>                   <span class="st">'tend. det. + tend. est.'</span>),</span>
+<span id="cb21-8"><a href=""></a>       <span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-14-1.png" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Tendencia estocástica: <span class="math inline">\(Y_t = \sum_{s=1}^t \epsilon_s\)</span></p>
 </div></div>
 </section>
 <section id="tendencia-determinística-y-estocástica" class="slide level2">
@@ -593,17 +683,17 @@ Y_t=TD_t+ \eta_t,
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">autoplot</span>(austa) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
-<span id="cb16-2"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"millions of people"</span>) <span class="sc">+</span></span>
-<span id="cb16-3"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Total annual international visitors to Australia"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">autoplot</span>(austa) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb22-2"><a href=""></a>  <span class="fu">ylab</span>(<span class="st">"millions of people"</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Total annual international visitors to Australia"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-13-1.png" width="384" class="r-stretch"></section>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-15-1.png" width="384" class="r-stretch"></section>
 <section id="ajuste-con-tendencia-determinística" class="slide level2">
 <h2>Ajuste con tendencia determinística</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>trend <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(austa)</span>
-<span id="cb17-2"><a href=""></a>(fit1 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(austa, <span class="at">d=</span><span class="dv">0</span>, <span class="at">xreg=</span>trend))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>trend <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(austa)</span>
+<span id="cb23-2"><a href=""></a>(fit1 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(austa, <span class="at">d=</span><span class="dv">0</span>, <span class="at">xreg=</span>trend))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: austa 
 Regression with ARIMA(2,0,0) errors 
@@ -622,7 +712,7 @@ AIC=-17.2   AICc=-15.2   BIC=-9.28</code></pre>
 <section id="ajuste-con-tendencia-estocástica" class="slide level2">
 <h2>Ajuste con tendencia estocástica</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>(fit2 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(austa, <span class="at">d=</span><span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>(fit2 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(austa, <span class="at">d=</span><span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: austa 
 ARIMA(0,1,1) with drift 
@@ -643,25 +733,197 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>fc1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit1,</span>
-<span id="cb21-2"><a href=""></a>  <span class="at">xreg =</span> <span class="fu">length</span>(austa) <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb21-3"><a href=""></a>fc2 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit2, <span class="at">h=</span><span class="dv">10</span>)</span>
-<span id="cb21-4"><a href=""></a><span class="fu">autoplot</span>(austa) <span class="sc">+</span></span>
-<span id="cb21-5"><a href=""></a>  <span class="fu">autolayer</span>(fc2, <span class="at">series=</span><span class="st">"Stochastic trend"</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href=""></a>  <span class="fu">autolayer</span>(fc1, <span class="at">series=</span><span class="st">"Deterministic trend"</span>) <span class="sc">+</span></span>
-<span id="cb21-7"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Forecasts from trend models"</span>) <span class="sc">+</span></span>
-<span id="cb21-8"><a href=""></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Visitors to Australia (millions)"</span>) <span class="sc">+</span></span>
-<span id="cb21-9"><a href=""></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Forecast"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>fc1 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit1,</span>
+<span id="cb27-2"><a href=""></a>  <span class="at">xreg =</span> <span class="fu">length</span>(austa) <span class="sc">+</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb27-3"><a href=""></a>fc2 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit2, <span class="at">h=</span><span class="dv">10</span>)</span>
+<span id="cb27-4"><a href=""></a><span class="fu">autoplot</span>(austa) <span class="sc">+</span></span>
+<span id="cb27-5"><a href=""></a>  <span class="fu">autolayer</span>(fc2, <span class="at">series=</span><span class="st">"Stochastic trend"</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a href=""></a>  <span class="fu">autolayer</span>(fc1, <span class="at">series=</span><span class="st">"Deterministic trend"</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Forecasts from trend models"</span>) <span class="sc">+</span></span>
+<span id="cb27-8"><a href=""></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Visitors to Australia (millions)"</span>) <span class="sc">+</span></span>
+<span id="cb27-9"><a href=""></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Forecast"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div></div>
 </section></section>
+<section>
+<section id="regresión-con-covariables-rezagadas" class="title-slide slide level1 agenda-slide center">
+<h1>Regresión con covariables rezagadas</h1>
+<div class="agenda-heading">
+<p>Contenido</p>
+</div>
+<div class="agenda">
+<ol>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Introducción</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Regresión lineal con error de tipo ARIMA</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Serie estacionaria por tendencia y por diferencia.</p>
+</div></li>
+<li><div class="agenda-active">
+<p>Regresión con covariables rezagadas</p>
+</div></li>
+<li><div class="agenda-inactive agenda-post-active">
+<p>Análisis de intervención</p>
+</div></li>
+</ol>
+</div>
+</section>
+<section id="regresión-con-covariables-rezagadas-1" class="slide level2">
+<h2>Regresión con covariables rezagadas</h2>
+<ul>
+<li>Cotización mensual y gastos en publicidad de una compañía estadounidense (enero 2002- abril 2005)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">data</span>(insurance)</span>
+<span id="cb28-2"><a href=""></a></span>
+<span id="cb28-3"><a href=""></a><span class="fu">autoplot</span>(insurance, <span class="at">facets=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb28-4"><a href=""></a>  <span class="fu">xlab</span>(<span class="st">"año"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb28-5"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Cotización mensual y gastos en anuncios"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>y<span class="ot">&lt;-</span> insurance[,<span class="st">"Quotes"</span>]</span>
+<span id="cb29-2"><a href=""></a>x<span class="ot">&lt;-</span> insurance[,<span class="st">"TV.advert"</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-19-1.png" width="384" class="r-stretch"></section>
+<section class="slide level2">
+
+<ul>
+<li>Predictores rezagadas (0,1,2 y 3 rezagos)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>anuncios <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb30-2"><a href=""></a>  <span class="at">x0 =</span> x,</span>
+<span id="cb30-3"><a href=""></a>  <span class="at">x1 =</span> stats<span class="sc">::</span><span class="fu">lag</span>(x,<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb30-4"><a href=""></a>  <span class="at">x2 =</span> stats<span class="sc">::</span><span class="fu">lag</span>(x,<span class="sc">-</span><span class="dv">2</span>),</span>
+<span id="cb30-5"><a href=""></a>  <span class="at">x3 =</span> stats<span class="sc">::</span><span class="fu">lag</span>(x,<span class="sc">-</span><span class="dv">3</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb30-6"><a href=""></a>  <span class="fu">head</span>(<span class="fu">NROW</span>(insurance))                    <span class="co">#eliminar los NA al final</span></span>
+<span id="cb30-7"><a href=""></a></span>
+<span id="cb30-8"><a href=""></a>anuncios[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            x0       x1       x2       x3
+ [1,] 7.212725       NA       NA       NA
+ [2,] 9.443570 7.212725       NA       NA
+ [3,] 7.534250 9.443570 7.212725       NA
+ [4,] 7.212725 7.534250 9.443570 7.212725
+ [5,] 9.443570 7.212725 7.534250 9.443570
+ [6,] 6.415215 9.443570 7.212725 7.534250
+ [7,] 5.806990 6.415215 9.443570 7.212725
+ [8,] 6.203600 5.806990 6.415215 9.443570
+ [9,] 7.586430 6.203600 5.806990 6.415215
+[10,] 8.004935 7.586430 6.203600 5.806990</code></pre>
+</div>
+</div>
+</section>
+<section id="ajuste-de-modelos" class="slide level2 smaller">
+<h2>Ajuste de modelos</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>(mod1 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(insurance[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span>], <span class="at">xreg=</span>anuncios[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span>],</span>
+<span id="cb32-2"><a href=""></a>                    <span class="at">stationary=</span><span class="cn">TRUE</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: insurance[4:40, 1] 
+Regression with ARIMA(2,0,0) errors 
+
+Coefficients:
+         ar1      ar2  intercept    xreg
+      1.2321  -0.4642     3.4263  1.2413
+s.e.  0.1636   0.1708     0.6805  0.0751
+
+sigma^2 = 0.2891:  log likelihood = -28.28
+AIC=66.56   AICc=68.5   BIC=74.62</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>(mod2 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(insurance[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span>], <span class="at">xreg=</span>anuncios[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],</span>
+<span id="cb34-2"><a href=""></a>                    <span class="at">stationary=</span><span class="cn">TRUE</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: insurance[4:40, 1] 
+Regression with ARIMA(1,0,1) errors 
+
+Coefficients:
+         ar1     ma1      x0      x1
+      0.6718  0.6713  1.3770  0.2745
+s.e.  0.1324  0.1302  0.0374  0.0362
+
+sigma^2 = 0.2285:  log likelihood = -24.04
+AIC=58.09   AICc=60.02   BIC=66.14</code></pre>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>(mod3 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(insurance[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span>], <span class="at">xreg=</span>anuncios[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>],</span>
+<span id="cb36-2"><a href=""></a>                    <span class="at">stationary=</span><span class="cn">TRUE</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: insurance[4:40, 1] 
+Regression with ARIMA(1,0,1) errors 
+
+Coefficients:
+         ar1     ma1      x0      x1       x2
+      0.6701  0.6757  1.3843  0.2764  -0.0111
+s.e.  0.1349  0.1311  0.0487  0.0369   0.0470
+
+sigma^2 = 0.2352:  log likelihood = -24.02
+AIC=60.03   AICc=62.83   BIC=69.7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>(mod4 <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(insurance[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span>], <span class="at">xreg=</span>anuncios[<span class="dv">4</span><span class="sc">:</span><span class="dv">40</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],</span>
+<span id="cb38-2"><a href=""></a>                    <span class="at">stationary=</span><span class="cn">TRUE</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: insurance[4:40, 1] 
+Regression with ARIMA(1,0,1) errors 
+
+Coefficients:
+         ar1     ma1  intercept      x0      x1       x2       x3
+      0.7567  0.6071     3.6314  1.2901  0.1323  -0.1303  -0.0643
+s.e.  0.1155  0.1369     1.8656  0.0656  0.0797   0.0759   0.0612
+
+sigma^2 = 0.2262:  log likelihood = -22.16
+AIC=60.31   AICc=65.46   BIC=73.2</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">c</span>(mod1[[<span class="st">"aicc"</span>]],mod2[[<span class="st">"aicc"</span>]],mod3[[<span class="st">"aicc"</span>]],mod4[[<span class="st">"aicc"</span>]])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 68.49968 60.02357 62.83253 65.45747</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>(mod.final <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(insurance[,<span class="dv">1</span>], <span class="at">xreg=</span>anuncios[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>],</span>
+<span id="cb42-2"><a href=""></a>                         <span class="at">stationary=</span><span class="cn">TRUE</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: insurance[, 1] 
+Regression with ARIMA(3,0,0) errors 
+
+Coefficients:
+         ar1      ar2     ar3  intercept      x0      x1
+      1.4117  -0.9317  0.3591     2.0393  1.2564  0.1625
+s.e.  0.1698   0.2545  0.1592     0.9931  0.0667  0.0591
+
+sigma^2 = 0.2165:  log likelihood = -23.89
+AIC=61.78   AICc=65.4   BIC=73.43</code></pre>
+</div>
+</div>
+</section>
+<section id="pronóstico-1" class="slide level2">
+<h2>pronóstico</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>pronostico <span class="ot">&lt;-</span> <span class="fu">forecast</span>(mod.final, <span class="at">h=</span><span class="dv">20</span>,</span>
+<span id="cb44-2"><a href=""></a>                       <span class="at">xreg=</span><span class="fu">cbind</span>(<span class="at">x0 =</span> <span class="fu">rep</span>(<span class="dv">8</span>,<span class="dv">20</span>),</span>
+<span id="cb44-3"><a href=""></a>                                  <span class="at">x1 =</span> <span class="fu">c</span>(anuncios[<span class="dv">40</span>,<span class="dv">1</span>], <span class="fu">rep</span>(<span class="dv">8</span>,<span class="dv">19</span>))))</span>
+<span id="cb44-4"><a href=""></a><span class="fu">autoplot</span>(pronostico) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Cotización"</span>) <span class="sc">+</span></span>
+<span id="cb44-5"><a href=""></a>  <span class="fu">ggtitle</span>(<span class="st">"Proyección"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-24-1.png" width="384" class="r-stretch"></section></section>
 <section>
 <section id="análisis-de-intervención" class="title-slide slide level1 agenda-slide center">
 <h1>Análisis de intervención</h1>
@@ -678,6 +940,9 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
 <p>Serie estacionaria por tendencia y por diferencia.</p>
+</div></li>
+<li><div class="agenda-inactive agenda-pre-active">
+<p>Regresión con covariables rezagadas</p>
 </div></li>
 <li><div class="agenda-active">
 <p>Análisis de intervención</p>
@@ -706,15 +971,15 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>table<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">"crestcolgate.dat"</span>)</span>
-<span id="cb22-2"><a href=""></a><span class="fu">colnames</span>(table)<span class="ot">&lt;-</span><span class="fu">c</span>( <span class="st">" CRESTMS"</span>, <span class="st">"COLGTEMS"</span> ,<span class="st">"CRESTPR"</span>, <span class="st">"COLGTEPR"</span>)</span>
-<span id="cb22-3"><a href=""></a></span>
-<span id="cb22-4"><a href=""></a>crest.colgate<span class="ot">&lt;-</span><span class="fu">ts</span>(table[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
-<span id="cb22-5"><a href=""></a><span class="fu">autoplot</span>(crest.colgate)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>table<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">"crestcolgate.dat"</span>)</span>
+<span id="cb45-2"><a href=""></a><span class="fu">colnames</span>(table)<span class="ot">&lt;-</span><span class="fu">c</span>( <span class="st">" CRESTMS"</span>, <span class="st">"COLGTEMS"</span> ,<span class="st">"CRESTPR"</span>, <span class="st">"COLGTEPR"</span>)</span>
+<span id="cb45-3"><a href=""></a></span>
+<span id="cb45-4"><a href=""></a>crest.colgate<span class="ot">&lt;-</span><span class="fu">ts</span>(table[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb45-5"><a href=""></a><span class="fu">autoplot</span>(crest.colgate)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-17-1.png" width="672"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-25-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -735,17 +1000,17 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>crest<span class="ot">&lt;-</span><span class="fu">ts</span>(table[,<span class="dv">1</span>])</span>
-<span id="cb23-2"><a href=""></a>crest1<span class="ot">&lt;-</span>crest.colgate[<span class="dv">1</span><span class="sc">:</span><span class="dv">134</span>]</span>
-<span id="cb23-3"><a href=""></a>crest2<span class="ot">&lt;-</span>crest.colgate[<span class="dv">135</span><span class="sc">:</span><span class="dv">276</span>]</span>
-<span id="cb23-4"><a href=""></a></span>
-<span id="cb23-5"><a href=""></a><span class="fu">ts.plot</span>(crest)</span>
-<span id="cb23-6"><a href=""></a><span class="fu">points</span>(<span class="dv">135</span><span class="sc">:</span><span class="dv">276</span>,crest2,<span class="at">col=</span><span class="dv">2</span>,<span class="at">type=</span><span class="st">"l"</span>)</span>
-<span id="cb23-7"><a href=""></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,<span class="fu">c</span>(<span class="st">"antes"</span>,<span class="st">"después"</span>),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>crest<span class="ot">&lt;-</span><span class="fu">ts</span>(table[,<span class="dv">1</span>])</span>
+<span id="cb46-2"><a href=""></a>crest1<span class="ot">&lt;-</span>crest.colgate[<span class="dv">1</span><span class="sc">:</span><span class="dv">134</span>]</span>
+<span id="cb46-3"><a href=""></a>crest2<span class="ot">&lt;-</span>crest.colgate[<span class="dv">135</span><span class="sc">:</span><span class="dv">276</span>]</span>
+<span id="cb46-4"><a href=""></a></span>
+<span id="cb46-5"><a href=""></a><span class="fu">ts.plot</span>(crest)</span>
+<span id="cb46-6"><a href=""></a><span class="fu">points</span>(<span class="dv">135</span><span class="sc">:</span><span class="dv">276</span>,crest2,<span class="at">col=</span><span class="dv">2</span>,<span class="at">type=</span><span class="st">"l"</span>)</span>
+<span id="cb46-7"><a href=""></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,<span class="fu">c</span>(<span class="st">"antes"</span>,<span class="st">"después"</span>),<span class="at">lwd=</span><span class="dv">2</span>,<span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-18-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-26-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -755,11 +1020,11 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 <li>Crest1: antes de la intervención</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">acf2</span>(crest1,<span class="at">main=</span><span class="st">"antes"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">acf2</span>(crest1,<span class="at">main=</span><span class="st">"antes"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-19-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-27-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -774,23 +1039,23 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>dif.crest1<span class="ot">&lt;-</span><span class="fu">diff</span>(crest1)</span>
-<span id="cb25-2"><a href=""></a><span class="fu">ts.plot</span>(dif.crest1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a>dif.crest1<span class="ot">&lt;-</span><span class="fu">diff</span>(crest1)</span>
+<span id="cb48-2"><a href=""></a><span class="fu">ts.plot</span>(dif.crest1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-20-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-28-1.png" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">acf2</span>(dif.crest1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">acf2</span>(dif.crest1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-21-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-29-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -803,8 +1068,8 @@ AIC=-15.24   AICc=-14.46   BIC=-10.57</code></pre>
 <li>Vamos a ajustar un ARIMA(0,1,1): <span class="math display">\[(1-B)Z_t=(1-\theta_1B)a_t\]</span></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>moda <span class="ot">&lt;-</span> <span class="fu">Arima</span>(crest1, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb27-2"><a href=""></a><span class="fu">summary</span>(moda)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a>moda <span class="ot">&lt;-</span> <span class="fu">Arima</span>(crest1, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb50-2"><a href=""></a><span class="fu">summary</span>(moda)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: crest1 
 ARIMA(0,1,1) 
@@ -842,11 +1107,11 @@ Training set -0.0009184472</code></pre>
 \right.\]</span></p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>I1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">134</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">142</span>)) <span class="co">#intervención durante la semana 135</span></span>
-<span id="cb29-2"><a href=""></a>I2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">135</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">141</span>)) <span class="co">#intervención durante la semana 136</span></span>
-<span id="cb29-3"><a href=""></a>X<span class="ot">&lt;-</span><span class="fu">cbind</span>(I1,I2)</span>
-<span id="cb29-4"><a href=""></a></span>
-<span id="cb29-5"><a href=""></a>X[<span class="dv">130</span><span class="sc">:</span><span class="dv">140</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>I1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">134</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">142</span>)) <span class="co">#intervención durante la semana 135</span></span>
+<span id="cb52-2"><a href=""></a>I2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">135</span>),<span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">141</span>)) <span class="co">#intervención durante la semana 136</span></span>
+<span id="cb52-3"><a href=""></a>X<span class="ot">&lt;-</span><span class="fu">cbind</span>(I1,I2)</span>
+<span id="cb52-4"><a href=""></a></span>
+<span id="cb52-5"><a href=""></a>X[<span class="dv">130</span><span class="sc">:</span><span class="dv">140</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      I1 I2
  [1,]  0  0
@@ -870,8 +1135,8 @@ Training set -0.0009184472</code></pre>
 <li><p>Multiplicando por ambos lados <span class="math inline">\((1-B)\)</span>: <span class="math display">\[(1-B) Z_t=c_1 (1-B) I_{1t} +c_2 (1-B) I_{2t}+ (1-\theta_1B)a_t\]</span> Note que en realidad…</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>X_diff <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">diff</span>(I1),<span class="fu">diff</span>(I2))</span>
-<span id="cb31-2"><a href=""></a>X_diff[<span class="dv">130</span><span class="sc">:</span><span class="dv">140</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>X_diff <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">diff</span>(I1),<span class="fu">diff</span>(I2))</span>
+<span id="cb54-2"><a href=""></a>X_diff[<span class="dv">130</span><span class="sc">:</span><span class="dv">140</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      [,1] [,2]
  [1,]    0    0
@@ -891,8 +1156,8 @@ Training set -0.0009184472</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>modb <span class="ot">&lt;-</span> <span class="fu">Arima</span>(crest, <span class="at">xreg=</span>X, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb33-2"><a href=""></a><span class="fu">summary</span>(modb)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a>modb <span class="ot">&lt;-</span> <span class="fu">Arima</span>(crest, <span class="at">xreg=</span>X, <span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb56-2"><a href=""></a><span class="fu">summary</span>(modb)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: crest 
 Regression with ARIMA(0,1,1) errors 
@@ -916,7 +1181,7 @@ Training set -0.01155037</code></pre>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">checkresiduals</span>(modb,<span class="at">lag=</span><span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="fu">checkresiduals</span>(modb,<span class="at">lag=</span><span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -928,8 +1193,169 @@ Q* = 15.279, df = 19, p-value = 0.7047
 Model df: 1.   Total lags used: 20</code></pre>
 </div>
 </div>
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-26-1.png" width="384" class="r-stretch"></section>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-34-1.png" width="384" class="r-stretch"></section>
 <section id="otros-tipos-de-intervención" class="slide level2">
+<h2>Otros tipos de intervención</h2>
+<ul>
+<li>De manera formal, un modelo de intervención considera:</li>
+</ul>
+<p><span class="math display">\[Z_t = m_t + N_t,\]</span> donde <span class="math inline">\(N_t \sim ARIMA(p,d,q)\)</span> (Podría ser SARIMA).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Una intervención que produce un cambio inmediato y permanente, se puede modelar con</li>
+</ul>
+<p><span class="math display">\[m_t = \omega S_t^{(T)},\]</span></p>
+<p>donde <span class="math inline">\(S_t^{(T)}\)</span> es una <span class="alert">función escalonada</span> <span class="math display">\[S_t^{(T)} =
+\begin{cases}
+1, &amp; t \geq T, \\
+0, &amp; t &lt; T.
+\end{cases}\]</span></p>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-intervencion1" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-intervencion1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="presentacion_files/figure-revealjs/fig-intervencion1-1.png" width="384">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intervencion1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Ilustración con <span class="math inline">\(S_t^{(5)}\)</span> y <span class="math inline">\(\omega=0.5\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Note que es posible establecer un efecto rezagado de período <span class="math inline">\(d\)</span>.</li>
+</ul>
+<p><span class="math display">\[m_t = \omega S_{t-d}^{(T)}=\omega B^d S_{t}^{(T)},\]</span></p>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-intervencion2" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-intervencion2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="presentacion_files/figure-revealjs/fig-intervencion2-1.png" width="384">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intervencion2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Ilustración con <span class="math inline">\(S_t^{(5)}\)</span>, <span class="math inline">\(d=1\)</span> y <span class="math inline">\(\omega =0.5\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Otro tipo de intervención produce solamente un cambio inmediato en el tiempo <span class="math inline">\(t\)</span>:</li>
+</ul>
+<p><span class="math display">\[m_t = \omega P_t^{(T)},\]</span></p>
+<p>donde <span class="math inline">\(P_t^{(T)} = S_t^{(T)} - S_{t-1}^{(T)}\)</span> es una <span class="alert">función de impulso</span>. <span class="math display">\[P_t^{(T)} =
+\begin{cases}
+1, &amp; t = T, \\
+0, &amp; t \neq T.
+\end{cases}\]</span></p>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-intervencion3" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-intervencion3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="presentacion_files/figure-revealjs/fig-intervencion3-1.png" width="384">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intervencion3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Ilustración con <span class="math inline">\(P_t^{(5)}\)</span> y <span class="math inline">\(\omega=0.5\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Otros tipos de intervención se puede incorporar con la especificación de una ecuación tipo AR(1) y con <span class="math inline">\(d=1\)</span>:</li>
+</ul>
+<p><span class="math display">\[m_t = \delta m_{t-1} + \omega S_{t-1}^{(T)},\]</span> con la condición inicial de <span class="math inline">\(m_0=0\)</span>.</p>
+<ul>
+<li>Se puede mostrar que con el uso del operador de rezago <span class="math inline">\(B\)</span>, se puede escribir como</li>
+</ul>
+<p><span class="math display">\[m_t =
+\begin{cases}
+\omega \frac{1-\delta^{t-T}}{1-\delta}, &amp; t &gt; T, \\
+0, &amp; t \leq T.
+\end{cases}\]</span></p>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-intervencion4" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-intervencion4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="presentacion_files/figure-revealjs/fig-intervencion4-1.png" width="384">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intervencion4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Ilustración con <span class="math inline">\(\delta=0.5\)</span> y <span class="math inline">\(\omega=1\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>De igual forma, se puede incorporar con la especificación de una ecuación tipo AR(1) y con <span class="math inline">\(d=1\)</span> a <span class="math inline">\(P_{t}^{(T)}\)</span>:</li>
+</ul>
+<p><span class="math display">\[m_t = \delta m_{t-1} + \omega P_{t-1}^{(T)},\]</span> con la condición inicial de <span class="math inline">\(m_0=0\)</span>.</p>
+<ul>
+<li>Con el uso del operador de rezago <span class="math inline">\(B\)</span>, se puede escribir como</li>
+</ul>
+<p><span class="math display">\[m_t =\omega \frac{B}{1-\delta B} P_{t}^{(T)} \]</span></p>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-intervencion5" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-intervencion5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="presentacion_files/figure-revealjs/fig-intervencion5-1.png" width="384">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-intervencion5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Ilustración con <span class="math inline">\(T=5\)</span>, <span class="math inline">\(\delta=0.5\)</span> y <span class="math inline">\(\omega=1\)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>En general, se puede modelar la función de media <span class="math inline">\(m_t\)</span> usando un modelo similar a ARMA:</li>
+</ul>
+<p><span class="math display">\[ \phi(B)  m_t = \theta(B) P_{t}^{(T)},\]</span> o bien <span class="math display">\[ m_t = \frac{\theta(B)}{\phi(B)} P_{t}^{(T)}.\]</span></p>
+<ul>
+<li>Note que se puede usar tanto la función <span class="math inline">\(P_{t}^{(T)}\)</span> o <span class="math inline">\(S_{t}^{(T)}\)</span> para representar el cambio pues <span class="math inline">\(P_{t}^{(T)}= (1-B)S_{t}^{(T)}\)</span>.</li>
+</ul>
+</section>
+<section id="otros-tipos-de-intervención-1" class="slide level2">
 <h2>Otros tipos de intervención</h2>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
@@ -945,7 +1371,7 @@ Model df: 1.   Total lags used: 20</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="./cryer_intervention2.png"></p>
-<figcaption>Intervención de respuesta a impulso.</figcaption>
+<figcaption>Intervención de respuesta de impulso.</figcaption>
 </figure>
 </div>
 </div>
@@ -956,6 +1382,149 @@ Model df: 1.   Total lags used: 20</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="ejemplo" class="slide level2">
+<h2>Ejemplo</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Los datos se tratan de las millas mensuales de pasajeros de aerolíneas en los E.U de enero 1996 a mayo de 2005.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="fu">data</span>(airmiles)</span>
+<span id="cb60-2"><a href=""></a><span class="fu">plot</span>(airmiles)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-35-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p>Los ataques terroristas en septiembre 2001 causó un efecto instantáneo (negativo) y lentamente se recupera a lo largo del período.</p></li>
+<li><p>Por lo que este modelo para intervención es utilizado <span class="math display">\[m_t = \omega_0 P_t^{(T)} + \frac{\omega_1}{1-\omega_2 B}P_t^{(T)},\]</span> donde <span class="math inline">\(T\)</span> es septiembre de 2001. <span class="math inline">\(\omega_0+\omega_1\)</span> representa el efecto del mes y <span class="math inline">\(\omega_1 \omega_2^k, k=0,1,2,...\)</span> representa el efecto de decaimiento exponencial.</p></li>
+</ul>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Usando los datos antes de la intervención, un <span class="math inline">\(SARIMA(0,1,1)(0,1,0)_{12}\)</span> es identificado.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a>airmiles_pre <span class="ot">&lt;-</span> <span class="fu">window</span>(<span class="fu">log</span>(airmiles),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">2001</span>,<span class="dv">8</span>))</span>
+<span id="cb61-2"><a href=""></a><span class="fu">acf2</span>(<span class="fu">as.vector</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(airmiles_pre),<span class="dv">12</span>)),<span class="at">max.lag=</span><span class="dv">48</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-36-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Después de la estimación y diagnósticos, se volvió a identificar un componente de SMA(1) que resulta ser relevante.</li>
+</ul>
+</div></div>
+</section>
+<section id="section" class="slide level2 smaller">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Definición de las intervenciones y períodos con valores extremos.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a>xtransf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>), <span class="co"># efecto instantáneo - omega_0</span></span>
+<span id="cb62-2"><a href=""></a>                      <span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>)  <span class="co"># efecto AR(1) - omega_1</span></span>
+<span id="cb62-3"><a href=""></a>                      )</span>
+<span id="cb62-4"><a href=""></a></span>
+<span id="cb62-5"><a href=""></a>xtransf[<span class="dv">65</span><span class="sc">:</span><span class="dv">69</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   I911 I911.1
+65    0      0
+66    0      0
+67    0      0
+68    0      0
+69    1      1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a><span class="co">#tratamiento de valores extremos</span></span>
+<span id="cb64-2"><a href=""></a>xreg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Dec96=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">12</span>),</span>
+<span id="cb64-3"><a href=""></a>                   <span class="at">Jan97=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">13</span>),</span>
+<span id="cb64-4"><a href=""></a>                   <span class="at">Dec02=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">84</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Estimación del modelo:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>xtransf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>),</span>
+<span id="cb65-2"><a href=""></a>                      <span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>))</span>
+<span id="cb65-3"><a href=""></a>xreg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Dec96=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">12</span>),</span>
+<span id="cb65-4"><a href=""></a>                   <span class="at">Jan97=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">13</span>),<span class="at">Dec02=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">84</span>)) <span class="co">#tratamiento de valores extremos</span></span>
+<span id="cb65-5"><a href=""></a>air.m1<span class="ot">=</span><span class="fu">arimax</span>(<span class="fu">log</span>(airmiles),<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb65-6"><a href=""></a>              <span class="at">seasonal=</span><span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">period=</span><span class="dv">12</span>),</span>
+<span id="cb65-7"><a href=""></a>              <span class="at">xtransf=</span>xtransf,<span class="at">transfer=</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),      <span class="co"># efecto instantáneo</span></span>
+<span id="cb65-8"><a href=""></a>                                            <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>)),     <span class="co"># efecto AR(1) </span></span>
+<span id="cb65-9"><a href=""></a>              <span class="at">xreg=</span>xreg,</span>
+<span id="cb65-10"><a href=""></a>              <span class="at">method=</span><span class="st">'ML'</span>)</span>
+<span id="cb65-11"><a href=""></a>air.m1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+arimax(x = log(airmiles), order = c(0, 1, 1), seasonal = list(order = c(0, 1, 
+    1), period = 12), xreg = xreg, method = "ML", xtransf = xtransf, transfer = list(c(0, 
+    0), c(1, 0)))
+
+Coefficients:
+          ma1     sma1   Dec96    Jan97   Dec02  I911-MA0  I911.1-AR1
+      -0.3825  -0.6499  0.0989  -0.0690  0.0810   -0.0949      0.8139
+s.e.   0.0926   0.1189  0.0228   0.0218  0.0202    0.0462      0.0978
+      I911.1-MA0
+         -0.2715
+s.e.      0.0439
+
+sigma^2 estimated as 0.0006721:  log likelihood = 219.99,  aic = -423.98</code></pre>
+</div>
+</div>
+</div></div>
+</section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a><span class="fu">plot</span>(<span class="fu">log</span>(airmiles),<span class="at">ylab=</span><span class="st">'Log(airmiles)'</span>)</span>
+<span id="cb67-2"><a href=""></a><span class="fu">points</span>(<span class="fu">fitted</span>(air.m1))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-39-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>Nine11p<span class="ot">=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>)</span>
+<span id="cb68-2"><a href=""></a><span class="fu">plot</span>(<span class="fu">ts</span>(Nine11p<span class="sc">*</span>(<span class="sc">-</span><span class="fl">0.0949</span>)<span class="sc">+</span></span>
+<span id="cb68-3"><a href=""></a>   <span class="fu">filter</span>(Nine11p,<span class="at">filter=</span>.<span class="dv">8139</span>,<span class="at">method=</span><span class="st">'recursive'</span>, <span class="at">side=</span><span class="dv">1</span>)<span class="sc">*</span></span>
+<span id="cb68-4"><a href=""></a>            (<span class="sc">-</span><span class="fl">0.2715</span>),<span class="at">frequency=</span><span class="dv">12</span>,<span class="at">start=</span><span class="dv">1996</span>),<span class="at">ylab=</span><span class="st">'9/11 Effects'</span>,</span>
+<span id="cb68-5"><a href=""></a>       <span class="at">type=</span><span class="st">'h'</span>); <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-40-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 <section id="próximo-tema" class="slide level2">
 <h2>Próximo tema</h2>
