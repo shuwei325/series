@@ -955,12 +955,12 @@ AIC=61.78   AICc=65.4   BIC=73.43</code></pre>
 <ul>
 <li><p>Una serie puede experimentar cambios de comportamiento en el tiempo cuando ocurren fenómenos como cambios en las políticas públicas, desastres naturales, crisis económicas serias, aumentos sustanciales en gastos de publicidad, etc.</p></li>
 <li><p>La suposición del mismo comportamiento a lo largo de tiempo puede ser no realista.</p></li>
-<li><p>El análisis de intervención introducida por Box &amp; Tiao en 1975 toma en cuenta este tipo de eventos.</p></li>
-<li><p>Ilustramos el análisis con el siguiente ejemplo (Wichern &amp; Jones, 1977).</p></li>
+<li><p>El análisis de intervención introducida por <a href="https://doi.org/10.1080/01621459.1975.10480264">Box &amp; Tiao</a> en 1975 toma en cuenta este tipo de eventos.</p></li>
+<li><p>Ilustramos el análisis con el siguiente ejemplo (<a href="https://doi.org/10.1287/mnsc.24.3.329">Wichern &amp; Jones, 1977</a>).</p></li>
 </ul>
 </section>
-<section class="slide level2">
-
+<section id="ejemplo-de-crest" class="slide level2">
+<h2>Ejemplo de Crest</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -986,13 +986,15 @@ AIC=61.78   AICc=65.4   BIC=73.43</code></pre>
 </div>
 </div></div>
 </section>
-<section class="slide level2">
-
-<p><strong>Pasos a seguir:</strong></p>
+<section id="pasos-del-análisis-de-intervención" class="slide level2">
+<h2>Pasos del análisis de intervención</h2>
+<ul>
+<li>Asumimos que antes de la intervención, la serie se puede modelar con ARIMA.</li>
+</ul>
 <ol type="1">
 <li><p>Elaborar un modelo ARIMA antes de la intervención, i.e.&nbsp;durante las primeras 134 semanas.</p></li>
 <li><p>Ampliar el modelo agregando variables indicadoras para registrar la intervención.</p></li>
-<li><p>Re-estimar el modelo con la serie completa con las variables indicadoras.</p></li>
+<li><p>Reestimar el modelo con la serie completa con las variables indicadoras.</p></li>
 </ol>
 </section>
 <section class="slide level2">
@@ -1131,8 +1133,8 @@ Training set -0.0009184472</code></pre>
 <section class="slide level2">
 
 <ul>
-<li><p>El modelo ARIMA con intervención: <span class="math display">\[Z_t=c_1 I_{1t} +c_2 I_{2t}+ \frac{(1-\theta_1B)}{(1-B)}a_t\]</span></p></li>
-<li><p>Multiplicando por ambos lados <span class="math inline">\((1-B)\)</span>: <span class="math display">\[(1-B) Z_t=c_1 (1-B) I_{1t} +c_2 (1-B) I_{2t}+ (1-\theta_1B)a_t\]</span> Note que en realidad…</p></li>
+<li><p>El modelo ARIMA con intervención: <span class="math display">\[Z_t=c_1 I_{1t} +c_2 I_{2t}+ \frac{(1-\theta_1B)}{(1-B)}a_t.\]</span></p></li>
+<li><p>Multiplicando por ambos lados <span class="math inline">\((1-B)\)</span>: <span class="math display">\[(1-B) Z_t=c_1 (1-B) I_{1t} +c_2 (1-B) I_{2t}+ (1-\theta_1B)a_t\]</span> Note que en realidad, estamos modelando la intervención como un impulso en la serie diferenciada.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a>X_diff <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">diff</span>(I1),<span class="fu">diff</span>(I2))</span>
@@ -1177,29 +1179,56 @@ Training set 0.00186971 0.04329952 0.03363337 -3.49533 16.66087 0.7903928
 Training set -0.01155037</code></pre>
 </div>
 </div>
+<ul>
+<li>La intervención produce el cambio a partir de la segunda semana.</li>
+</ul>
 </section>
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="fu">checkresiduals</span>(modb,<span class="at">lag=</span><span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a>modb <span class="ot">&lt;-</span> <span class="fu">Arima</span>(crest, <span class="at">xreg=</span><span class="fu">cbind</span>(I2), <span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb58-2"><a href=""></a><span class="fu">summary</span>(modb)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Series: crest 
+Regression with ARIMA(0,1,1) errors 
+
+Coefficients:
+          ma1      I2
+      -0.7758  0.1624
+s.e.   0.0442  0.0283
+
+sigma^2 = 0.001911:  log likelihood = 471.09
+AIC=-936.18   AICc=-936.09   BIC=-925.33
+
+Training set error measures:
+                      ME       RMSE        MAE       MPE     MAPE      MASE
+Training set 0.002091025 0.04347852 0.03386705 -3.380261 16.76654 0.7958844
+                    ACF1
+Training set -0.01500684</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="fu">checkresiduals</span>(modb,<span class="at">lag=</span><span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Ljung-Box test
 
 data:  Residuals from Regression with ARIMA(0,1,1) errors
-Q* = 15.279, df = 19, p-value = 0.7047
+Q* = 16.273, df = 19, p-value = 0.639
 
 Model df: 1.   Total lags used: 20</code></pre>
 </div>
 </div>
-<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-34-1.png" width="384" class="r-stretch"></section>
-<section id="otros-tipos-de-intervención" class="slide level2">
-<h2>Otros tipos de intervención</h2>
+<img data-src="presentacion_files/figure-revealjs/unnamed-chunk-35-1.png" width="384" class="r-stretch"></section>
+<section id="análisis-de-intervención-2" class="slide level2">
+<h2>Análisis de intervención</h2>
 <ul>
-<li>De manera formal, un modelo de intervención considera:</li>
+<li>De manera formal, un modelo de intervención se define como <span class="math display">\[Z_t = m_t + N_t,\]</span> donde <span class="math inline">\(N_t \sim ARIMA(p,d,q)\)</span> (Podría ser SARIMA).</li>
 </ul>
-<p><span class="math display">\[Z_t = m_t + N_t,\]</span> donde <span class="math inline">\(N_t \sim ARIMA(p,d,q)\)</span> (Podría ser SARIMA).</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
@@ -1355,8 +1384,8 @@ Figura&nbsp;5: Ilustración con <span class="math inline">\(T=5\)</span>, <span 
 <li>Note que se puede usar tanto la función <span class="math inline">\(P_{t}^{(T)}\)</span> o <span class="math inline">\(S_{t}^{(T)}\)</span> para representar el cambio pues <span class="math inline">\(P_{t}^{(T)}= (1-B)S_{t}^{(T)}\)</span>.</li>
 </ul>
 </section>
-<section id="otros-tipos-de-intervención-1" class="slide level2">
-<h2>Otros tipos de intervención</h2>
+<section class="slide level2">
+
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
@@ -1378,25 +1407,25 @@ Figura&nbsp;5: Ilustración con <span class="math inline">\(T=5\)</span>, <span 
 </div>
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<p>Capítulo 11 del Cryer &amp; Chan (2008) Time Series Analysis with Applications in R.</p>
+<p>Fuente: Capítulo 11 del Cryer &amp; Chan (2008) Time Series Analysis with Applications in R.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="ejemplo" class="slide level2">
-<h2>Ejemplo</h2>
+<section id="ejemplo-de-millas-mensuales-de-pasajeros" class="slide level2">
+<h2>Ejemplo de millas mensuales de pasajeros</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
 <li>Los datos se tratan de las millas mensuales de pasajeros de aerolíneas en los E.U de enero 1996 a mayo de 2005.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="fu">data</span>(airmiles)</span>
-<span id="cb60-2"><a href=""></a><span class="fu">plot</span>(airmiles)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a><span class="fu">data</span>(airmiles)</span>
+<span id="cb62-2"><a href=""></a><span class="fu">plot</span>(airmiles)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-35-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-36-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -1416,12 +1445,12 @@ Figura&nbsp;5: Ilustración con <span class="math inline">\(T=5\)</span>, <span 
 <li>Usando los datos antes de la intervención, un <span class="math inline">\(SARIMA(0,1,1)(0,1,0)_{12}\)</span> es identificado.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a>airmiles_pre <span class="ot">&lt;-</span> <span class="fu">window</span>(<span class="fu">log</span>(airmiles),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">2001</span>,<span class="dv">8</span>))</span>
-<span id="cb61-2"><a href=""></a><span class="fu">acf2</span>(<span class="fu">as.vector</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(airmiles_pre),<span class="dv">12</span>)),<span class="at">max.lag=</span><span class="dv">48</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>airmiles_pre <span class="ot">&lt;-</span> <span class="fu">window</span>(<span class="fu">log</span>(airmiles),<span class="at">end=</span><span class="fu">c</span>(<span class="dv">2001</span>,<span class="dv">8</span>))</span>
+<span id="cb63-2"><a href=""></a><span class="fu">acf2</span>(<span class="fu">as.vector</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(airmiles_pre),<span class="dv">12</span>)),<span class="at">max.lag=</span><span class="dv">48</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-36-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-37-1.png" width="384"></p>
 </figure>
 </div>
 </div>
@@ -1440,40 +1469,37 @@ Figura&nbsp;5: Ilustración con <span class="math inline">\(T=5\)</span>, <span 
 <li>Definición de las intervenciones y períodos con valores extremos.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a>xtransf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>), <span class="co"># efecto instantáneo - omega_0</span></span>
-<span id="cb62-2"><a href=""></a>                      <span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>)  <span class="co"># efecto AR(1) - omega_1</span></span>
-<span id="cb62-3"><a href=""></a>                      )</span>
-<span id="cb62-4"><a href=""></a></span>
-<span id="cb62-5"><a href=""></a>xtransf[<span class="dv">65</span><span class="sc">:</span><span class="dv">69</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>xtransf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>), <span class="co"># efecto instantáneo - omega_0</span></span>
+<span id="cb64-2"><a href=""></a>                      <span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>)  <span class="co"># efecto AR(1) - omega_1</span></span>
+<span id="cb64-3"><a href=""></a>                      )</span>
+<span id="cb64-4"><a href=""></a></span>
+<span id="cb64-5"><a href=""></a>xtransf[<span class="dv">65</span><span class="sc">:</span><span class="dv">70</span>,]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   I911 I911.1
 65    0      0
 66    0      0
 67    0      0
 68    0      0
-69    1      1</code></pre>
+69    1      1
+70    0      0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a><span class="co">#tratamiento de valores extremos</span></span>
-<span id="cb64-2"><a href=""></a>xreg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Dec96=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">12</span>),</span>
-<span id="cb64-3"><a href=""></a>                   <span class="at">Jan97=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">13</span>),</span>
-<span id="cb64-4"><a href=""></a>                   <span class="at">Dec02=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">84</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a><span class="co">#tratamiento de valores extremos</span></span>
+<span id="cb66-2"><a href=""></a>xreg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Dec96=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">12</span>),</span>
+<span id="cb66-3"><a href=""></a>                   <span class="at">Jan97=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">13</span>),</span>
+<span id="cb66-4"><a href=""></a>                   <span class="at">Dec02=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">84</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:50%;">
 <ul>
 <li>Estimación del modelo:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>xtransf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>),</span>
-<span id="cb65-2"><a href=""></a>                      <span class="at">I911=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>))</span>
-<span id="cb65-3"><a href=""></a>xreg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Dec96=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">12</span>),</span>
-<span id="cb65-4"><a href=""></a>                   <span class="at">Jan97=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">13</span>),<span class="at">Dec02=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">84</span>)) <span class="co">#tratamiento de valores extremos</span></span>
-<span id="cb65-5"><a href=""></a>air.m1<span class="ot">=</span><span class="fu">arimax</span>(<span class="fu">log</span>(airmiles),<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
-<span id="cb65-6"><a href=""></a>              <span class="at">seasonal=</span><span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">period=</span><span class="dv">12</span>),</span>
-<span id="cb65-7"><a href=""></a>              <span class="at">xtransf=</span>xtransf,<span class="at">transfer=</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),      <span class="co"># efecto instantáneo</span></span>
-<span id="cb65-8"><a href=""></a>                                            <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>)),     <span class="co"># efecto AR(1) </span></span>
-<span id="cb65-9"><a href=""></a>              <span class="at">xreg=</span>xreg,</span>
-<span id="cb65-10"><a href=""></a>              <span class="at">method=</span><span class="st">'ML'</span>)</span>
-<span id="cb65-11"><a href=""></a>air.m1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>air.m1<span class="ot">=</span><span class="fu">arimax</span>(<span class="fu">log</span>(airmiles),<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb67-2"><a href=""></a>              <span class="at">seasonal=</span><span class="fu">list</span>(<span class="at">order=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>),<span class="at">period=</span><span class="dv">12</span>),</span>
+<span id="cb67-3"><a href=""></a>              <span class="at">xtransf=</span>xtransf,<span class="at">transfer=</span><span class="fu">list</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),      <span class="co"># efecto instantáneo</span></span>
+<span id="cb67-4"><a href=""></a>                                            <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>)),     <span class="co"># efecto AR(1) </span></span>
+<span id="cb67-5"><a href=""></a>              <span class="at">xreg=</span>xreg,</span>
+<span id="cb67-6"><a href=""></a>              <span class="at">method=</span><span class="st">'ML'</span>)</span>
+<span id="cb67-7"><a href=""></a>air.m1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1499,27 +1525,27 @@ sigma^2 estimated as 0.0006721:  log likelihood = 219.99,  aic = -423.98</code><
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a><span class="fu">plot</span>(<span class="fu">log</span>(airmiles),<span class="at">ylab=</span><span class="st">'Log(airmiles)'</span>)</span>
-<span id="cb67-2"><a href=""></a><span class="fu">points</span>(<span class="fu">fitted</span>(air.m1))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a><span class="fu">plot</span>(<span class="fu">log</span>(airmiles),<span class="at">ylab=</span><span class="st">'Log(airmiles)'</span>)</span>
+<span id="cb69-2"><a href=""></a><span class="fu">points</span>(<span class="fu">fitted</span>(air.m1))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-39-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-40-1.png" width="384"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>Nine11p<span class="ot">=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>)</span>
-<span id="cb68-2"><a href=""></a><span class="fu">plot</span>(<span class="fu">ts</span>(Nine11p<span class="sc">*</span>(<span class="sc">-</span><span class="fl">0.0949</span>)<span class="sc">+</span></span>
-<span id="cb68-3"><a href=""></a>   <span class="fu">filter</span>(Nine11p,<span class="at">filter=</span>.<span class="dv">8139</span>,<span class="at">method=</span><span class="st">'recursive'</span>, <span class="at">side=</span><span class="dv">1</span>)<span class="sc">*</span></span>
-<span id="cb68-4"><a href=""></a>            (<span class="sc">-</span><span class="fl">0.2715</span>),<span class="at">frequency=</span><span class="dv">12</span>,<span class="at">start=</span><span class="dv">1996</span>),<span class="at">ylab=</span><span class="st">'9/11 Effects'</span>,</span>
-<span id="cb68-5"><a href=""></a>       <span class="at">type=</span><span class="st">'h'</span>); <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a>Nine11p<span class="ot">=</span><span class="dv">1</span><span class="sc">*</span>(<span class="fu">seq</span>(airmiles)<span class="sc">==</span><span class="dv">69</span>)</span>
+<span id="cb70-2"><a href=""></a><span class="fu">plot</span>(<span class="fu">ts</span>(Nine11p<span class="sc">*</span>(<span class="sc">-</span><span class="fl">0.0949</span>)<span class="sc">+</span></span>
+<span id="cb70-3"><a href=""></a>   <span class="fu">filter</span>(Nine11p,<span class="at">filter=</span>.<span class="dv">8139</span>,<span class="at">method=</span><span class="st">'recursive'</span>, <span class="at">side=</span><span class="dv">1</span>)<span class="sc">*</span></span>
+<span id="cb70-4"><a href=""></a>            (<span class="sc">-</span><span class="fl">0.2715</span>),<span class="at">frequency=</span><span class="dv">12</span>,<span class="at">start=</span><span class="dv">1996</span>),<span class="at">ylab=</span><span class="st">'efecto 9/11'</span>,</span>
+<span id="cb70-5"><a href=""></a>       <span class="at">type=</span><span class="st">'h'</span>); <span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-40-1.png" width="384"></p>
+<p><img data-src="presentacion_files/figure-revealjs/unnamed-chunk-41-1.png" width="384"></p>
 </figure>
 </div>
 </div>
