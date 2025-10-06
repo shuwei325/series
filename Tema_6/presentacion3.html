@@ -377,34 +377,35 @@
 </section>
 <section id="estimación-por-máxima-verosimilitud" class="slide level2">
 <h2>Estimación por máxima verosimilitud</h2>
-<p><span class="alert">Función de verosimilitud condicional:</span> - Bajo el supuesto de que <span class="math inline">\(a_t\)</span> son ruidos blancos gaussianos, tenemos que la función de densidad conjunta de <span class="math inline">\(a_1,...,a_T\)</span> es <span class="math display">\[f(a_1,...,a_T)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{a_t^2}{2 \sigma_a^2} \right\rbrace\]</span></p>
+<p><span class="alert">Función de verosimilitud condicional:</span></p>
 <ul>
-<li>Para el caso de AR(1), <span class="math display">\[a_t=Z_t-C-\phi_1 Z_{t-1},~~\text{para}~~ t=1,...,T,\]</span> se tiene que</li>
+<li><p>Bajo el supuesto de que <span class="math inline">\(a_t\)</span> son ruidos blancos gaussianos, tenemos que la función de densidad conjunta de <span class="math inline">\(a_1,...,a_T\)</span> es <span class="math display">\[f(a_1,...,a_T)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{a_t^2}{2 \sigma_a^2} \right\rbrace\]</span></p></li>
+<li><p>Para el caso de AR(1), <span class="math display">\[a_t=Z_t-C-\phi_1 Z_{t-1},~~\text{para}~~ t=1,...,T,\]</span> se tiene que</p></li>
 </ul>
-<p><span class="math display">\[L(C,\phi_1,\sigma_a^2|Z_1,...,Z_T)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
+<p><span class="math display">\[\mathcal{L}(C,\phi_1,\sigma_a^2|Z_1,...,Z_T)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
 </section>
 <section class="slide level2">
 
-<p><span class="math display">\[L(C,\phi_1,\sigma_a^2)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
+<p><span class="math display">\[\mathcal{L}(C,\phi_1,\sigma_a^2)=(2 \pi)^{-n/2}(\sigma_a)^{-n} \exp \left\lbrace -\sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
 <ul>
-<li>Luego, la función log-verosimilitud es definida como <span class="math display">\[l(C,\phi_1,\sigma_a^2)=
+<li>Luego, la función log-verosimilitud es definida como <span class="math display">\[\ell(C,\phi_1,\sigma_a^2)=
 -(\frac{n}{2}) \log(2 \pi)-n \log(\sigma_a) \left\lbrace -\sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace\]</span></li>
 </ul>
-<p><span class="math display">\[\Rightarrow l(C,\phi_1,\sigma_a^2)\propto -n \log(\sigma_a)  -\left\lbrace \sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
+<p><span class="math display">\[\Rightarrow \ell(C,\phi_1,\sigma_a^2)\propto -n \log(\sigma_a)  -\left\lbrace \sum\limits_{t=1}^T \frac{(Z_t-C-\phi_1 Z_{t-1})^2}{2 \sigma_a^2} \right\rbrace.\]</span></p>
 <ul>
-<li>La idea es maximizar <span class="math inline">\(l(C,\phi_1,\sigma_a^2)\)</span>.</li>
+<li>La idea es maximizar <span class="math inline">\(\ell(C,\phi_1,\sigma_a^2)\)</span>.</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
-<li><p>De manera general, después de hacer <span class="math inline">\(d\)</span> diferencias, el modelo ARMA resultante es estacionario e invertible y se puede escribir como <span class="math display">\[a_t=Z_t-C-\phi_1 Z_{t-1}-\phi_2 Z_{t-2}-...-\phi_p Z_{t-p}\]</span> <span class="math display">\[+\theta_1 a_{t-1}+\theta_2 a_{t-2}+...+\theta_q a_{t-q}\]</span> Su función de log-verosimilitud es: <span class="math display">\[l(\boldsymbol{\theta}|Z_1,...,Z_T)\propto -n \log\sigma_a -\frac{S(\boldsymbol{\theta},\boldsymbol{Z},\boldsymbol{a})}{2 \sigma_a^2},\]</span> donde<br> <span class="math inline">\(\boldsymbol{\theta}=(C,\phi_1,...,\phi_p,\theta_1,...,\theta_q,\sigma_a^2)\)</span><br> <span class="math inline">\(S(\boldsymbol{\theta},\boldsymbol{Z},\boldsymbol{a})=\sum\limits_{t=1}^T a_t^2(\boldsymbol{\theta},\boldsymbol{Z},\boldsymbol{a})\)</span> (suma de cuadrados condicional)</p></li>
-<li><p>El procedimiento de maximizar <span class="math inline">\(l(\boldsymbol{\theta}|Z_1,...,Z_T)\)</span> usa algún método de optimización.</p></li>
+<li><p>De manera general, después de hacer <span class="math inline">\(d\)</span> diferencias, el modelo ARMA resultante es estacionario e invertible y se puede escribir como <span class="math display">\[a_t=Z_t-C-\phi_1 Z_{t-1}-\phi_2 Z_{t-2}-...-\phi_p Z_{t-p}\]</span> <span class="math display">\[+\theta_1 a_{t-1}+\theta_2 a_{t-2}+...+\theta_q a_{t-q}\]</span> Su función de log-verosimilitud es: <span class="math display">\[\ell(\boldsymbol{\theta}|Z_1,...,Z_T)\propto -n \log\sigma_a -\frac{S(\boldsymbol{\theta},\boldsymbol{Z},\boldsymbol{a})}{2 \sigma_a^2},\]</span> donde<br> <span class="math inline">\(\boldsymbol{\theta}=(C,\phi_1,...,\phi_p,\theta_1,...,\theta_q,\sigma_a^2)\)</span><br> <span class="math inline">\(S(\boldsymbol{\theta},\boldsymbol{Z},\boldsymbol{a})=\sum\limits_{t=1}^T a_t^2(\boldsymbol{\theta},\boldsymbol{Z},\boldsymbol{a})\)</span> (suma de cuadrados condicional)</p></li>
+<li><p>El procedimiento de maximizar <span class="math inline">\(\ell(\boldsymbol{\theta}|Z_1,...,Z_T)\)</span> usa algún método de optimización.</p></li>
 </ul>
 </section>
 <section class="slide level2">
 
-<p><span class="alert">función de verosimilitud no condicional:</span></p>
+<p><span class="alert">Función de verosimilitud no condicional:</span></p>
 <ul>
 <li>Bajo el supuesto de normalidad, el modelo ARMA tiene su media y matriz de autocovariancia teórica definida y su función de log-verosimilitud es: <span class="math display">\[l(\boldsymbol{\theta}|Z_1,...,Z_T) \cong -n \log\sigma_a -\frac{S(\boldsymbol{\theta},\boldsymbol{Z})}{2 \sigma_a^2},\]</span> donde<br> <span class="math inline">\(\boldsymbol{\theta}=(C,\phi_1,...,\phi_p,\theta_1,...,\theta_q,\sigma_a^2)\)</span><br> <span class="math inline">\(S(\boldsymbol{\theta},\boldsymbol{Z})=\sum\limits_{t=1}^T a_t^2(\boldsymbol{\theta},\boldsymbol{Z})\)</span> (suma de cuadrados no condicional)</li>
 </ul>
