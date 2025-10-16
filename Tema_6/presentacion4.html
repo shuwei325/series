@@ -441,22 +441,6 @@
 <ul>
 <li>En la práctica, la etapa de identificación de modelos estacionales es más difícil debido a que los modelos estacionales se mezclan con modelos no estacionales.</li>
 </ul>
-</section>
-<section id="diferenciación-estacional" class="slide level2">
-<h2>Diferenciación estacional</h2>
-<ul>
-<li><p>Cuando la ACF muestran estacas en los rezagos <span class="math inline">\(s, 2s, 3s,...\)</span>, que no caen rápidamente a cero, la serie tiene una media no estacionaria y es necesario hacer una diferenciación estacional de longitud <span class="math inline">\(s\)</span> para obtener una media estacionaria.</p></li>
-<li><p><span class="alert">La diferenciación estacional de primer orden</span> es definida por:</p></li>
-</ul>
-<p><span class="math display">\[\nabla_s Z_t=Z_t-B^{s}Z_t=(1-B^{s})Z_t=Z_t-Z_{t-s}\]</span></p>
-<ul>
-<li><span class="alert">La diferenciación estacional de segundo orden</span> es definida por:</li>
-</ul>
-<p><span class="math display">\[\nabla_s^2 Z_t=\nabla_s (\nabla_s Z_t)=(1-B^{s})(1-B^{s})Z_t=Z_t-2Z_{t-s}+Z_{t-2s}\]</span></p>
-<ul>
-<li>De la misma forma, se puede extender a <span class="math inline">\(D\)</span> diferencias estacionales.</li>
-</ul>
-<p><span class="math display">\[\nabla_s^D Z_t=(1-B^{s})^D Z_t\]</span></p>
 </section></section>
 <section>
 <section id="sarima" class="title-slide slide level1 agenda-slide center">
@@ -481,11 +465,27 @@
 </ol>
 </div>
 </section>
+<section id="diferenciación-estacional" class="slide level2">
+<h2>Diferenciación estacional</h2>
+<ul>
+<li><p>Cuando la ACF muestran estacas en los rezagos <span class="math inline">\(s, 2s, 3s,...\)</span>, que no caen rápidamente a cero, la serie tiene una media no estacionaria y es necesario hacer una diferenciación estacional de longitud <span class="math inline">\(s\)</span> para obtener una media estacionaria.</p></li>
+<li><p><span class="alert">La diferenciación estacional de primer orden</span> es definida por:</p></li>
+</ul>
+<p><span class="math display">\[\nabla_s Z_t=Z_t-B^{s}Z_t=(1-B^{s})Z_t=Z_t-Z_{t-s}\]</span></p>
+<ul>
+<li><span class="alert">La diferenciación estacional de segundo orden</span> es definida por:</li>
+</ul>
+<p><span class="math display">\[\nabla_s^2 Z_t=\nabla_s (\nabla_s Z_t)=(1-B^{s})(1-B^{s})Z_t=Z_t-2Z_{t-s}+Z_{t-2s}\]</span></p>
+<ul>
+<li>De la misma forma, se puede extender a <span class="math inline">\(D\)</span> diferencias estacionales.</li>
+</ul>
+<p><span class="math display">\[\nabla_s^D Z_t=(1-B^{s})^D Z_t\]</span></p>
+</section>
 <section id="modelos-arima-estacionales-sarima" class="slide level2">
 <h2>Modelos ARIMA estacionales (SARIMA)</h2>
 <ul>
 <li><p>En la práctica, los patrones estacionales y no estacionales se mezclan y es necesario separarlos mediante un cuidadoso examen de las ACF y PACF.</p></li>
-<li><p>Similarmente a un modelo no estacional, el modelo multiplicativo estacional es ajustado primero por un modelo ARIMA(P,D,Q):</p></li>
+<li><p>Similarmente a un modelo no estacional, el modelo multiplicativo estacional es ajustado primero por un modelo <span class="math inline">\(ARIMA(P,D,Q)\)</span>:</p></li>
 </ul>
 <p><span class="math display">\[(1-\Phi_s B^s -\Phi_{2s}  B^{2s}-...-\Phi_{Ps} B^{sP})(1-B^s)^D \tilde{Z}_t=\]</span> <span class="math display">\[(1-\Theta_{s} B^s-\Theta_{2s} B^{2s}-...-\Theta_{Qs} B^{Qs})b_t.\]</span></p>
 <ul>
