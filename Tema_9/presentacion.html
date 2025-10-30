@@ -255,9 +255,6 @@
 <p>VAR(p)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>VAR(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
 <p>Diagnósticos</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
@@ -348,9 +345,6 @@
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>VAR(p)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>VAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>Diagnósticos</p>
@@ -544,9 +538,6 @@ Autocorrelations of series 'X', by lag
 <p>VAR(p)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>VAR(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
 <p>Diagnósticos</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
@@ -593,9 +584,6 @@ Autocorrelations of series 'X', by lag
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>VAR(p)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>VAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
 <p>Diagnósticos</p>
@@ -704,6 +692,7 @@ Autocorrelations of series 'X', by lag
 
 </div>
 <img data-src="presentacion_files/figure-revealjs/unnamed-chunk-12-1.png" width="384" class="r-stretch"></section></section>
+<section>
 <section id="varp" class="title-slide slide level1 agenda-slide center">
 <h1>VAR(p)</h1>
 <div class="agenda-heading">
@@ -727,45 +716,6 @@ Autocorrelations of series 'X', by lag
 <p>VAR(p)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
-<p>VAR(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>Diagnósticos</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
-<p>ARMAX(p,q) vectorial</p>
-</div></li>
-</ol>
-</div>
-</section>
-
-<section>
-<section id="var1" class="title-slide slide level1 agenda-slide center">
-<h1>VAR(1)</h1>
-<div class="agenda-heading">
-<p>Contenido</p>
-</div>
-<div class="agenda">
-<ol>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Introducción</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Medidas de dependencia (bivariada)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Medidas de dependencia (multivariada)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>Estacionariedad</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>VAR(p)</p>
-</div></li>
-<li><div class="agenda-active">
-<p>VAR(1)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-post-active">
 <p>Diagnósticos</p>
 </div></li>
 <li><div class="agenda-inactive agenda-post-active">
@@ -778,14 +728,19 @@ Autocorrelations of series 'X', by lag
 <h2>Modelos autorregresivos multivariados</h2>
 <ul>
 <li><p>Es un caso particular de los modelos de series temporales multivariados que supone que la observación de cada variable depende linealmente de los rezagos pasados de ella misma y también de otras variables.</p></li>
-<li><p>Para introducir el modelo, vamos a empezar VAR(1) con 3 series: <span class="math inline">\(X_{t,1},X_{t,2},X_{t,3}\)</span>.</p></li>
+<li><p>Para introducir el modelo, vamos a empezar con el VAR(1) de 3 series: <span class="math inline">\(X_{t,1},X_{t,2},X_{t,3}\)</span>.</p></li>
 <li><p>El VAR(1) se define de la siguiente forma:</p></li>
 </ul>
-<p><span class="math display">\[X_{t,1}=\alpha_1+\Phi_{11}X_{t-1,1}+\Phi_{12}X_{t-1,2}+\Phi_{13}X_{t-1,3}+w_{t,1}\]</span></p>
-<p><span class="math display">\[X_{t,2}=\alpha_2+\Phi_{21}X_{t-1,1}+\Phi_{22}X_{t-1,2}+\Phi_{23}X_{t-1,3}+w_{t,2}\]</span></p>
-<p><span class="math display">\[X_{t,3}=\alpha_3+\Phi_{31}X_{t-1,1}+\Phi_{32}X_{t-1,2}+\Phi_{33}X_{t-1,3}+w_{t,3}\]</span> - Note que cada ecuación establece un modelo autorregresivo de orden 1 más otras variables de un rezago.</p>
+<p><span class="math display">\[\begin{align*}
+X_{t,1} &amp;= \alpha_1 + \Phi_{11} X_{t-1,1} + \Phi_{12} X_{t-1,2} + \Phi_{13} X_{t-1,3} + w_{t,1}, \\
+X_{t,2} &amp;= \alpha_2 + \Phi_{21} X_{t-1,1} + \Phi_{22} X_{t-1,2} + \Phi_{23} X_{t-1,3} + w_{t,2}, \\
+X_{t,3} &amp;= \alpha_3 + \Phi_{31} X_{t-1,1} + \Phi_{32} X_{t-1,2} + \Phi_{33} X_{t-1,3} + w_{t,3}.
+\end{align*}\]</span></p>
+<ul>
+<li>Note que cada ecuación establece un modelo autorregresivo de orden 1 más otras variables de un rezago.</li>
+</ul>
 </section>
-<section id="var1-1" class="slide level2">
+<section id="var1" class="slide level2">
 <h2>VAR(1)</h2>
 <ul>
 <li>En concreto, el modelo anterior se puede resumir en</li>
@@ -814,22 +769,20 @@ w_{t,3}
 <section id="arx1-multivariado" class="slide level2">
 <h2>ARX(1) multivariado</h2>
 <ul>
-<li>También es posible extender el modelo anterior con intercepto y tendencia:</li>
+<li>También es posible extender el modelo anterior con intercepto y tendencia: <span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{\Phi}\boldsymbol{X}_{t-1}+\boldsymbol{w}_{t},\]</span></li>
 </ul>
-<p><span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{\Phi}\boldsymbol{X}_{t-1}+\boldsymbol{w}_{t},\]</span></p>
 <p><span class="math display">\[\text{donde}~~ \boldsymbol{\Gamma}=\begin{bmatrix}\alpha_{1} &amp; \beta_{1}  \\
 \alpha_{2} &amp; \beta_{2} \\
 \alpha_{3} &amp; \beta_{3}
 \end{bmatrix} ~~\text{y}~~ \boldsymbol{u}_t= \begin{bmatrix}1  \\
 t \end{bmatrix}\]</span></p>
 <ul>
-<li>Es decir,</li>
-</ul>
-<p><span class="math display">\[X_{t,1}=\alpha_1 + \beta_1 t+\Phi_{11}X_{t-1,1}+\Phi_{12}X_{t-1,2}+\Phi_{13}X_{t-1,3}+w_{t,1}\]</span></p>
-<p><span class="math display">\[X_{t,2}=\alpha_2+ \beta_2 t+\Phi_{21}X_{t-1,1}+\Phi_{22}X_{t-1,2}+\Phi_{23}X_{t-1,3}+w_{t,2}\]</span></p>
-<p><span class="math display">\[X_{t,3}=\alpha_3+ \beta_3 t+\Phi_{31}X_{t-1,1}+\Phi_{32}X_{t-1,2}+\Phi_{33}X_{t-1,3}+w_{t,3}\]</span></p>
-<ul>
-<li>Note que X en ARX se refiere al vector exógeno denotado por <span class="math inline">\(u_t\)</span> y se puede extender fácilmente incluyendo variable exógenas.</li>
+<li><p>Es decir, <span class="math display">\[\begin{align*}
+X_{t,1} &amp;= \alpha_1 + \beta_1 t + \Phi_{11} X_{t-1,1} + \Phi_{12} X_{t-1,2} + \Phi_{13} X_{t-1,3} + w_{t,1}, \\
+X_{t,2} &amp;= \alpha_2 + \beta_2 t + \Phi_{21} X_{t-1,1} + \Phi_{22} X_{t-1,2} + \Phi_{23} X_{t-1,3} + w_{t,2}, \\
+X_{t,3} &amp;= \alpha_3 + \beta_3 t + \Phi_{31} X_{t-1,1} + \Phi_{32} X_{t-1,2} + \Phi_{33} X_{t-1,3} + w_{t,3}.
+\end{align*}\]</span></p></li>
+<li><p>Note que X en ARX se refiere al vector exógeno denotado por <span class="math inline">\(u_t\)</span> y se puede extender fácilmente incluyendo variable exógenas.</p></li>
 </ul>
 </section>
 <section id="arxp-multivariado" class="slide level2">
@@ -881,14 +834,17 @@ I &amp; 0 &amp; ... &amp; 0 &amp; 0 \\
 0 \\
 \vdots\\
 0
-\end{bmatrix}\]</span> y <span class="math inline">\(\boldsymbol{\xi}_{t}\)</span> y <span class="math inline">\(\boldsymbol{v}_{t}\)</span> son vectores <span class="math inline">\(Kp \times 1\)</span>, y <span class="math inline">\(A\)</span> es una matriz <span class="math inline">\(Kp \times Kp\)</span>. - Luego, la condición anterior de estacionariedad es equivalente a que todos los eigenvalues de la matriz <span class="math inline">\(A\)</span> tienen módulo menor a 1.</p>
+\end{bmatrix}\]</span> y <span class="math inline">\(\boldsymbol{\xi}_{t}\)</span> y <span class="math inline">\(\boldsymbol{v}_{t}\)</span> son vectores <span class="math inline">\(Kp \times 1\)</span>, y <span class="math inline">\(A\)</span> es una matriz <span class="math inline">\(Kp \times Kp\)</span>.</p>
+<ul>
+<li>Luego, la condición anterior de estacionariedad es equivalente a que todos los eigenvalues de la matriz <span class="math inline">\(A\)</span> tienen módulo menor a 1.</li>
+</ul>
 </section>
 <section id="criterio-de-información" class="slide level2">
 <h2>Criterio de información</h2>
 <ul>
 <li>Debido a la complejidad de selección del orden <span class="math inline">\(p\)</span>, en la práctica se usan los criterios de información:</li>
 </ul>
-<p><strong>AIC:</strong> <span class="math display">\[AIC(p)= \log \det(\tilde{Z}_u(p))+\frac{2}{T}pK^2\]</span> <strong>HQ (Hannan-Quinn):</strong></p>
+<p><span class="alert">AIC:</span> <span class="math display">\[AIC(p)= \log \det(\tilde{Z}_u(p))+\frac{2}{T}pK^2\]</span> <span class="alert">HQ (Hannan-Quinn):</span></p>
 <p><span class="math display">\[HQ(p)= \log \det(\tilde{Z}_u(p))+\frac{2\log(\log(T))}{T}pK^2\]</span></p>
 <p>donde <span class="math inline">\(\tilde{Z}_u(p)=T^{-1}\sum_{t=1}^T \hat{w}_t \hat{w}'_t\)</span>,<br>
 <span class="math inline">\(p^*\)</span> es el total de parámetros en cada ecuación y<br>
@@ -896,7 +852,7 @@ I &amp; 0 &amp; ... &amp; 0 &amp; 0 \\
 </section>
 <section class="slide level2">
 
-<p><strong>BIC o criterio de información de Schwarz (SC):</strong> <span class="math display">\[SC(p)= \log \det(\tilde{Z}_u(p))+\frac{\log(T)}{T}pK^2\]</span> <strong>FPE (Final Predictor Error):</strong> <span class="math display">\[FPE(p)=\left( \frac{T+p^*}{T-p^*}\right)^K \det(\tilde{Z}_u(p))\]</span></p>
+<p><span class="alert">BIC o criterio de información de Schwarz (SC):</span> <span class="math display">\[SC(p)= \log \det(\tilde{Z}_u(p))+\frac{\log(T)}{T}pK^2\]</span> <span class="alert">FPE (Final Predictor Error):</span> <span class="math display">\[FPE(p)=\left( \frac{T+p^*}{T-p^*}\right)^K \det(\tilde{Z}_u(p))\]</span></p>
 </section></section>
 <section>
 <section id="diagnósticos" class="title-slide slide level1 agenda-slide center">
@@ -921,9 +877,6 @@ I &amp; 0 &amp; ... &amp; 0 &amp; 0 \\
 <li><div class="agenda-inactive agenda-pre-active">
 <p>VAR(p)</p>
 </div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>VAR(1)</p>
-</div></li>
 <li><div class="agenda-active">
 <p>Diagnósticos</p>
 </div></li>
@@ -938,8 +891,8 @@ I &amp; 0 &amp; ... &amp; 0 &amp; 0 \\
 <ul>
 <li>Pruebas de hipótesis para la correlación serial:</li>
 </ul>
-<p><strong>El estadístico de Portmanteau:</strong> <span class="math display">\[Q_h=T \sum_{j=1}^h tr(\hat{C}'_j\hat{C}^{-1}_0\hat{C}_j\hat{C}^{-1}_0)\]</span> donde <span class="math inline">\(\hat{C}_i=\frac{1}{T}\sum_{j=i+1}^T \hat{w}_t\hat{w}'_{t-i}\)</span>. Para <span class="math inline">\(T\)</span> y <span class="math inline">\(h\)</span> suficientemente grandes, el estadístico se aproxima a la distribución <span class="math inline">\(\chi^2(K^2(h-n^*))\)</span>, donde <span class="math inline">\(n^*\)</span> es la cantidad de parámetros excluyendo los de términos determinísticos.</p>
-<p><strong>El estadístico de Portmanteau ajustado (muestras pequeñas):</strong> <span class="math display">\[Q^*_h=T^2 \sum_{j=1}^h \frac{1}{T-j} tr(\hat{C}'_j\hat{C}^{-1}_0\hat{C}_j\hat{C}^{-1}_0)\]</span></p>
+<p><span class="alert">El estadístico de Portmanteau:</span> <span class="math display">\[Q_h=T \sum_{j=1}^h tr(\hat{C}'_j\hat{C}^{-1}_0\hat{C}_j\hat{C}^{-1}_0)\]</span> donde <span class="math inline">\(\hat{C}_i=\frac{1}{T}\sum_{j=i+1}^T \hat{w}_t\hat{w}'_{t-i}\)</span>. Para <span class="math inline">\(T\)</span> y <span class="math inline">\(h\)</span> suficientemente grandes, el estadístico se aproxima a la distribución <span class="math inline">\(\chi^2(K^2(h-n^*))\)</span>, donde <span class="math inline">\(n^*\)</span> es la cantidad de parámetros excluyendo los de términos determinísticos.</p>
+<p><span class="alert">El estadístico de Portmanteau ajustado (muestras pequeñas):</span> <span class="math display">\[Q^*_h=T^2 \sum_{j=1}^h \frac{1}{T-j} tr(\hat{C}'_j\hat{C}^{-1}_0\hat{C}_j\hat{C}^{-1}_0)\]</span></p>
 </section>
 <section id="ejemplo" class="slide level2">
 <h2>Ejemplo</h2>
@@ -975,9 +928,6 @@ I &amp; 0 &amp; ... &amp; 0 &amp; 0 \\
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
 <p>VAR(p)</p>
-</div></li>
-<li><div class="agenda-inactive agenda-pre-active">
-<p>VAR(1)</p>
 </div></li>
 <li><div class="agenda-inactive agenda-pre-active">
 <p>Diagnósticos</p>
