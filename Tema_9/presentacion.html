@@ -724,11 +724,12 @@ Autocorrelations of series 'X', by lag
 </ol>
 </div>
 </section>
-<section id="modelos-autorregresivos-multivariados" class="slide level2">
-<h2>Modelos autorregresivos multivariados</h2>
+<section id="varp-1" class="slide level2">
+<h2>VAR(p)</h2>
 <ul>
 <li><p>Es un caso particular de los modelos de series temporales multivariados que supone que la observación de cada variable depende linealmente de los rezagos pasados de ella misma y también de otras variables.</p></li>
-<li><p>Para introducir el modelo, vamos a empezar con el VAR(1) de 3 series: <span class="math inline">\(X_{t,1},X_{t,2},X_{t,3}\)</span>.</p></li>
+<li><p>Comúnmente se les conoce como <span class="alert">modelos autorregresivos multivariados</span> o <span class="alert">modelos autorregresivos vectoriales</span>.</p></li>
+<li><p>Empezamos con el <span class="alert">modelo autorregresivo vectorial de orden 1, VAR(1)</span>, de dimensión 3 (3 series): <span class="math inline">\(X_{t,1},X_{t,2},X_{t,3}\)</span>.</p></li>
 <li><p>El VAR(1) se define de la siguiente forma:</p></li>
 </ul>
 <p><span class="math display">\[\begin{align*}
@@ -766,8 +767,8 @@ w_{t,2}\\
 w_{t,3}
 \end{bmatrix}\]</span></p>
 </section>
-<section id="arx1-multivariado" class="slide level2">
-<h2>ARX(1) multivariado</h2>
+<section id="varx1" class="slide level2">
+<h2>VARX(1)</h2>
 <ul>
 <li>También es posible extender el modelo anterior con intercepto y tendencia: <span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{\Phi}\boldsymbol{X}_{t-1}+\boldsymbol{w}_{t},\]</span></li>
 </ul>
@@ -785,12 +786,13 @@ X_{t,3} &amp;= \alpha_3 + \beta_3 t + \Phi_{31} X_{t-1,1} + \Phi_{32} X_{t-1,2} 
 <li><p>Note que X en ARX se refiere al vector exógeno denotado por <span class="math inline">\(u_t\)</span> y se puede extender fácilmente incluyendo variable exógenas.</p></li>
 </ul>
 </section>
-<section id="arxp-multivariado" class="slide level2">
-<h2>ARX(p) multivariado</h2>
+<section id="varxp" class="slide level2">
+<h2>VARX(p)</h2>
 <ul>
 <li>De esta forma, se puede generalizar a series temporales <span class="math inline">\(K\)</span>-dimensionales y <span class="math inline">\(p\)</span> rezagos:</li>
 </ul>
-<p><span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{\Phi_1}\boldsymbol{X}_{t-1}+...+\boldsymbol{\Phi_p}\boldsymbol{X}_{t-p}+\boldsymbol{w}_{t}\]</span> en donde <span class="math display">\[\boldsymbol{X}_{t}=
+<p><span class="math display">\[\boldsymbol{X}_{t}=\boldsymbol{\Gamma} \boldsymbol{u}_t+\boldsymbol{\Phi_1}\boldsymbol{X}_{t-1}+...+\boldsymbol{\Phi_p}\boldsymbol{X}_{t-p}+\boldsymbol{w}_{t}\]</span> en donde <span class="math inline">\(u_t\)</span> es un vector <span class="math inline">\(k \times 1\)</span> de <span class="math inline">\(k\)</span> variables exógenas y <span class="math inline">\(\boldsymbol{\Gamma}\)</span> es una matriz <span class="math inline">\(r \times k\)</span> de coeficientes asociados a las variables exógenas, y</p>
+<p><span class="math display">\[\boldsymbol{X}_{t}=
 \begin{bmatrix}X_{t,1}\\
 \vdots \\
 X_{t,K}
@@ -802,7 +804,6 @@ X_{t,K}
 \vdots\\
 w_{t,K}
 \end{bmatrix}\]</span></p>
-<p><span class="math inline">\(u_t\)</span> es un vector <span class="math inline">\(k \times 1\)</span> de <span class="math inline">\(k\)</span> variables exógenas y <span class="math inline">\(\boldsymbol{\Gamma}\)</span> es una matriz <span class="math inline">\(r \times k\)</span> de coeficientes asociados a las variables exógenas.</p>
 </section>
 <section id="arxp-multivariado-o-varxp" class="slide level2">
 <h2>ARX(p) multivariado o VARX(p)</h2>
@@ -841,18 +842,20 @@ I &amp; 0 &amp; ... &amp; 0 &amp; 0 \\
 </section>
 <section id="criterio-de-información" class="slide level2">
 <h2>Criterio de información</h2>
+<p>Debido a la complejidad de selección del orden <span class="math inline">\(p\)</span>, en la práctica se usan los criterios de información:</p>
 <ul>
-<li>Debido a la complejidad de selección del orden <span class="math inline">\(p\)</span>, en la práctica se usan los criterios de información:</li>
-</ul>
-<p><span class="alert">AIC:</span> <span class="math display">\[AIC(p)= \log \det(\tilde{Z}_u(p))+\frac{2}{T}pK^2\]</span> <span class="alert">HQ (Hannan-Quinn):</span></p>
-<p><span class="math display">\[HQ(p)= \log \det(\tilde{Z}_u(p))+\frac{2\log(\log(T))}{T}pK^2\]</span></p>
-<p>donde <span class="math inline">\(\tilde{Z}_u(p)=T^{-1}\sum_{t=1}^T \hat{w}_t \hat{w}'_t\)</span>,<br>
+<li><span class="alert">AIC:</span> <span class="math display">\[AIC(p)= \log \det(\tilde{Z}_u(p))+\frac{2}{T}pK^2\]</span></li>
+<li><span class="alert">HQ (Hannan-Quinn):</span> <span class="math display">\[HQ(p)= \log \det(\tilde{Z}_u(p))+\frac{2\log(\log(T))}{T}pK^2\]</span> donde <span class="math inline">\(\tilde{Z}_u(p)=T^{-1}\sum_{t=1}^T \hat{w}_t \hat{w}'_t\)</span>,<br>
 <span class="math inline">\(p^*\)</span> es el total de parámetros en cada ecuación y<br>
-<span class="math inline">\(p\)</span> es el orden de rezago.</p>
+<span class="math inline">\(p\)</span> es el orden de rezago.</li>
+</ul>
 </section>
 <section class="slide level2">
 
-<p><span class="alert">BIC o criterio de información de Schwarz (SC):</span> <span class="math display">\[SC(p)= \log \det(\tilde{Z}_u(p))+\frac{\log(T)}{T}pK^2\]</span> <span class="alert">FPE (Final Predictor Error):</span> <span class="math display">\[FPE(p)=\left( \frac{T+p^*}{T-p^*}\right)^K \det(\tilde{Z}_u(p))\]</span></p>
+<ul>
+<li><span class="alert">BIC o criterio de información de Schwarz (SC):</span> <span class="math display">\[SC(p)= \log \det(\tilde{Z}_u(p))+\frac{\log(T)}{T}pK^2\]</span></li>
+<li><span class="alert">FPE (Final Predictor Error):</span> <span class="math display">\[FPE(p)=\left( \frac{T+p^*}{T-p^*}\right)^K \det(\tilde{Z}_u(p))\]</span></li>
+</ul>
 </section></section>
 <section>
 <section id="diagnósticos" class="title-slide slide level1 agenda-slide center">
